@@ -2,10 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Verity — Honest Advice for Relationships That Matter</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -16,8 +15,7 @@
     --border: #d0c8bc;
     --text: #1a3a3a;
     --text-soft: #2e4e4e;
-    /* Improved contrast for accessibility */
-    --muted: #3d5a5a; 
+    --muted: #4a6a6a;
     --accent: #2a8a8a;
     --accent-dim: #1f6666;
     --accent-soft: rgba(42,138,138,0.12);
@@ -33,7 +31,6 @@
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-size: 18px;
     line-height: 1.7;
-    overflow-x: hidden;
   }
   body {
     display: flex;
@@ -45,8 +42,8 @@
       radial-gradient(ellipse at 80% 80%, rgba(42,138,138,0.04) 0%, transparent 50%);
   }
 
-  .page { display: none; width: 100%; flex-direction: column; align-items: center; opacity: 0; transition: opacity 0.3s ease; }
-  .page.active { display: flex; opacity: 1; }
+  .page { display: none; width: 100%; flex-direction: column; align-items: center; }
+  .page.active { display: flex; }
 
   .loading-screen {
     display: flex; flex-direction: column; align-items: center;
@@ -69,7 +66,6 @@
     align-items: center;
     justify-content: center;
     margin-bottom: 20px;
-    min-height: 60px; /* Placeholder for logo loading */
   }
   .logo-wrap img { width: 120px; display: block; }
 
@@ -97,12 +93,13 @@
   }
   .trust-item {
     flex: 1; display: flex; flex-direction: column;
-    align-items: center; gap: 8px; padding: 18px 4px;
+    align-items: center; gap: 8px; padding: 18px 8px;
     background: var(--surface); border-right: 1px solid var(--border);
   }
   .trust-item:last-child { border-right: none; }
+  .trust-icon { width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; }
   .trust-label {
-    font-family: 'Jost', sans-serif; font-size: 11px;
+    font-family: 'Jost', sans-serif; font-size: 13px;
     font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
     color: var(--text-soft); text-align: center;
   }
@@ -116,15 +113,20 @@
     font-size: 24px; font-weight: 300; font-style: italic;
     margin-bottom: 10px; color: var(--text); line-height: 1.3;
   }
+  .login-sub {
+    font-family: 'Jost', sans-serif; font-size: 14px;
+    font-weight: 300; color: var(--text-soft);
+    margin-bottom: 28px; line-height: 1.6;
+  }
   .input-field {
     width: 100%; background: var(--bg);
     border: 1px solid var(--border); border-radius: 6px;
     padding: 14px 16px; font-family: 'Jost', sans-serif;
-    font-size: 16px; font-weight: 300; color: var(--text);
+    font-size: 15px; font-weight: 300; color: var(--text);
     outline: none; transition: border-color 0.2s; margin-bottom: 14px;
-    -webkit-appearance: none;
   }
   .input-field:focus { border-color: var(--accent-dim); }
+  .input-field::placeholder { color: var(--muted); }
   .primary-btn {
     width: 100%; background: var(--accent-dim); border: none;
     color: #fff; font-family: 'Jost', sans-serif;
@@ -133,14 +135,121 @@
     cursor: pointer; transition: all 0.2s;
   }
   .primary-btn:hover:not(:disabled) { background: var(--accent); }
-  .primary-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  .primary-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  .guest-btn {
+    width: 100%; background: transparent;
+    border: 1px solid var(--border); color: var(--text-soft);
+    font-family: 'Jost', sans-serif; font-size: 14px;
+    font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 13px; border-radius: 6px; cursor: pointer;
+    transition: all 0.2s; margin-top: 10px;
+  }
+  .guest-btn:hover { border-color: var(--accent-dim); color: var(--accent); }
+  .guest-note {
+    font-family: 'Jost', sans-serif; font-size: 13px;
+    font-weight: 300; color: var(--muted);
+    text-align: center; margin-top: 10px; line-height: 1.6;
+    font-style: italic;
+  }
+
+  .login-note {
+    font-family: 'Jost', sans-serif; font-size: 13px;
+    font-weight: 300; color: var(--muted);
+    text-align: center; margin-top: 16px; line-height: 1.6;
+  }
+  .success-msg { display: none; text-align: center; padding: 20px; }
+  .success-icon { font-size: 36px; margin-bottom: 12px; }
+  .success-title { font-size: 22px; font-style: italic; font-weight: 300; margin-bottom: 8px; }
+  .success-sub {
+    font-family: 'Jost', sans-serif; font-size: 14px;
+    font-weight: 300; color: var(--text-soft); line-height: 1.6;
+  }
 
   .how-it-works {
     width: 100%; max-width: 680px;
     padding: 48px 28px; display: grid;
     grid-template-columns: repeat(4, 1fr); gap: 14px;
   }
-  .step { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 20px 16px; }
+  .step {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; padding: 20px 16px;
+  }
+  .step-number {
+    font-family: 'Jost', sans-serif; font-size: 13px;
+    font-weight: 500; letter-spacing: 0.2em;
+    color: var(--accent-dim); margin-bottom: 8px;
+  }
+  .step-title { font-size: 17px; font-weight: 500; color: var(--text); line-height: 1.3; margin-bottom: 8px; }
+  .step-desc {
+    font-family: 'Jost', sans-serif; font-size: 13px;
+    font-weight: 300; color: var(--text-soft); line-height: 1.6;
+  }
+
+  .type-page-logo {
+    padding: 32px 28px 0;
+    display: flex; justify-content: center;
+    width: 100%; max-width: 680px;
+  }
+
+  .type-page {
+    width: 100%; max-width: 680px;
+    padding: 32px 28px; display: flex;
+    flex-direction: column; align-items: center; gap: 32px;
+  }
+  .type-header { text-align: center; }
+  .type-title { font-size: 32px; font-weight: 300; font-style: italic; margin-bottom: 10px; }
+  .type-sub {
+    font-family: 'Jost', sans-serif; font-size: 15px;
+    font-weight: 300; color: var(--text-soft);
+  }
+  .type-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 16px; width: 100%;
+  }
+  .type-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 28px 20px; cursor: pointer;
+    transition: all 0.25s; text-align: center;
+    display: flex; flex-direction: column; align-items: center; gap: 14px;
+    position: relative; overflow: hidden;
+  }
+  .type-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    opacity: 0; transition: opacity 0.25s;
+  }
+  .type-card.romantic::before { background: linear-gradient(90deg, transparent, var(--rose), transparent); }
+  .type-card.workplace::before { background: linear-gradient(90deg, transparent, var(--blue), transparent); }
+  .type-card.family::before { background: linear-gradient(90deg, transparent, var(--sage), transparent); }
+  .type-card.friendship::before { background: linear-gradient(90deg, transparent, var(--lavender), transparent); }
+  .type-card:hover::before { opacity: 1; }
+  .type-card:hover {
+    background: var(--surface2);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 32px rgba(42,138,138,0.12);
+  }
+  .type-card:hover .type-name { color: var(--accent); }
+
+  .type-illustration {
+    width: 80px; height: 80px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 50%; transition: transform 0.25s;
+  }
+  .type-card:hover .type-illustration { transform: scale(1.05); }
+  .type-card.romantic .type-illustration { background: rgba(196,122,122,0.1); }
+  .type-card.workplace .type-illustration { background: rgba(74,122,176,0.1); }
+  .type-card.family .type-illustration { background: rgba(58,154,106,0.1); }
+  .type-card.friendship .type-illustration { background: rgba(122,106,176,0.1); }
+
+  .type-name {
+    font-size: 18px; font-weight: 400; color: var(--text);
+    transition: color 0.25s;
+  }
+  .type-desc {
+    font-family: 'Jost', sans-serif; font-size: 13px;
+    font-weight: 300; color: var(--muted); line-height: 1.6;
+  }
 
   .chat-header {
     width: 100%; max-width: 680px;
@@ -148,39 +257,171 @@
     display: flex; justify-content: space-between; align-items: center;
     gap: 12px;
   }
+  .chat-logo-wrap {
+    background: var(--bg);
+    border-radius: 8px;
+    padding: 4px 8px;
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .chat-logo-wrap img { width: 72px; display: block; }
+
+  .chat-right { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+  .chat-type-badge {
+    font-family: 'Jost', sans-serif; font-size: 13px;
+    font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--accent-dim); background: var(--accent-soft);
+    border: 1px solid rgba(42,138,138,0.2);
+    padding: 5px 12px; border-radius: 20px; cursor: pointer;
+    transition: all 0.2s;
+  }
+  .chat-type-badge:hover { border-color: var(--accent-dim); color: var(--accent); }
+  .user-email {
+    font-family: 'Jost', sans-serif; font-size: 13px;
+    font-weight: 300; color: var(--muted);
+  }
+  .main-menu-btn {
+    font-family: 'Jost', sans-serif; font-size: 13px;
+    font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-soft); background: var(--surface);
+    border: 1px solid var(--border); padding: 7px 14px;
+    border-radius: 4px; cursor: pointer; transition: all 0.2s;
+  }
+  .main-menu-btn:hover { color: var(--accent); border-color: var(--accent-dim); }
+  .signout-btn {
+    font-family: 'Jost', sans-serif; font-size: 12px;
+    font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--muted); background: none;
+    border: 1px solid var(--border); padding: 6px 12px;
+    border-radius: 4px; cursor: pointer; transition: all 0.2s;
+  }
+  .signout-btn:hover { color: var(--text); border-color: var(--muted); }
+
+  .chat-divider {
+    width: 100%; max-width: 680px;
+    padding: 16px 28px 0;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .chat-divider::before, .chat-divider::after {
+    content: ''; flex: 1; height: 1px; background: var(--border);
+  }
+  .chat-divider span {
+    font-family: 'Jost', sans-serif; font-size: 13px;
+    font-weight: 300; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--muted); white-space: nowrap;
+  }
+
+  .guest-badge {
+    font-family: 'Jost', sans-serif; font-size: 12px;
+    font-weight: 300; color: var(--muted); font-style: italic;
+  }
+
   .chat-wrap {
     width: 100%; max-width: 680px; flex: 1;
     display: flex; flex-direction: column;
-    padding: 0 28px; overflow-y: auto;
+    padding: 0 28px; min-height: 300px;
   }
-  .messages { display: flex; flex-direction: column; padding-bottom: 20px; }
-  .msg-body { font-size: 18px; font-weight: 300; line-height: 1.8; color: var(--text); white-space: pre-wrap; padding-left: 34px; }
+  .messages { flex: 1; display: flex; flex-direction: column; padding-bottom: 16px; }
+  .msg {
+    display: flex; flex-direction: column; gap: 6px;
+    padding: 22px 0; border-bottom: 1px solid rgba(42,138,138,0.15);
+    animation: fadeUp 0.4s ease both;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .msg-header { display: flex; align-items: center; gap: 8px; }
+  .msg-avatar {
+    width: 26px; height: 26px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Jost', sans-serif; font-size: 9px; font-weight: 500; flex-shrink: 0;
+  }
+  .msg.ai .msg-avatar { background: var(--accent-soft); border: 1px solid rgba(42,138,138,0.3); color: var(--accent); }
+  .msg.user .msg-avatar { background: rgba(42,138,138,0.12); border: 1px solid rgba(42,138,138,0.25); color: var(--accent); }
+  .msg-label {
+    font-family: 'Jost', sans-serif; font-size: 13px;
+    font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase;
+  }
+  .msg.user .msg-label { color: var(--accent-dim); }
+  .msg.ai .msg-label { color: var(--accent); }
+  .msg-body {
+    font-size: 18px; font-weight: 300; line-height: 1.8;
+    color: var(--text); white-space: pre-wrap; padding-left: 34px;
+  }
+  .msg.user .msg-body { color: var(--text-soft); font-style: italic; }
+
+  .typing {
+    display: flex; align-items: center; gap: 6px;
+    padding: 22px 0; padding-left: 34px;
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .typing.visible { opacity: 1; }
+  .typing-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent-dim);
+    animation: pulse 1.2s ease-in-out infinite;
+  }
+  .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes pulse {
+    0%, 80%, 100% { opacity: 0.2; transform: scale(0.75); }
+    40% { opacity: 1; transform: scale(1); }
+  }
 
   .input-area {
     width: 100%; max-width: 680px;
-    padding: 16px 28px 24px;
+    padding: 16px 28px 32px;
     display: flex; flex-direction: column; gap: 10px;
-    background: var(--bg);
+    position: sticky; bottom: 0;
+    background: linear-gradient(to bottom, transparent, var(--bg) 25%);
   }
   .input-box {
     display: flex; gap: 10px; align-items: flex-end;
     background: var(--surface); border: 1px solid var(--border);
-    border-radius: 8px; padding: 12px 14px;
+    border-radius: 8px; padding: 14px 16px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .input-box:focus-within {
+    border-color: var(--accent-dim);
+    box-shadow: 0 0 0 3px rgba(42,138,138,0.12);
   }
   textarea {
     flex: 1; background: transparent; border: none; outline: none;
     resize: none; font-family: 'Cormorant Garamond', serif;
-    font-size: 18px; color: var(--text);
-    min-height: 28px; max-height: 150px;
-    overflow-y: auto;
+    font-size: 18px; font-weight: 300; color: var(--text);
+    line-height: 1.6; min-height: 28px; max-height: 140px;
+    overflow-y: auto; scrollbar-width: none;
+  }
+  textarea::placeholder { color: var(--muted); font-style: italic; }
+  .send-btn {
+    background: var(--accent-dim); border: none; color: #fff;
+    font-family: 'Jost', sans-serif; font-size: 14px; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 9px 18px; border-radius: 5px; cursor: pointer;
+    transition: all 0.2s; white-space: nowrap;
+  }
+  .send-btn:hover:not(:disabled) { background: var(--accent); transform: translateY(-1px); }
+  .send-btn:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
+  .disclaimer {
+    font-family: 'Jost', sans-serif; font-size: 13px;
+    font-weight: 300; color: var(--muted);
+    text-align: center; line-height: 1.6;
   }
 
-  /* Accessibility & Mobile tweaks */
+  @media (max-width: 620px) {
+    .how-it-works { grid-template-columns: repeat(2, 1fr); padding: 32px 20px; }
+  }
   @media (max-width: 520px) {
-    .trust-strip { max-width: 100%; }
-    .trust-label { font-size: 9px; }
-    .how-it-works { grid-template-columns: 1fr; }
-    .hero-title { font-size: 28px; }
+    .how-it-works { grid-template-columns: 1fr; padding: 32px 20px; }
+    .type-grid { grid-template-columns: 1fr; }
+    .hero, .type-page, .chat-header, .chat-divider, .chat-wrap, .input-area { padding-left: 20px; padding-right: 20px; }
+    .login-card { margin: 0 20px; padding: 28px 20px; }
+    .msg-body { font-size: 17px; }
+    textarea { font-size: 16px; }
+    .user-email { display: none; }
   }
 </style>
 </head>
@@ -188,139 +429,299 @@
 
 <div id="loadingScreen" class="loading-screen">
   <div class="spinner"></div>
-  <div id="loadingText">Let's Chat</div>
+  Let's Chat
 </div>
 
+<!-- LANDING PAGE -->
 <div id="landingPage" class="page">
   <div class="hero">
-    <div class="logo-wrap"><img src="/logo.png" alt="Verity" /></div>
+    <div class="logo-wrap">
+      <img src="/logo.png" alt="Verity" />
+    </div>
+    <div style="font-family:'Jost',sans-serif; font-weight:400; font-size:15px; letter-spacing:0.3em; text-transform:uppercase; color:var(--accent); margin-bottom:18px;">Let's Chat</div>
     <h1 class="hero-title">Honest advice for relationships that matter</h1>
     <p class="hero-sub">Psychology-grounded · Confidential · Always honest</p>
-    
     <div class="trust-strip">
-      <div class="trust-item"><div class="trust-label">Private</div></div>
-      <div class="trust-item"><div class="trust-label">Science-Based</div></div>
-      <div class="trust-item"><div class="trust-label">No Judgment</div></div>
-      <div class="trust-item"><div class="trust-label">Always Honest</div></div>
+      <div class="trust-item">
+        <div class="trust-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="4" y="11" width="16" height="11" rx="2" stroke="#1f6666" stroke-width="1.5" fill="none"/>
+            <path d="M8 11V7a4 4 0 0 1 8 0v4" stroke="#1f6666" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+            <circle cx="12" cy="16" r="1.5" fill="#1f6666"/>
+          </svg>
+        </div>
+        <div class="trust-label">Private</div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 3h6M9 3v7L4.5 18A1 1 0 0 0 5.4 20h13.2a1 1 0 0 0 .9-1.45L15 10V3" stroke="#1f6666" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <path d="M7 15h10" stroke="#1f6666" stroke-width="1" stroke-linecap="round" opacity="0.5"/>
+            <circle cx="9.5" cy="17.5" r="1" fill="#1f6666" opacity="0.6"/>
+            <circle cx="13" cy="16" r="0.75" fill="#1f6666" opacity="0.5"/>
+          </svg>
+        </div>
+        <div class="trust-label">Science-Based</div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 14c0-1 .5-2 1.5-2L9 11V6a1 1 0 0 1 2 0v5" stroke="#1f6666" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <path d="M13 6a1 1 0 0 1 2 0v5" stroke="#1f6666" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+            <path d="M15 7a1 1 0 0 1 2 0v4" stroke="#1f6666" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+            <path d="M17 8.5A1 1 0 0 1 19 9v5c0 3-2 5-5 5H9c-2 0-3.5-1.5-4-3l-1-3" stroke="#1f6666" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <path d="M11 11v-5" stroke="#1f6666" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+          </svg>
+        </div>
+        <div class="trust-label">No Judgment</div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <line x1="12" y1="3" x2="12" y2="21" stroke="#1f6666" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="8" y1="21" x2="16" y2="21" stroke="#1f6666" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="12" y1="7" x2="4" y2="10" stroke="#1f6666" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="12" y1="7" x2="20" y2="10" stroke="#1f6666" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M4 10 C4 10 2 13 4 14 C6 15 6 12 4 10Z" stroke="#1f6666" stroke-width="1.25" fill="rgba(31,102,102,0.1)"/>
+            <path d="M20 10 C20 10 18 13 20 14 C22 15 22 12 20 10Z" stroke="#1f6666" stroke-width="1.25" fill="rgba(31,102,102,0.1)"/>
+          </svg>
+        </div>
+        <div class="trust-label">Always Honest</div>
+      </div>
     </div>
 
     <div class="login-card">
       <div id="loginForm">
-        <div class="login-title">Begin your journey</div>
-        <input type="email" id="emailInput" class="input-field" placeholder="your@email.com" autocomplete="email" />
-        <button class="primary-btn" id="sendLinkBtn" onclick="sendMagicLink()">Send login link</button>
-        <button class="guest-btn" style="width:100%; margin-top:12px; background:none; border:1px solid var(--border); padding:12px; cursor:pointer;" onclick="startAsGuest()">Continue as Guest</button>
+        <div class="login-title">Begin your journey or pick up where you left off</div>
+        <div class="login-sub">Enter your email and we'll send you a secure login link — no password needed.</div>
+        <input type="email" id="emailInput" class="input-field" placeholder="your@email.com" />
+        <button class="primary-btn" id="sendLinkBtn" onclick="sendMagicLink()">Send my login link</button>
+        <button class="guest-btn" onclick="startAsGuest()">Continue without logging in</button>
+        <div class="guest-note">Guest sessions are private but cannot be resumed later.</div>
+        <div class="login-note">Free trial, no credit card required. · We use top-tier data encryption, your conversations are always safe and private.</div>
       </div>
-      <div id="successMsg" style="display:none; text-align:center;">
-        <div>Check your inbox. We sent a link to <strong id="sentEmail"></strong>.</div>
+      <div class="success-msg" id="successMsg">
+        <div class="success-icon">✉️</div>
+        <div class="success-title">Check your inbox</div>
+        <div class="success-sub">We sent a login link to <strong id="sentEmail"></strong>.<br>Click it to open Verity. The link expires in 15 minutes.</div>
       </div>
+    </div>
+  </div>
+
+  <div class="how-it-works">
+    <div class="step">
+      <div class="step-number">01</div>
+      <div class="step-title">Share openly</div>
+      <div class="step-desc">Tell Verity what's going on in your own words. No forms, no labels, no judgment.</div>
+    </div>
+    <div class="step">
+      <div class="step-number">02</div>
+      <div class="step-title">See patterns</div>
+      <div class="step-desc">Verity reflects what she hears and names the dynamics at play.</div>
+    </div>
+    <div class="step">
+      <div class="step-number">03</div>
+      <div class="step-title">Find clarity</div>
+      <div class="step-desc">Walk away knowing what you feel, what you need, and what to do next.</div>
+    </div>
+    <div class="step">
+      <div class="step-number">04</div>
+      <div class="step-title">Take Action</div>
+      <div class="step-desc">Begin your journey with more effective communication. Learn the skills to get what you want out of your relationships and life.</div>
     </div>
   </div>
 </div>
 
+<!-- TYPE SELECTOR -->
 <div id="typePage" class="page">
-    <div class="type-page-logo" style="margin-top:40px;"><img src="/logo.png" width="100" /></div>
-    <div class="type-header" style="text-align:center; margin: 30px 0;">
-        <h2 style="font-style:italic; font-weight:300;">Choose a focus</h2>
+  <div class="type-page-logo">
+    <div class="logo-wrap" style="margin-bottom:0; cursor:default;">
+      <img src="/logo.png" alt="Verity" />
     </div>
-    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px; padding:20px; max-width:600px;">
-        <button onclick="selectType('romantic')" style="padding:40px 20px; border:1px solid var(--border); background:var(--surface); cursor:pointer;">Romantic</button>
-        <button onclick="selectType('workplace')" style="padding:40px 20px; border:1px solid var(--border); background:var(--surface); cursor:pointer;">Workplace</button>
-        <button onclick="selectType('family')" style="padding:40px 20px; border:1px solid var(--border); background:var(--surface); cursor:pointer;">Family</button>
-        <button onclick="selectType('friendship')" style="padding:40px 20px; border:1px solid var(--border); background:var(--surface); cursor:pointer;">Friendship</button>
+  </div>
+  <div class="type-page">
+    <div class="type-header">
+      <div class="type-title">What kind of relationship?</div>
+      <div class="type-sub">Choose the relationship you'd like to work on today</div>
     </div>
+    <div class="type-grid">
+
+      <div class="type-card romantic" onclick="selectType('romantic')">
+        <div class="type-illustration">
+          <svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="17" cy="13" r="6" fill="none" stroke="#c47a7a" stroke-width="1.5"/>
+            <path d="M8 38 C8 28 14 24 17 24 C20 24 23 26 24 30" stroke="#c47a7a" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+            <circle cx="35" cy="13" r="6" fill="none" stroke="#c47a7a" stroke-width="1.5"/>
+            <path d="M44 38 C44 28 38 24 35 24 C32 24 29 26 28 30" stroke="#c47a7a" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+            <path d="M26 21 C26 21 22 17.5 22 15 C22 13 23.5 12 25 12.5 C25.5 12.7 26 13.2 26 13.2 C26 13.2 26.5 12.7 27 12.5 C28.5 12 30 13 30 15 C30 17.5 26 21 26 21Z" fill="#c47a7a" opacity="0.7"/>
+            <path d="M24 30 Q26 33 28 30" stroke="#c47a7a" stroke-width="1" stroke-linecap="round" fill="none" opacity="0.5"/>
+          </svg>
+        </div>
+        <div class="type-name">Romantic Partner</div>
+        <div class="type-desc">Dating, marriage, long-term partnerships, breakups</div>
+      </div>
+
+      <div class="type-card workplace" onclick="selectType('workplace')">
+        <div class="type-illustration">
+          <svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="26" cy="10" r="5" fill="none" stroke="#4a7ab0" stroke-width="1.5"/>
+            <path d="M19 26 C19 20 22 17 26 17 C30 17 33 20 33 26" stroke="#4a7ab0" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+            <circle cx="11" cy="30" r="4" fill="none" stroke="#4a7ab0" stroke-width="1.25" opacity="0.7"/>
+            <path d="M6 43 C6 38 8 35 11 35 C14 35 16 38 16 43" stroke="#4a7ab0" stroke-width="1.25" stroke-linecap="round" fill="none" opacity="0.7"/>
+            <circle cx="41" cy="30" r="4" fill="none" stroke="#4a7ab0" stroke-width="1.25" opacity="0.7"/>
+            <path d="M36 43 C36 38 38 35 41 35 C44 35 46 38 46 43" stroke="#4a7ab0" stroke-width="1.25" stroke-linecap="round" fill="none" opacity="0.7"/>
+            <line x1="26" y1="26" x2="11" y2="31" stroke="#4a7ab0" stroke-width="1" opacity="0.35" stroke-dasharray="2,2"/>
+            <line x1="26" y1="26" x2="41" y2="31" stroke="#4a7ab0" stroke-width="1" opacity="0.35" stroke-dasharray="2,2"/>
+          </svg>
+        </div>
+        <div class="type-name">Coworkers & Workplace</div>
+        <div class="type-desc">Managers, colleagues, team conflict, professional dynamics</div>
+      </div>
+
+      <div class="type-card family" onclick="selectType('family')">
+        <div class="type-illustration">
+          <svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="14" cy="13" r="6" fill="none" stroke="#3a9a6a" stroke-width="1.5"/>
+            <path d="M6 36 C6 27 9 23 14 23 C16.5 23 18.5 24.5 20 27" stroke="#3a9a6a" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+            <circle cx="38" cy="13" r="6" fill="none" stroke="#3a9a6a" stroke-width="1.5"/>
+            <path d="M46 36 C46 27 43 23 38 23 C35.5 23 33.5 24.5 32 27" stroke="#3a9a6a" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+            <circle cx="26" cy="30" r="4.5" fill="none" stroke="#3a9a6a" stroke-width="1.25"/>
+            <path d="M20 46 C20 41 22.5 38 26 38 C29.5 38 32 41 32 46" stroke="#3a9a6a" stroke-width="1.25" stroke-linecap="round" fill="none"/>
+            <path d="M20 27 Q26 32 32 27" stroke="#3a9a6a" stroke-width="1" stroke-linecap="round" fill="none" opacity="0.5"/>
+          </svg>
+        </div>
+        <div class="type-name">Family</div>
+        <div class="type-desc">Parents, siblings, in-laws, children, family conflict</div>
+      </div>
+
+      <div class="type-card friendship" onclick="selectType('friendship')">
+        <div class="type-illustration">
+          <svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="17" cy="13" r="6" fill="none" stroke="#7a6ab0" stroke-width="1.5"/>
+            <path d="M8 40 C8 29 12 24 17 24 C20 24 22.5 25.5 24 28" stroke="#7a6ab0" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+            <circle cx="35" cy="13" r="6" fill="none" stroke="#7a6ab0" stroke-width="1.5"/>
+            <path d="M44 40 C44 29 40 24 35 24 C32 24 29.5 25.5 28 28" stroke="#7a6ab0" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+            <path d="M24 28 Q26 30 28 28" stroke="#7a6ab0" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+            <path d="M22 18 Q26 15 30 18" stroke="#7a6ab0" stroke-width="1" stroke-linecap="round" fill="none" opacity="0.45"/>
+            <circle cx="24" cy="20" r="1" fill="#7a6ab0" opacity="0.4"/>
+            <circle cx="26" cy="19" r="1" fill="#7a6ab0" opacity="0.4"/>
+            <circle cx="28" cy="20" r="1" fill="#7a6ab0" opacity="0.4"/>
+          </svg>
+        </div>
+        <div class="type-name">Friendships</div>
+        <div class="type-desc">Close friends, drifting apart, one-sided dynamics, conflict</div>
+      </div>
+
+    </div>
+  </div>
 </div>
 
-<div id="chatPage" class="page" style="height:100vh;">
+<!-- CHAT PAGE -->
+<div id="chatPage" class="page">
   <div class="chat-header">
-    <div onclick="goToTypeSelector()" style="cursor:pointer;">← Menu</div>
-    <div id="typeBadge" class="chat-type-badge">Romantic</div>
-    <button onclick="signOut()" class="signout-btn">Exit</button>
+    <div class="chat-logo-wrap" onclick="goToTypeSelector()">
+      <img src="/logo.png" alt="Verity" />
+    </div>
+    <button class="main-menu-btn" onclick="goToTypeSelector()">← Main Menu</button>
+    <div class="chat-right">
+      <div class="chat-type-badge" id="typeBadge" onclick="goToTypeSelector()">Romantic</div>
+      <div class="user-email" id="userEmail"></div>
+      <span class="guest-badge" id="guestBadge" style="display:none;">Guest session</span>
+      <button class="signout-btn" id="signoutBtn" onclick="signOut()">Sign out</button>
+    </div>
   </div>
-  <div class="chat-wrap" id="chatWrap">
+  <div class="chat-divider"><span id="chatDividerLabel">Your conversation</span></div>
+  <div class="chat-wrap">
     <div class="messages" id="messages"></div>
-    <div id="typing" class="typing" style="display:none; padding-left:34px;">...</div>
+    <div class="typing" id="typing">
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+    </div>
   </div>
   <div class="input-area">
     <div class="input-box">
       <textarea id="userInput" placeholder="Share what's on your mind…" rows="1"></textarea>
       <button class="send-btn" id="sendBtn" onclick="sendMessage()">Send</button>
     </div>
+    <div class="disclaimer">Verity is not a licensed therapist. If you're in crisis, please contact a mental health professional.</div>
   </div>
 </div>
 
 <script>
   let isLoading = false;
   let currentType = 'romantic';
+  let userEmailAddress = '';
   let isGuest = false;
+  let guestHistory = [];
 
   const TYPE_CONFIG = {
-    romantic: { label: 'Romantic', opening: "Welcome. I'm Verity. What's been weighing on you lately regarding your relationship?" },
-    workplace: { label: 'Workplace', opening: "Welcome. I'm here to help navigate work dynamics. What's happening at the office?" },
-    family: { label: 'Family', opening: "Family dynamics are complex. What's been on your mind regarding your family?" },
-    friendship: { label: 'Friendship', opening: "Friendships matter deeply. What's going on with your friend today?" }
+    romantic:   { label: 'Romantic',   opening: `Welcome. I'm Verity.\n\nI'm here to help you find clarity about your romantic relationship — without judgment, without empty reassurance, and without pretending that hard things are simple.\n\nWhatever brought you here today, you're in the right place. We'll go at your pace, and I'll be honest with you every step of the way.\n\nTo start: what's been weighing on you most lately when it comes to your relationship?` },
+    workplace:  { label: 'Workplace',  opening: `Welcome. I'm Verity.\n\nI'm here to help you navigate what's happening at work — whether that's a difficult manager, a tense team dynamic, a coworker conflict, or something harder to name.\n\nWorkplace relationships affect your career, your confidence, and your daily wellbeing. I take that seriously, and I'll give you honest, practical guidance.\n\nTo start: what's been going on at work that you'd like to work through?` },
+    family:     { label: 'Family',     opening: `Welcome. I'm Verity.\n\nFamily relationships are some of the most complex we navigate — layered with history, love, obligation, and sometimes pain. I'm here to help you make sense of what's happening and find a way forward.\n\nThere's no judgment here, and no assumption that any relationship has to be fixed or preserved at all costs.\n\nTo start: what's been on your mind when it comes to your family?` },
+    friendship: { label: 'Friendship', opening: `Welcome. I'm Verity.\n\nFriendships matter more than we often admit — and when something feels off, it can be surprisingly hard to know what to do. I'm here to help you think it through clearly and honestly.\n\nWhether it's a conflict, a drift, or something harder to put into words — you're in the right place.\n\nTo start: what's been going on with a friendship that brought you here today?` }
   };
 
   function showPage(name) {
     document.getElementById('loadingScreen').style.display = 'none';
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    const target = document.getElementById(name);
-    target.style.display = 'flex';
-    setTimeout(() => target.classList.add('active'), 10);
+    if (name) document.getElementById(name).classList.add('active');
   }
 
   function goToTypeSelector() { showPage('typePage'); }
 
   function startAsGuest() {
     isGuest = true;
+    guestHistory = [];
+    userEmailAddress = '';
+    document.getElementById('userEmail').textContent = '';
+    document.getElementById('guestBadge').style.display = 'inline';
+    document.getElementById('signoutBtn').textContent = 'Exit';
     showPage('typePage');
   }
 
   async function selectType(type) {
     currentType = type;
-    document.getElementById('typeBadge').textContent = TYPE_CONFIG[type].label;
+    guestHistory = [];
+    const config = TYPE_CONFIG[type];
+    document.getElementById('typeBadge').textContent = config.label;
+    document.getElementById('chatDividerLabel').textContent = config.label + ' · Your conversation';
     document.getElementById('messages').innerHTML = '';
     showPage('chatPage');
-    
     if (isGuest) {
-      appendMessage('ai', TYPE_CONFIG[type].opening);
+      const openingMsg = config.opening;
+      guestHistory.push({ role: 'assistant', content: openingMsg });
+      appendMessage('ai', openingMsg, false);
     } else {
       await loadHistory(type);
     }
   }
 
-  // Improved Load Logic with Timeout Stress-Test
   window.addEventListener('load', async () => {
-    const timeout = setTimeout(() => {
-        if (document.getElementById('loadingScreen').style.display !== 'none') {
-            showPage('landingPage');
-            console.warn("Auth check timed out.");
-        }
-    }, 4000);
-
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('error')) { showPage('landingPage'); return; }
     try {
       const res = await fetch('/api/auth/me');
       const data = await res.json();
-      clearTimeout(timeout);
       if (data.authenticated) {
+        isGuest = false;
+        userEmailAddress = data.email;
+        document.getElementById('userEmail').textContent = data.email;
+        document.getElementById('guestBadge').style.display = 'none';
+        document.getElementById('signoutBtn').textContent = 'Sign out';
         showPage('typePage');
       } else {
         showPage('landingPage');
       }
-    } catch {
-      clearTimeout(timeout);
-      showPage('landingPage');
-    }
+    } catch { showPage('landingPage'); }
   });
 
   async function sendMagicLink() {
     const email = document.getElementById('emailInput').value.trim();
     if (!email) return;
-    
     const btn = document.getElementById('sendLinkBtn');
-    btn.disabled = true; // Prevent double submission immediately
+    btn.disabled = true;
     btn.textContent = 'Sending...';
-
     try {
       const res = await fetch('/api/auth/send-link', {
         method: 'POST',
@@ -333,82 +734,140 @@
         document.getElementById('loginForm').style.display = 'none';
         document.getElementById('successMsg').style.display = 'block';
       } else {
-        throw new Error();
+        btn.disabled = false;
+        btn.textContent = 'Send my login link';
+        alert('Something went wrong. Please try again.');
       }
     } catch {
       btn.disabled = false;
-      btn.textContent = 'Send login link';
-      alert('Failed to send. Please check your connection.');
+      btn.textContent = 'Send my login link';
+      alert('Something went wrong. Please try again.');
     }
   }
 
-  function appendMessage(role, text) {
+  async function signOut() {
+    if (isGuest) {
+      isGuest = false;
+      guestHistory = [];
+      currentType = 'romantic';
+      document.getElementById('messages').innerHTML = '';
+      document.getElementById('guestBadge').style.display = 'none';
+      document.getElementById('signoutBtn').textContent = 'Sign out';
+      showPage('landingPage');
+      return;
+    }
+    await fetch('/api/auth/signout', { method: 'POST' });
+    isGuest = false;
+    currentType = 'romantic';
+    document.getElementById('messages').innerHTML = '';
+    document.getElementById('loginForm').style.display = 'block';
+    document.getElementById('successMsg').style.display = 'none';
+    document.getElementById('sendLinkBtn').disabled = false;
+    document.getElementById('sendLinkBtn').textContent = 'Send my login link';
+    document.getElementById('emailInput').value = '';
+    showPage('landingPage');
+  }
+
+  async function loadHistory(type) {
+    try {
+      const res = await fetch('/api/messages?type=' + type);
+      const data = await res.json();
+      if (data.messages && data.messages.length > 0) {
+        data.messages.forEach(m => appendMessage(m.role === 'assistant' ? 'ai' : 'user', m.content, false));
+        document.getElementById('messages').scrollTop = document.getElementById('messages').scrollHeight;
+      } else {
+        appendMessage('ai', TYPE_CONFIG[type].opening, false);
+      }
+    } catch {
+      appendMessage('ai', 'Welcome back. What would you like to talk about today?', false);
+    }
+  }
+
+  function appendMessage(role, text, animate = true) {
     const container = document.getElementById('messages');
     const msg = document.createElement('div');
-    msg.style.padding = "20px 0";
-    msg.style.borderBottom = "1px solid rgba(0,0,0,0.05)";
-    
+    msg.className = 'msg ' + role;
+    if (!animate) msg.style.animation = 'none';
+    const header = document.createElement('div');
+    header.className = 'msg-header';
+    const avatar = document.createElement('div');
+    avatar.className = 'msg-avatar';
+    avatar.textContent = role === 'user' ? 'You' : 'V';
     const label = document.createElement('div');
-    label.style.fontFamily = "Jost";
-    label.style.fontSize = "12px";
-    label.style.textTransform = "uppercase";
-    label.style.color = "var(--accent)";
+    label.className = 'msg-label';
     label.textContent = role === 'user' ? 'You' : 'Verity';
-    
+    header.appendChild(avatar);
+    header.appendChild(label);
     const body = document.createElement('div');
     body.className = 'msg-body';
-    body.textContent = text; // Safe textContent handling
-    
-    msg.appendChild(label);
+    body.textContent = text;
+    msg.appendChild(header);
     msg.appendChild(body);
     container.appendChild(msg);
-    
-    const wrap = document.getElementById('chatWrap');
-    wrap.scrollTop = wrap.scrollHeight;
+    container.scrollTop = container.scrollHeight;
   }
+
+  function setLoading(val) {
+    isLoading = val;
+    document.getElementById('sendBtn').disabled = val;
+    document.getElementById('typing').className = val ? 'typing visible' : 'typing';
+  }
+
+  const textarea = document.getElementById('userInput');
+  textarea.addEventListener('input', function() {
+    this.style.height = 'auto';
+    this.style.height = Math.min(this.scrollHeight, 140) + 'px';
+  });
+  textarea.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+  });
 
   async function sendMessage() {
     if (isLoading) return;
-    const textarea = document.getElementById('userInput');
     const text = textarea.value.trim();
     if (!text) return;
-
     textarea.value = '';
     textarea.style.height = 'auto';
     appendMessage('user', text);
-    
-    isLoading = true;
-    document.getElementById('sendBtn').disabled = true;
-    document.getElementById('typing').style.display = 'block';
+    setLoading(true);
 
     try {
-      const endpoint = isGuest ? '/api/chat/guest' : '/api/chat';
-      const res = await fetch(endpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: text, type: currentType })
-      });
+      let res;
+      if (isGuest) {
+        res = await fetch('/api/chat/guest', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: text, type: currentType, history: guestHistory })
+        });
+      } else {
+        res = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: text, type: currentType })
+        });
+      }
+
       const data = await res.json();
-      if (data.reply) appendMessage('ai', data.reply);
+      setLoading(false);
+
+      if (data.reply) {
+        if (isGuest) {
+          guestHistory.push({ role: 'user', content: text });
+          guestHistory.push({ role: 'assistant', content: data.reply });
+        }
+        appendMessage('ai', data.reply);
+      } else {
+        appendMessage('ai', 'Something went wrong. Please try again.');
+      }
     } catch {
-      appendMessage('ai', 'Connection lost. Please try again.');
-    } finally {
-      isLoading = false;
-      document.getElementById('sendBtn').disabled = false;
-      document.getElementById('typing').style.display = 'none';
+      setLoading(false);
+      appendMessage('ai', 'Something went wrong connecting to Verity. Please try again.');
     }
   }
 
-  // Auto-resize for textarea
-  document.getElementById('userInput').addEventListener('input', function() {
-    this.style.height = 'auto';
-    this.style.height = (this.scrollHeight) + 'px';
+  document.getElementById('emailInput').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') sendMagicLink();
   });
-
-  async function signOut() {
-    if (!isGuest) await fetch('/api/auth/signout', { method: 'POST' });
-    location.reload();
-  }
 </script>
 </body>
 </html>
