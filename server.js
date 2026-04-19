@@ -24,7 +24,7 @@ app.post('/api/chat', async (req, res) => {
         'anthropic-version': '2023-06-01'
       },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
+        model: 'claude-sonnet-4-5',
         max_tokens: 1000,
         system: `You are Verity, a warm, insightful, and honest relationship advisor grounded in modern relationship psychology. Your role is to help users gain clarity about their romantic relationships — including whether to stay, work on things, or leave.
 
@@ -52,6 +52,7 @@ FORMAT: Flowing prose only. No bullet points or headers. 3-5 paragraphs max.`,
 
     const data = await response.json();
     console.log('Anthropic response status:', response.status);
+
     if (!response.ok) {
       console.error('Anthropic error:', JSON.stringify(data));
       return res.status(500).json({ error: 'Anthropic API error', details: data });
