@@ -9,20 +9,20 @@
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --bg: #1a1208;
-    --surface: #221a0e;
-    --surface2: #2a2010;
-    --border: #3d3020;
-    --text: #f0e8d8;
-    --text-soft: #c8b99a;
-    --muted: #8a7860;
-    --accent: #d4a853;
-    --accent-dim: #a07c38;
-    --accent-soft: rgba(212,168,83,0.12);
-    --sage: #7aaa8e;
+    --bg: #f5f0e8;
+    --surface: #ede8df;
+    --surface2: #e4ddd3;
+    --border: #d0c8bc;
+    --text: #1a3a3a;
+    --text-soft: #3a5a5a;
+    --muted: #6a8a8a;
+    --accent: #2a8a8a;
+    --accent-dim: #1f6666;
+    --accent-soft: rgba(42,138,138,0.12);
+    --sage: #3a9a6a;
     --rose: #c47a7a;
-    --blue: #7a9ec4;
-    --lavender: #a07ac4;
+    --blue: #4a7ab0;
+    --lavender: #7a6ab0;
   }
   html, body {
     height: 100%;
@@ -38,8 +38,8 @@
     align-items: center;
     min-height: 100vh;
     background-image:
-      radial-gradient(ellipse at 50% 0%, rgba(212,168,83,0.06) 0%, transparent 55%),
-      radial-gradient(ellipse at 80% 80%, rgba(122,170,142,0.04) 0%, transparent 50%);
+      radial-gradient(ellipse at 50% 0%, rgba(42,138,138,0.06) 0%, transparent 55%),
+      radial-gradient(ellipse at 80% 80%, rgba(42,138,138,0.04) 0%, transparent 50%);
   }
 
   .page { display: none; width: 100%; flex-direction: column; align-items: center; }
@@ -53,7 +53,7 @@
   }
   .spinner {
     width: 32px; height: 32px;
-    border: 1px solid #3d3020; border-top-color: #d4a853;
+    border: 1px solid #d0c8bc; border-top-color: #2a8a8a;
     border-radius: 50%; animation: spin 1s linear infinite;
   }
   @keyframes spin { to { transform: rotate(360deg); } }
@@ -63,15 +63,6 @@
     padding: 52px 28px 36px;
     display: flex; flex-direction: column;
     align-items: center; text-align: center;
-  }
-  .logo-mark {
-    width: 48px; height: 48px;
-    border: 1px solid var(--accent-dim);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    margin-bottom: 20px;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 22px; font-style: italic; color: var(--accent);
   }
   .wordmark {
     font-family: 'Jost', sans-serif; font-weight: 300;
@@ -122,7 +113,7 @@
     margin-bottom: 28px; line-height: 1.6;
   }
   .input-field {
-    width: 100%; background: var(--surface2);
+    width: 100%; background: var(--bg);
     border: 1px solid var(--border); border-radius: 6px;
     padding: 13px 16px; font-family: 'Jost', sans-serif;
     font-size: 14px; font-weight: 300; color: var(--text);
@@ -132,7 +123,7 @@
   .input-field::placeholder { color: var(--muted); }
   .primary-btn {
     width: 100%; background: var(--accent-dim); border: none;
-    color: var(--bg); font-family: 'Jost', sans-serif;
+    color: #fff; font-family: 'Jost', sans-serif;
     font-size: 12px; font-weight: 500; letter-spacing: 0.15em;
     text-transform: uppercase; padding: 14px; border-radius: 6px;
     cursor: pointer; transition: all 0.2s;
@@ -207,7 +198,7 @@
   .type-card:hover {
     background: var(--surface2);
     transform: translateY(-3px);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    box-shadow: 0 8px 32px rgba(42,138,138,0.12);
   }
   .type-card:hover .type-name { color: var(--accent); }
 
@@ -218,9 +209,9 @@
   }
   .type-card:hover .type-illustration { transform: scale(1.05); }
   .type-card.romantic .type-illustration { background: rgba(196,122,122,0.1); }
-  .type-card.workplace .type-illustration { background: rgba(122,158,196,0.1); }
-  .type-card.family .type-illustration { background: rgba(122,170,142,0.1); }
-  .type-card.friendship .type-illustration { background: rgba(160,122,196,0.1); }
+  .type-card.workplace .type-illustration { background: rgba(74,122,176,0.1); }
+  .type-card.family .type-illustration { background: rgba(58,154,106,0.1); }
+  .type-card.friendship .type-illustration { background: rgba(122,106,176,0.1); }
 
   .type-name {
     font-size: 17px; font-weight: 400; color: var(--text);
@@ -246,7 +237,7 @@
     font-family: 'Jost', sans-serif; font-size: 10px;
     font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase;
     color: var(--accent-dim); background: var(--accent-soft);
-    border: 1px solid rgba(212,168,83,0.2);
+    border: 1px solid rgba(42,138,138,0.2);
     padding: 4px 10px; border-radius: 20px; cursor: pointer;
     transition: all 0.2s;
   }
@@ -255,6 +246,14 @@
     font-family: 'Jost', sans-serif; font-size: 11px;
     font-weight: 300; color: var(--muted);
   }
+  .main-menu-btn {
+    font-family: 'Jost', sans-serif; font-size: 10px;
+    font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-soft); background: var(--surface);
+    border: 1px solid var(--border); padding: 6px 14px;
+    border-radius: 4px; cursor: pointer; transition: all 0.2s;
+  }
+  .main-menu-btn:hover { color: var(--accent); border-color: var(--accent-dim); }
   .signout-btn {
     font-family: 'Jost', sans-serif; font-size: 10px;
     font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase;
@@ -286,7 +285,7 @@
   .messages { flex: 1; display: flex; flex-direction: column; padding-bottom: 16px; }
   .msg {
     display: flex; flex-direction: column; gap: 6px;
-    padding: 22px 0; border-bottom: 1px solid rgba(61,48,32,0.5);
+    padding: 22px 0; border-bottom: 1px solid rgba(42,138,138,0.15);
     animation: fadeUp 0.4s ease both;
   }
   @keyframes fadeUp {
@@ -299,13 +298,13 @@
     display: flex; align-items: center; justify-content: center;
     font-family: 'Jost', sans-serif; font-size: 9px; font-weight: 500; flex-shrink: 0;
   }
-  .msg.ai .msg-avatar { background: var(--accent-soft); border: 1px solid rgba(212,168,83,0.3); color: var(--accent); }
-  .msg.user .msg-avatar { background: rgba(122,170,142,0.12); border: 1px solid rgba(122,170,142,0.25); color: var(--sage); }
+  .msg.ai .msg-avatar { background: var(--accent-soft); border: 1px solid rgba(42,138,138,0.3); color: var(--accent); }
+  .msg.user .msg-avatar { background: rgba(42,138,138,0.12); border: 1px solid rgba(42,138,138,0.25); color: var(--accent); }
   .msg-label {
     font-family: 'Jost', sans-serif; font-size: 10px;
     font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase;
   }
-  .msg.user .msg-label { color: var(--sage); }
+  .msg.user .msg-label { color: var(--accent-dim); }
   .msg.ai .msg-label { color: var(--accent); }
   .msg-body {
     font-size: 17px; font-weight: 300; line-height: 1.8;
@@ -340,13 +339,13 @@
   }
   .input-box {
     display: flex; gap: 10px; align-items: flex-end;
-    background: var(--surface2); border: 1px solid var(--border);
+    background: var(--surface); border: 1px solid var(--border);
     border-radius: 8px; padding: 14px 16px;
     transition: border-color 0.2s, box-shadow 0.2s;
   }
   .input-box:focus-within {
     border-color: var(--accent-dim);
-    box-shadow: 0 0 0 3px rgba(212,168,83,0.08);
+    box-shadow: 0 0 0 3px rgba(42,138,138,0.12);
   }
   textarea {
     flex: 1; background: transparent; border: none; outline: none;
@@ -357,7 +356,7 @@
   }
   textarea::placeholder { color: var(--muted); font-style: italic; }
   .send-btn {
-    background: var(--accent-dim); border: none; color: var(--bg);
+    background: var(--accent-dim); border: none; color: #fff;
     font-family: 'Jost', sans-serif; font-size: 11px; font-weight: 500;
     letter-spacing: 0.12em; text-transform: uppercase;
     padding: 9px 18px; border-radius: 5px; cursor: pointer;
@@ -392,7 +391,7 @@
 <!-- LANDING PAGE -->
 <div id="landingPage" class="page">
   <div class="hero">
-    <div class="logo-mark">V</div>
+    <img src="/logo.png" alt="Verity" style="width:120px; margin-bottom:20px;" />
     <div class="wordmark">Verity</div>
     <h1 class="hero-title">Honest advice for relationships that matter</h1>
     <p class="hero-sub">Psychology-grounded · Confidential · Always honest</p>
@@ -465,14 +464,14 @@
       <div class="type-card workplace" onclick="selectType('workplace')">
         <div class="type-illustration">
           <svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="26" cy="10" r="5" fill="none" stroke="#7a9ec4" stroke-width="1.5"/>
-            <path d="M19 26 C19 20 22 17 26 17 C30 17 33 20 33 26" stroke="#7a9ec4" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-            <circle cx="11" cy="30" r="4" fill="none" stroke="#7a9ec4" stroke-width="1.25" opacity="0.7"/>
-            <path d="M6 43 C6 38 8 35 11 35 C14 35 16 38 16 43" stroke="#7a9ec4" stroke-width="1.25" stroke-linecap="round" fill="none" opacity="0.7"/>
-            <circle cx="41" cy="30" r="4" fill="none" stroke="#7a9ec4" stroke-width="1.25" opacity="0.7"/>
-            <path d="M36 43 C36 38 38 35 41 35 C44 35 46 38 46 43" stroke="#7a9ec4" stroke-width="1.25" stroke-linecap="round" fill="none" opacity="0.7"/>
-            <line x1="26" y1="26" x2="11" y2="31" stroke="#7a9ec4" stroke-width="1" opacity="0.35" stroke-dasharray="2,2"/>
-            <line x1="26" y1="26" x2="41" y2="31" stroke="#7a9ec4" stroke-width="1" opacity="0.35" stroke-dasharray="2,2"/>
+            <circle cx="26" cy="10" r="5" fill="none" stroke="#4a7ab0" stroke-width="1.5"/>
+            <path d="M19 26 C19 20 22 17 26 17 C30 17 33 20 33 26" stroke="#4a7ab0" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+            <circle cx="11" cy="30" r="4" fill="none" stroke="#4a7ab0" stroke-width="1.25" opacity="0.7"/>
+            <path d="M6 43 C6 38 8 35 11 35 C14 35 16 38 16 43" stroke="#4a7ab0" stroke-width="1.25" stroke-linecap="round" fill="none" opacity="0.7"/>
+            <circle cx="41" cy="30" r="4" fill="none" stroke="#4a7ab0" stroke-width="1.25" opacity="0.7"/>
+            <path d="M36 43 C36 38 38 35 41 35 C44 35 46 38 46 43" stroke="#4a7ab0" stroke-width="1.25" stroke-linecap="round" fill="none" opacity="0.7"/>
+            <line x1="26" y1="26" x2="11" y2="31" stroke="#4a7ab0" stroke-width="1" opacity="0.35" stroke-dasharray="2,2"/>
+            <line x1="26" y1="26" x2="41" y2="31" stroke="#4a7ab0" stroke-width="1" opacity="0.35" stroke-dasharray="2,2"/>
           </svg>
         </div>
         <div class="type-name">Coworkers & Workplace</div>
@@ -483,13 +482,13 @@
       <div class="type-card family" onclick="selectType('family')">
         <div class="type-illustration">
           <svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="14" cy="13" r="6" fill="none" stroke="#7aaa8e" stroke-width="1.5"/>
-            <path d="M6 36 C6 27 9 23 14 23 C16.5 23 18.5 24.5 20 27" stroke="#7aaa8e" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-            <circle cx="38" cy="13" r="6" fill="none" stroke="#7aaa8e" stroke-width="1.5"/>
-            <path d="M46 36 C46 27 43 23 38 23 C35.5 23 33.5 24.5 32 27" stroke="#7aaa8e" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-            <circle cx="26" cy="30" r="4.5" fill="none" stroke="#7aaa8e" stroke-width="1.25"/>
-            <path d="M20 46 C20 41 22.5 38 26 38 C29.5 38 32 41 32 46" stroke="#7aaa8e" stroke-width="1.25" stroke-linecap="round" fill="none"/>
-            <path d="M20 27 Q26 32 32 27" stroke="#7aaa8e" stroke-width="1" stroke-linecap="round" fill="none" opacity="0.5"/>
+            <circle cx="14" cy="13" r="6" fill="none" stroke="#3a9a6a" stroke-width="1.5"/>
+            <path d="M6 36 C6 27 9 23 14 23 C16.5 23 18.5 24.5 20 27" stroke="#3a9a6a" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+            <circle cx="38" cy="13" r="6" fill="none" stroke="#3a9a6a" stroke-width="1.5"/>
+            <path d="M46 36 C46 27 43 23 38 23 C35.5 23 33.5 24.5 32 27" stroke="#3a9a6a" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+            <circle cx="26" cy="30" r="4.5" fill="none" stroke="#3a9a6a" stroke-width="1.25"/>
+            <path d="M20 46 C20 41 22.5 38 26 38 C29.5 38 32 41 32 46" stroke="#3a9a6a" stroke-width="1.25" stroke-linecap="round" fill="none"/>
+            <path d="M20 27 Q26 32 32 27" stroke="#3a9a6a" stroke-width="1" stroke-linecap="round" fill="none" opacity="0.5"/>
           </svg>
         </div>
         <div class="type-name">Family</div>
@@ -500,15 +499,15 @@
       <div class="type-card friendship" onclick="selectType('friendship')">
         <div class="type-illustration">
           <svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="17" cy="13" r="6" fill="none" stroke="#a07ac4" stroke-width="1.5"/>
-            <path d="M8 40 C8 29 12 24 17 24 C20 24 22.5 25.5 24 28" stroke="#a07ac4" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-            <circle cx="35" cy="13" r="6" fill="none" stroke="#a07ac4" stroke-width="1.5"/>
-            <path d="M44 40 C44 29 40 24 35 24 C32 24 29.5 25.5 28 28" stroke="#a07ac4" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-            <path d="M24 28 Q26 30 28 28" stroke="#a07ac4" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-            <path d="M22 18 Q26 15 30 18" stroke="#a07ac4" stroke-width="1" stroke-linecap="round" fill="none" opacity="0.45"/>
-            <circle cx="24" cy="20" r="1" fill="#a07ac4" opacity="0.4"/>
-            <circle cx="26" cy="19" r="1" fill="#a07ac4" opacity="0.4"/>
-            <circle cx="28" cy="20" r="1" fill="#a07ac4" opacity="0.4"/>
+            <circle cx="17" cy="13" r="6" fill="none" stroke="#7a6ab0" stroke-width="1.5"/>
+            <path d="M8 40 C8 29 12 24 17 24 C20 24 22.5 25.5 24 28" stroke="#7a6ab0" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+            <circle cx="35" cy="13" r="6" fill="none" stroke="#7a6ab0" stroke-width="1.5"/>
+            <path d="M44 40 C44 29 40 24 35 24 C32 24 29.5 25.5 28 28" stroke="#7a6ab0" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+            <path d="M24 28 Q26 30 28 28" stroke="#7a6ab0" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+            <path d="M22 18 Q26 15 30 18" stroke="#7a6ab0" stroke-width="1" stroke-linecap="round" fill="none" opacity="0.45"/>
+            <circle cx="24" cy="20" r="1" fill="#7a6ab0" opacity="0.4"/>
+            <circle cx="26" cy="19" r="1" fill="#7a6ab0" opacity="0.4"/>
+            <circle cx="28" cy="20" r="1" fill="#7a6ab0" opacity="0.4"/>
           </svg>
         </div>
         <div class="type-name">Friendships</div>
@@ -523,6 +522,7 @@
 <div id="chatPage" class="page">
   <div class="chat-header">
     <div class="chat-logo" onclick="goToTypeSelector()">Verity</div>
+    <button class="main-menu-btn" onclick="goToTypeSelector()">← Main Menu</button>
     <div class="chat-right">
       <div class="chat-type-badge" id="typeBadge" onclick="goToTypeSelector()">Romantic</div>
       <div class="user-email" id="userEmail"></div>
@@ -720,4 +720,4 @@
   });
 </script>
 </body>
-</html>
+ </html>
