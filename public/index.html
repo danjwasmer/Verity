@@ -214,4 +214,439 @@
     font-size: 11px;
     font-weight: 300;
     color: var(--text-soft);
-    line-height
+    line-height: 1.5;
+  }
+
+  /* ── DIVIDER ── */
+  .section-divider {
+    width: 100%;
+    max-width: 680px;
+    padding: 0 28px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .section-divider::before,
+  .section-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .section-divider span {
+    font-family: 'Jost', sans-serif;
+    font-size: 10px;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  /* ── CHAT ── */
+  .chat-wrap {
+    width: 100%;
+    max-width: 680px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 0 28px;
+    min-height: 400px;
+  }
+
+  .messages {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding-bottom: 16px;
+  }
+
+  .msg {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 24px 0;
+    border-bottom: 1px solid rgba(61,48,32,0.6);
+    animation: fadeUp 0.4s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .msg-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .msg-avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Jost', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+  }
+
+  .msg.ai .msg-avatar {
+    background: var(--accent-soft);
+    border: 1px solid rgba(212,168,83,0.3);
+    color: var(--accent);
+  }
+
+  .msg.user .msg-avatar {
+    background: rgba(122,170,142,0.12);
+    border: 1px solid rgba(122,170,142,0.25);
+    color: var(--sage);
+  }
+
+  .msg-label {
+    font-family: 'Jost', sans-serif;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .msg.user .msg-label { color: var(--sage); }
+  .msg.ai .msg-label { color: var(--accent); }
+
+  .msg-body {
+    font-size: 17px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--text);
+    white-space: pre-wrap;
+    padding-left: 32px;
+  }
+
+  .msg.user .msg-body {
+    color: var(--text-soft);
+    font-style: italic;
+  }
+
+  /* ── TYPING ── */
+  .typing {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 24px 0;
+    padding-left: 32px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .typing.visible { opacity: 1; }
+
+  .typing-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent-dim);
+    animation: pulse 1.2s ease-in-out infinite;
+  }
+
+  .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes pulse {
+    0%, 80%, 100% { opacity: 0.2; transform: scale(0.75); }
+    40% { opacity: 1; transform: scale(1); }
+  }
+
+  /* ── INPUT ── */
+  .input-area {
+    width: 100%;
+    max-width: 680px;
+    padding: 20px 28px 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: sticky;
+    bottom: 0;
+    background: linear-gradient(to bottom, transparent, var(--bg) 30%);
+  }
+
+  .input-box {
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .input-box:focus-within {
+    border-color: var(--accent-dim);
+    box-shadow: 0 0 0 3px rgba(212,168,83,0.08);
+  }
+
+  textarea {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    resize: none;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    font-weight: 300;
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 28px;
+    max-height: 140px;
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
+
+  textarea::placeholder {
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  .send-btn {
+    background: var(--accent-dim);
+    border: none;
+    color: var(--bg);
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 9px 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+    align-self: flex-end;
+  }
+
+  .send-btn:hover:not(:disabled) {
+    background: var(--accent);
+    transform: translateY(-1px);
+  }
+
+  .send-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .disclaimer {
+    font-family: 'Jost', sans-serif;
+    font-size: 10px;
+    font-weight: 300;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    text-align: center;
+    line-height: 1.6;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 520px) {
+    .how-it-works { grid-template-columns: 1fr; }
+    .hero { padding: 36px 20px 28px; }
+    .how-it-works, .chat-wrap, .input-area, .section-divider { padding-left: 20px; padding-right: 20px; }
+    .msg-body { font-size: 16px; }
+    textarea { font-size: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="logo-mark">
+    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+  </div>
+  <div class="wordmark">Verity</div>
+  <h1 class="hero-title">The truth about your relationship</h1>
+  <p class="hero-sub">Honest · Psychology-grounded · Confidential</p>
+
+  <div class="trust-strip">
+    <div class="trust-item">
+      <div class="trust-icon">🔒</div>
+      <div class="trust-label">Private</div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">🧠</div>
+      <div class="trust-label">Science-based</div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">💬</div>
+      <div class="trust-label">No judgment</div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">✦</div>
+      <div class="trust-label">Always honest</div>
+    </div>
+  </div>
+
+  <div class="section-label">Frameworks we draw from</div>
+  <div class="frameworks">
+    <span class="fw-tag">Gottman Method</span>
+    <span class="fw-tag">Attachment Theory</span>
+    <span class="fw-tag">Sternberg's Triangle</span>
+    <span class="fw-tag">Non-Violent Communication</span>
+    <span class="fw-tag">Emotionally Focused Therapy</span>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="how-it-works">
+  <div class="step">
+    <div class="step-number">01</div>
+    <div class="step-title">Share openly</div>
+    <div class="step-desc">Tell Verity what's going on in your own words. No forms, no labels.</div>
+  </div>
+  <div class="step">
+    <div class="step-number">02</div>
+    <div class="step-title">See patterns</div>
+    <div class="step-desc">Verity reflects what she hears and names the dynamics at play.</div>
+  </div>
+  <div class="step">
+    <div class="step-number">03</div>
+    <div class="step-title">Find clarity</div>
+    <div class="step-desc">Walk away knowing what you feel, what you need, and what to do next.</div>
+  </div>
+</div>
+
+<!-- CHAT DIVIDER -->
+<div class="section-divider">
+  <span>Begin your conversation</span>
+</div>
+
+<!-- CHAT -->
+<div class="chat-wrap">
+  <div class="messages" id="messages"></div>
+  <div class="typing" id="typing">
+    <div class="typing-dot"></div>
+    <div class="typing-dot"></div>
+    <div class="typing-dot"></div>
+  </div>
+</div>
+
+<!-- INPUT -->
+<div class="input-area">
+  <div class="input-box">
+    <textarea
+      id="userInput"
+      placeholder="Share what's on your mind…"
+      rows="1"
+    ></textarea>
+    <button class="send-btn" id="sendBtn" onclick="sendMessage()">Send</button>
+  </div>
+  <div class="disclaimer">
+    Verity is not a licensed therapist. If you're in crisis, please contact a mental health professional.
+  </div>
+</div>
+
+<script>
+  let history = [];
+  let isLoading = false;
+
+  const textarea = document.getElementById('userInput');
+
+  textarea.addEventListener('input', function() {
+    this.style.height = 'auto';
+    this.style.height = Math.min(this.scrollHeight, 140) + 'px';
+  });
+
+  textarea.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  });
+
+  function appendMessage(role, text) {
+    const container = document.getElementById('messages');
+    const msg = document.createElement('div');
+    msg.className = `msg ${role}`;
+
+    const header = document.createElement('div');
+    header.className = 'msg-header';
+
+    const avatar = document.createElement('div');
+    avatar.className = 'msg-avatar';
+    avatar.textContent = role === 'user' ? 'You' : 'V';
+
+    const label = document.createElement('div');
+    label.className = 'msg-label';
+    label.textContent = role === 'user' ? 'You' : 'Verity';
+
+    header.appendChild(avatar);
+    header.appendChild(label);
+
+    const body = document.createElement('div');
+    body.className = 'msg-body';
+    body.textContent = text;
+
+    msg.appendChild(header);
+    msg.appendChild(body);
+    container.appendChild(msg);
+    container.scrollTop = container.scrollHeight;
+    msg.scrollIntoView({ behavior: 'smooth', block: 'end' });
+  }
+
+  function setLoading(val) {
+    isLoading = val;
+    document.getElementById('sendBtn').disabled = val;
+    document.getElementById('typing').className = val ? 'typing visible' : 'typing';
+  }
+
+  async function sendMessage() {
+    if (isLoading) return;
+    const text = textarea.value.trim();
+    if (!text) return;
+
+    textarea.value = '';
+    textarea.style.height = 'auto';
+    appendMessage('user', text);
+    history.push({ role: 'user', content: text });
+    setLoading(true);
+
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: history })
+      });
+
+      const data = await response.json();
+      const reply = data.content?.map(b => b.text || '').join('') || 'Something went wrong. Please try again.';
+      history.push({ role: 'assistant', content: reply });
+      setLoading(false);
+      appendMessage('ai', reply);
+    } catch (err) {
+      setLoading(false);
+      appendMessage('ai', 'Something went wrong connecting to Verity. Please try again.');
+    }
+  }
+
+  window.addEventListener('load', () => {
+    const opening = `Welcome. I'm Verity.
+
+I'm here to help you find clarity about your relationship — without judgment, without empty reassurance, and without pretending that hard things are simple.
+
+Whatever brought you here today, you're in the right place. We'll go at your pace, and I'll be honest with you every step of the way.
+
+To start: what's been weighing on you most lately when it comes to your relationship?`;
+
+    history.push({ role: 'assistant', content: opening });
+    setTimeout(() => appendMessage('ai', opening), 400);
+  });
+</script>
+</body>
+</html>
