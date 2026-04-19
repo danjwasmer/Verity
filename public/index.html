@@ -89,7 +89,7 @@
   .trust-strip {
     display: flex; border: 1px solid var(--border);
     border-radius: 8px; overflow: hidden;
-    width: 100%; max-width: 460px; margin-bottom: 48px;
+    width: 100%; max-width: 460px; margin-bottom: 0;
   }
   .trust-item {
     flex: 1; display: flex; flex-direction: column;
@@ -105,7 +105,7 @@
   }
 
   .login-card {
-    width: 100%; max-width: 420px;
+    width: 100%; max-width: 680px;
     background: var(--surface); border: 1px solid var(--border);
     border-radius: 10px; padding: 36px 32px; margin: 0 28px;
   }
@@ -116,7 +116,12 @@
   .login-sub {
     font-family: 'Jost', sans-serif; font-size: 14px;
     font-weight: 300; color: var(--text-soft);
-    margin-bottom: 28px; line-height: 1.6;
+    margin-bottom: 6px; line-height: 1.6;
+  }
+  .login-sub-note {
+    font-family: 'Jost', sans-serif; font-size: 13px;
+    font-weight: 300; color: var(--muted);
+    margin-bottom: 24px; line-height: 1.6; font-style: italic;
   }
   .input-field {
     width: 100%; background: var(--bg);
@@ -126,7 +131,7 @@
     outline: none; transition: border-color 0.2s; margin-bottom: 14px;
   }
   .input-field:focus { border-color: var(--accent-dim); }
-  .input-field::placeholder { color: var(--muted); }
+  .input-field::placeholder { color: var(--muted); font-size: 14px; }
   .primary-btn {
     width: 100%; background: var(--accent-dim); border: none;
     color: #fff; font-family: 'Jost', sans-serif;
@@ -184,6 +189,11 @@
   .step-desc {
     font-family: 'Jost', sans-serif; font-size: 13px;
     font-weight: 300; color: var(--text-soft); line-height: 1.6;
+  }
+
+  .login-section {
+    width: 100%; max-width: 680px;
+    padding: 0 28px 56px;
   }
 
   .type-page-logo {
@@ -395,7 +405,7 @@
     line-height: 1.6; min-height: 28px; max-height: 140px;
     overflow-y: auto; scrollbar-width: none;
   }
-  textarea::placeholder { color: var(--muted); font-style: italic; }
+  textarea::placeholder { color: var(--muted); font-style: italic; font-size: 16px; }
   .send-btn {
     background: var(--accent-dim); border: none; color: #fff;
     font-family: 'Jost', sans-serif; font-size: 14px; font-weight: 500;
@@ -418,7 +428,8 @@
     .how-it-works { grid-template-columns: 1fr; padding: 32px 20px; }
     .type-grid { grid-template-columns: 1fr; }
     .hero, .type-page, .chat-header, .chat-divider, .chat-wrap, .input-area { padding-left: 20px; padding-right: 20px; }
-    .login-card { margin: 0 20px; padding: 28px 20px; }
+    .login-section { padding-left: 20px; padding-right: 20px; }
+    .login-card { padding: 28px 20px; }
     .msg-body { font-size: 17px; }
     textarea { font-size: 16px; }
     .user-email { display: none; }
@@ -489,25 +500,9 @@
         <div class="trust-label">Always Honest</div>
       </div>
     </div>
-
-    <div class="login-card">
-      <div id="loginForm">
-        <div class="login-title">Begin your journey or pick up where you left off</div>
-        <div class="login-sub">Enter your email and we'll send you a secure login link — no password needed.</div>
-        <input type="email" id="emailInput" class="input-field" placeholder="your@email.com" />
-        <button class="primary-btn" id="sendLinkBtn" onclick="sendMagicLink()">Send my login link</button>
-        <button class="guest-btn" onclick="startAsGuest()">Continue without logging in</button>
-        <div class="guest-note">Guest sessions are private but cannot be resumed later.</div>
-        <div class="login-note">Free trial, no credit card required. · We use top-tier data encryption, your conversations are always safe and private.</div>
-      </div>
-      <div class="success-msg" id="successMsg">
-        <div class="success-icon">✉️</div>
-        <div class="success-title">Check your inbox</div>
-        <div class="success-sub">We sent a login link to <strong id="sentEmail"></strong>.<br>Click it to open Verity. The link expires in 15 minutes.</div>
-      </div>
-    </div>
   </div>
 
+  <!-- 4 STEPS -->
   <div class="how-it-works">
     <div class="step">
       <div class="step-number">01</div>
@@ -528,6 +523,27 @@
       <div class="step-number">04</div>
       <div class="step-title">Take Action</div>
       <div class="step-desc">Begin your journey with more effective communication. Learn the skills to get what you want out of your relationships and life.</div>
+    </div>
+  </div>
+
+  <!-- LOGIN CARD — now below the steps -->
+  <div class="login-section">
+    <div class="login-card">
+      <div id="loginForm">
+        <div class="login-title">Begin your journey or pick up where you left off</div>
+        <div class="login-sub">Enter your email and we'll send you a secure login link — no password needed.</div>
+        <div class="login-sub-note">Login required to pick up where you left off.</div>
+        <input type="email" id="emailInput" class="input-field" placeholder="your@email.com" />
+        <button class="primary-btn" id="sendLinkBtn" onclick="sendMagicLink()">Send my login link</button>
+        <button class="guest-btn" onclick="startAsGuest()">Continue without logging in</button>
+        <div class="guest-note">Guest sessions are private but cannot be resumed later.</div>
+        <div class="login-note">Free trial, no credit card required. · We use top-tier data encryption, your conversations are always safe and private.</div>
+      </div>
+      <div class="success-msg" id="successMsg">
+        <div class="success-icon">✉️</div>
+        <div class="success-title">Check your inbox</div>
+        <div class="success-sub">We sent a login link to <strong id="sentEmail"></strong>.<br>Click it to open Verity. The link expires in 15 minutes.</div>
+      </div>
     </div>
   </div>
 </div>
@@ -830,7 +846,6 @@
     textarea.style.height = 'auto';
     appendMessage('user', text);
     setLoading(true);
-
     try {
       let res;
       if (isGuest) {
@@ -846,10 +861,8 @@
           body: JSON.stringify({ message: text, type: currentType })
         });
       }
-
       const data = await res.json();
       setLoading(false);
-
       if (data.reply) {
         if (isGuest) {
           guestHistory.push({ role: 'user', content: text });
