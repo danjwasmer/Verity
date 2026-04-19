@@ -1,6 +1,5 @@
 const express = require('express');
 const cors = require('cors');
-const fetch = require('node-fetch');
 const path = require('path');
 
 const app = express();
@@ -11,12 +10,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.post('/api/chat', async (req, res) => {
   try {
     const { messages } = req.body;
-    
+    const apiKey = process.env.ANTHROPIC_KEY;
+
+    if (!apiKey) {
+      return res.status(500).json({ error: 'API key not configured' });
+    }
+
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': process.env.ANTHROPIC_KEY,
+        'x-api-key': apiKey,
         'anthropic-version': '2023-06-01'
       },
       body: JSON.stringify({
@@ -36,7 +40,7 @@ YOUR APPROACH:
 2. Reflect back what you hear and validate emotions
 3. Name psychological patterns when you see them, clearly but compassionately
 4. Be honest — if you observe red flags like contempt, stonewalling, or manipulation, name them directly
-5. Do not default to "stay and work on it" — helping someone leave a bad relationship is just as valuable
+5. Do not default to stay and work on it — helping someone leave a bad relationship is just as valuable
 6. End each response with one thoughtful open-ended question
 
 TONE: Warm, intelligent, direct. Like a trusted friend who happens to have a psychology PhD. Never clinical. Never vague to avoid discomfort.
@@ -47,10 +51,16 @@ FORMAT: Flowing prose only. No bullet points or headers. 3-5 paragraphs max.`,
     });
 
     const data = await response.json();
+    console.log('Anthropic response status:', response.status);
+    if (!response.ok) {
+      console.error('Anthropic error:', JSON.stringify(data));
+      return res.status(500).json({ error: 'Anthropic API error', details: data });
+    }
+
     res.json(data);
   } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ error: 'Something went wrong' });
+    console.error('Server error:', error);
+    res.status(500).json({ error: error.message });
   }
 });
 
