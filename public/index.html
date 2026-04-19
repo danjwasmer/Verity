@@ -14,8 +14,8 @@
     --surface2: #e4ddd3;
     --border: #d0c8bc;
     --text: #1a3a3a;
-    --text-soft: #3a5a5a;
-    --muted: #6a8a8a;
+    --text-soft: #2e4e4e;
+    --muted: #4a6a6a;
     --accent: #2a8a8a;
     --accent-dim: #1f6666;
     --accent-soft: rgba(42,138,138,0.12);
@@ -49,7 +49,7 @@
     display: flex; flex-direction: column; align-items: center;
     justify-content: center; min-height: 100vh; gap: 16px;
     color: var(--muted); font-family: 'Jost', sans-serif;
-    font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase;
+    font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase;
   }
   .spinner {
     width: 32px; height: 32px;
@@ -58,25 +58,31 @@
   }
   @keyframes spin { to { transform: rotate(360deg); } }
 
+  .logo-wrap {
+    background: var(--bg);
+    border-radius: 12px;
+    padding: 8px 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  .logo-wrap img { width: 120px; display: block; }
+
   .hero {
     width: 100%; max-width: 680px;
     padding: 52px 28px 36px;
     display: flex; flex-direction: column;
     align-items: center; text-align: center;
   }
-  .wordmark {
-    font-family: 'Jost', sans-serif; font-weight: 300;
-    font-size: 12px; letter-spacing: 0.45em; text-transform: uppercase;
-    color: var(--accent); margin-bottom: 16px;
-  }
   .hero-title {
-    font-size: clamp(28px, 6vw, 44px); font-weight: 300;
+    font-size: clamp(32px, 6vw, 48px); font-weight: 300;
     font-style: italic; line-height: 1.2;
-    color: var(--text); margin-bottom: 14px;
+    color: var(--text); margin-bottom: 18px;
   }
   .hero-sub {
-    font-family: 'Jost', sans-serif; font-weight: 300;
-    font-size: 13px; color: var(--text-soft);
+    font-family: 'Jost', sans-serif; font-weight: 400;
+    font-size: 15px; color: var(--text-soft);
     letter-spacing: 0.08em; margin-bottom: 40px;
   }
 
@@ -87,14 +93,14 @@
   }
   .trust-item {
     flex: 1; display: flex; flex-direction: column;
-    align-items: center; gap: 5px; padding: 16px 8px;
+    align-items: center; gap: 8px; padding: 18px 8px;
     background: var(--surface); border-right: 1px solid var(--border);
   }
   .trust-item:last-child { border-right: none; }
-  .trust-icon { font-size: 18px; }
+  .trust-icon { width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; }
   .trust-label {
-    font-family: 'Jost', sans-serif; font-size: 12px;
-    font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase;
+    font-family: 'Jost', sans-serif; font-size: 13px;
+    font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
     color: var(--text-soft); text-align: center;
   }
 
@@ -104,19 +110,19 @@
     border-radius: 10px; padding: 36px 32px; margin: 0 28px;
   }
   .login-title {
-    font-size: 22px; font-weight: 300; font-style: italic;
-    margin-bottom: 8px; color: var(--text);
+    font-size: 24px; font-weight: 300; font-style: italic;
+    margin-bottom: 10px; color: var(--text); line-height: 1.3;
   }
   .login-sub {
-    font-family: 'Jost', sans-serif; font-size: 12px;
-    font-weight: 300; color: var(--muted);
+    font-family: 'Jost', sans-serif; font-size: 14px;
+    font-weight: 300; color: var(--text-soft);
     margin-bottom: 28px; line-height: 1.6;
   }
   .input-field {
     width: 100%; background: var(--bg);
     border: 1px solid var(--border); border-radius: 6px;
-    padding: 13px 16px; font-family: 'Jost', sans-serif;
-    font-size: 14px; font-weight: 300; color: var(--text);
+    padding: 14px 16px; font-family: 'Jost', sans-serif;
+    font-size: 15px; font-weight: 300; color: var(--text);
     outline: none; transition: border-color 0.2s; margin-bottom: 14px;
   }
   .input-field:focus { border-color: var(--accent-dim); }
@@ -124,54 +130,77 @@
   .primary-btn {
     width: 100%; background: var(--accent-dim); border: none;
     color: #fff; font-family: 'Jost', sans-serif;
-    font-size: 12px; font-weight: 500; letter-spacing: 0.15em;
-    text-transform: uppercase; padding: 14px; border-radius: 6px;
+    font-size: 14px; font-weight: 500; letter-spacing: 0.15em;
+    text-transform: uppercase; padding: 15px; border-radius: 6px;
     cursor: pointer; transition: all 0.2s;
   }
   .primary-btn:hover:not(:disabled) { background: var(--accent); }
   .primary-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  .guest-btn {
+    width: 100%; background: transparent;
+    border: 1px solid var(--border); color: var(--text-soft);
+    font-family: 'Jost', sans-serif; font-size: 14px;
+    font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 13px; border-radius: 6px; cursor: pointer;
+    transition: all 0.2s; margin-top: 10px;
+  }
+  .guest-btn:hover { border-color: var(--accent-dim); color: var(--accent); }
+  .guest-note {
+    font-family: 'Jost', sans-serif; font-size: 13px;
+    font-weight: 300; color: var(--muted);
+    text-align: center; margin-top: 10px; line-height: 1.6;
+    font-style: italic;
+  }
+
   .login-note {
-    font-family: 'Jost', sans-serif; font-size: 12px;
+    font-family: 'Jost', sans-serif; font-size: 13px;
     font-weight: 300; color: var(--muted);
     text-align: center; margin-top: 16px; line-height: 1.6;
   }
   .success-msg { display: none; text-align: center; padding: 20px; }
   .success-icon { font-size: 36px; margin-bottom: 12px; }
-  .success-title { font-size: 20px; font-style: italic; font-weight: 300; margin-bottom: 8px; }
+  .success-title { font-size: 22px; font-style: italic; font-weight: 300; margin-bottom: 8px; }
   .success-sub {
-    font-family: 'Jost', sans-serif; font-size: 13px;
+    font-family: 'Jost', sans-serif; font-size: 14px;
     font-weight: 300; color: var(--text-soft); line-height: 1.6;
   }
 
   .how-it-works {
     width: 100%; max-width: 680px;
     padding: 48px 28px; display: grid;
-    grid-template-columns: repeat(3, 1fr); gap: 16px;
+    grid-template-columns: repeat(4, 1fr); gap: 14px;
   }
   .step {
     background: var(--surface); border: 1px solid var(--border);
     border-radius: 8px; padding: 20px 16px;
   }
   .step-number {
-    font-family: 'Jost', sans-serif; font-size: 12px;
-    font-weight: 400; letter-spacing: 0.2em;
+    font-family: 'Jost', sans-serif; font-size: 13px;
+    font-weight: 500; letter-spacing: 0.2em;
     color: var(--accent-dim); margin-bottom: 8px;
   }
-  .step-title { font-size: 15px; font-weight: 500; color: var(--text); line-height: 1.3; margin-bottom: 6px; }
+  .step-title { font-size: 17px; font-weight: 500; color: var(--text); line-height: 1.3; margin-bottom: 8px; }
   .step-desc {
-    font-family: 'Jost', sans-serif; font-size: 12px;
-    font-weight: 300; color: var(--text-soft); line-height: 1.5;
+    font-family: 'Jost', sans-serif; font-size: 13px;
+    font-weight: 300; color: var(--text-soft); line-height: 1.6;
+  }
+
+  .type-page-logo {
+    padding: 32px 28px 0;
+    display: flex; justify-content: center;
+    width: 100%; max-width: 680px;
   }
 
   .type-page {
     width: 100%; max-width: 680px;
-    padding: 48px 28px; display: flex;
+    padding: 32px 28px; display: flex;
     flex-direction: column; align-items: center; gap: 32px;
   }
   .type-header { text-align: center; }
-  .type-title { font-size: 30px; font-weight: 300; font-style: italic; margin-bottom: 10px; }
+  .type-title { font-size: 32px; font-weight: 300; font-style: italic; margin-bottom: 10px; }
   .type-sub {
-    font-family: 'Jost', sans-serif; font-size: 13px;
+    font-family: 'Jost', sans-serif; font-size: 15px;
     font-weight: 300; color: var(--text-soft);
   }
   .type-grid {
@@ -214,51 +243,58 @@
   .type-card.friendship .type-illustration { background: rgba(122,106,176,0.1); }
 
   .type-name {
-    font-size: 17px; font-weight: 400; color: var(--text);
+    font-size: 18px; font-weight: 400; color: var(--text);
     transition: color 0.25s;
   }
   .type-desc {
-    font-family: 'Jost', sans-serif; font-size: 12px;
+    font-family: 'Jost', sans-serif; font-size: 13px;
     font-weight: 300; color: var(--muted); line-height: 1.6;
   }
 
   .chat-header {
     width: 100%; max-width: 680px;
-    padding: 24px 28px 0;
+    padding: 20px 28px 0;
     display: flex; justify-content: space-between; align-items: center;
+    gap: 12px;
   }
-  .chat-logo {
-    font-family: 'Jost', sans-serif; font-weight: 300;
-    font-size: 12px; letter-spacing: 0.4em; text-transform: uppercase;
-    color: var(--accent); cursor: pointer;
+  .chat-logo-wrap {
+    background: var(--bg);
+    border-radius: 8px;
+    padding: 4px 8px;
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    flex-shrink: 0;
   }
+  .chat-logo-wrap img { width: 72px; display: block; }
+
   .chat-right { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
   .chat-type-badge {
-    font-family: 'Jost', sans-serif; font-size: 12px;
+    font-family: 'Jost', sans-serif; font-size: 13px;
     font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase;
     color: var(--accent-dim); background: var(--accent-soft);
     border: 1px solid rgba(42,138,138,0.2);
-    padding: 4px 10px; border-radius: 20px; cursor: pointer;
+    padding: 5px 12px; border-radius: 20px; cursor: pointer;
     transition: all 0.2s;
   }
   .chat-type-badge:hover { border-color: var(--accent-dim); color: var(--accent); }
   .user-email {
-    font-family: 'Jost', sans-serif; font-size: 12px;
+    font-family: 'Jost', sans-serif; font-size: 13px;
     font-weight: 300; color: var(--muted);
   }
   .main-menu-btn {
-    font-family: 'Jost', sans-serif; font-size: 12px;
+    font-family: 'Jost', sans-serif; font-size: 13px;
     font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase;
     color: var(--text-soft); background: var(--surface);
-    border: 1px solid var(--border); padding: 6px 14px;
+    border: 1px solid var(--border); padding: 7px 14px;
     border-radius: 4px; cursor: pointer; transition: all 0.2s;
   }
   .main-menu-btn:hover { color: var(--accent); border-color: var(--accent-dim); }
   .signout-btn {
-    font-family: 'Jost', sans-serif; font-size: 10px;
+    font-family: 'Jost', sans-serif; font-size: 12px;
     font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase;
     color: var(--muted); background: none;
-    border: 1px solid var(--border); padding: 5px 10px;
+    border: 1px solid var(--border); padding: 6px 12px;
     border-radius: 4px; cursor: pointer; transition: all 0.2s;
   }
   .signout-btn:hover { color: var(--text); border-color: var(--muted); }
@@ -272,9 +308,14 @@
     content: ''; flex: 1; height: 1px; background: var(--border);
   }
   .chat-divider span {
-    font-family: 'Jost', sans-serif; font-size: 12px;
+    font-family: 'Jost', sans-serif; font-size: 13px;
     font-weight: 300; letter-spacing: 0.2em; text-transform: uppercase;
     color: var(--muted); white-space: nowrap;
+  }
+
+  .guest-badge {
+    font-family: 'Jost', sans-serif; font-size: 12px;
+    font-weight: 300; color: var(--muted); font-style: italic;
   }
 
   .chat-wrap {
@@ -301,13 +342,13 @@
   .msg.ai .msg-avatar { background: var(--accent-soft); border: 1px solid rgba(42,138,138,0.3); color: var(--accent); }
   .msg.user .msg-avatar { background: rgba(42,138,138,0.12); border: 1px solid rgba(42,138,138,0.25); color: var(--accent); }
   .msg-label {
-    font-family: 'Jost', sans-serif; font-size: 12px;
+    font-family: 'Jost', sans-serif; font-size: 13px;
     font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase;
   }
   .msg.user .msg-label { color: var(--accent-dim); }
   .msg.ai .msg-label { color: var(--accent); }
   .msg-body {
-    font-size: 17px; font-weight: 300; line-height: 1.8;
+    font-size: 18px; font-weight: 300; line-height: 1.8;
     color: var(--text); white-space: pre-wrap; padding-left: 34px;
   }
   .msg.user .msg-body { color: var(--text-soft); font-style: italic; }
@@ -350,7 +391,7 @@
   textarea {
     flex: 1; background: transparent; border: none; outline: none;
     resize: none; font-family: 'Cormorant Garamond', serif;
-    font-size: 17px; font-weight: 300; color: var(--text);
+    font-size: 18px; font-weight: 300; color: var(--text);
     line-height: 1.6; min-height: 28px; max-height: 140px;
     overflow-y: auto; scrollbar-width: none;
   }
@@ -365,17 +406,20 @@
   .send-btn:hover:not(:disabled) { background: var(--accent); transform: translateY(-1px); }
   .send-btn:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
   .disclaimer {
-    font-family: 'Jost', sans-serif; font-size: 12px;
+    font-family: 'Jost', sans-serif; font-size: 13px;
     font-weight: 300; color: var(--muted);
     text-align: center; line-height: 1.6;
   }
 
+  @media (max-width: 620px) {
+    .how-it-works { grid-template-columns: repeat(2, 1fr); padding: 32px 20px; }
+  }
   @media (max-width: 520px) {
     .how-it-works { grid-template-columns: 1fr; padding: 32px 20px; }
     .type-grid { grid-template-columns: 1fr; }
     .hero, .type-page, .chat-header, .chat-divider, .chat-wrap, .input-area { padding-left: 20px; padding-right: 20px; }
     .login-card { margin: 0 20px; padding: 28px 20px; }
-    .msg-body { font-size: 16px; }
+    .msg-body { font-size: 17px; }
     textarea { font-size: 16px; }
     .user-email { display: none; }
   }
@@ -391,22 +435,69 @@
 <!-- LANDING PAGE -->
 <div id="landingPage" class="page">
   <div class="hero">
-    <img src="/logo.png" style="width:120px; margin-bottom:20px;" />
-    <div class="wordmark">Verity</div>
+    <div class="logo-wrap">
+      <img src="/logo.png" alt="Verity" />
+    </div>
+    <div style="font-family:'Jost',sans-serif; font-weight:400; font-size:15px; letter-spacing:0.3em; text-transform:uppercase; color:var(--accent); margin-bottom:18px;">Let's Chat</div>
     <h1 class="hero-title">Honest advice for relationships that matter</h1>
     <p class="hero-sub">Psychology-grounded · Confidential · Always honest</p>
     <div class="trust-strip">
-      <div class="trust-item"><div class="trust-icon">🔒</div><div class="trust-label">Private</div></div>
-      <div class="trust-item"><div class="trust-icon">🧠</div><div class="trust-label">Science-based</div></div>
-      <div class="trust-item"><div class="trust-icon">💬</div><div class="trust-label">No judgment</div></div>
-      <div class="trust-item"><div class="trust-icon">✦</div><div class="trust-label">Always honest</div></div>
+      <div class="trust-item">
+        <div class="trust-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="4" y="11" width="16" height="11" rx="2" stroke="#1f6666" stroke-width="1.5" fill="none"/>
+            <path d="M8 11V7a4 4 0 0 1 8 0v4" stroke="#1f6666" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+            <circle cx="12" cy="16" r="1.5" fill="#1f6666"/>
+          </svg>
+        </div>
+        <div class="trust-label">Private</div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 3h6M9 3v7L4.5 18A1 1 0 0 0 5.4 20h13.2a1 1 0 0 0 .9-1.45L15 10V3" stroke="#1f6666" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <path d="M7 15h10" stroke="#1f6666" stroke-width="1" stroke-linecap="round" opacity="0.5"/>
+            <circle cx="9.5" cy="17.5" r="1" fill="#1f6666" opacity="0.6"/>
+            <circle cx="13" cy="16" r="0.75" fill="#1f6666" opacity="0.5"/>
+          </svg>
+        </div>
+        <div class="trust-label">Science-Based</div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 14c0-1 .5-2 1.5-2L9 11V6a1 1 0 0 1 2 0v5" stroke="#1f6666" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <path d="M13 6a1 1 0 0 1 2 0v5" stroke="#1f6666" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+            <path d="M15 7a1 1 0 0 1 2 0v4" stroke="#1f6666" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+            <path d="M17 8.5A1 1 0 0 1 19 9v5c0 3-2 5-5 5H9c-2 0-3.5-1.5-4-3l-1-3" stroke="#1f6666" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <path d="M11 11v-5" stroke="#1f6666" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+          </svg>
+        </div>
+        <div class="trust-label">No Judgment</div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <line x1="12" y1="3" x2="12" y2="21" stroke="#1f6666" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="8" y1="21" x2="16" y2="21" stroke="#1f6666" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="12" y1="7" x2="4" y2="10" stroke="#1f6666" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="12" y1="7" x2="20" y2="10" stroke="#1f6666" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M4 10 C4 10 2 13 4 14 C6 15 6 12 4 10Z" stroke="#1f6666" stroke-width="1.25" fill="rgba(31,102,102,0.1)"/>
+            <path d="M20 10 C20 10 18 13 20 14 C22 15 22 12 20 10Z" stroke="#1f6666" stroke-width="1.25" fill="rgba(31,102,102,0.1)"/>
+          </svg>
+        </div>
+        <div class="trust-label">Always Honest</div>
+      </div>
     </div>
+
     <div class="login-card">
       <div id="loginForm">
         <div class="login-title">Begin your journey or pick up where you left off</div>
         <div class="login-sub">Enter your email and we'll send you a secure login link — no password needed.</div>
         <input type="email" id="emailInput" class="input-field" placeholder="your@email.com" />
         <button class="primary-btn" id="sendLinkBtn" onclick="sendMagicLink()">Send my login link</button>
+        <button class="guest-btn" onclick="startAsGuest()">Continue without logging in</button>
+        <div class="guest-note">Guest sessions are private but cannot be resumed later.</div>
         <div class="login-note">Free trial, no credit card required. · We use top-tier data encryption, your conversations are always safe and private.</div>
       </div>
       <div class="success-msg" id="successMsg">
@@ -416,6 +507,7 @@
       </div>
     </div>
   </div>
+
   <div class="how-it-works">
     <div class="step">
       <div class="step-number">01</div>
@@ -432,11 +524,21 @@
       <div class="step-title">Find clarity</div>
       <div class="step-desc">Walk away knowing what you feel, what you need, and what to do next.</div>
     </div>
+    <div class="step">
+      <div class="step-number">04</div>
+      <div class="step-title">Take Action</div>
+      <div class="step-desc">Begin your journey with more effective communication. Learn the skills to get what you want out of your relationships and life.</div>
+    </div>
   </div>
 </div>
 
 <!-- TYPE SELECTOR -->
 <div id="typePage" class="page">
+  <div class="type-page-logo">
+    <div class="logo-wrap" style="margin-bottom:0; cursor:default;">
+      <img src="/logo.png" alt="Verity" />
+    </div>
+  </div>
   <div class="type-page">
     <div class="type-header">
       <div class="type-title">What kind of relationship?</div>
@@ -444,7 +546,6 @@
     </div>
     <div class="type-grid">
 
-      <!-- ROMANTIC -->
       <div class="type-card romantic" onclick="selectType('romantic')">
         <div class="type-illustration">
           <svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -460,7 +561,6 @@
         <div class="type-desc">Dating, marriage, long-term partnerships, breakups</div>
       </div>
 
-      <!-- WORKPLACE -->
       <div class="type-card workplace" onclick="selectType('workplace')">
         <div class="type-illustration">
           <svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -478,7 +578,6 @@
         <div class="type-desc">Managers, colleagues, team conflict, professional dynamics</div>
       </div>
 
-      <!-- FAMILY -->
       <div class="type-card family" onclick="selectType('family')">
         <div class="type-illustration">
           <svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -495,7 +594,6 @@
         <div class="type-desc">Parents, siblings, in-laws, children, family conflict</div>
       </div>
 
-      <!-- FRIENDSHIP -->
       <div class="type-card friendship" onclick="selectType('friendship')">
         <div class="type-illustration">
           <svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -521,12 +619,15 @@
 <!-- CHAT PAGE -->
 <div id="chatPage" class="page">
   <div class="chat-header">
-    <div class="chat-logo" onclick="goToTypeSelector()">Verity</div>
+    <div class="chat-logo-wrap" onclick="goToTypeSelector()">
+      <img src="/logo.png" alt="Verity" />
+    </div>
     <button class="main-menu-btn" onclick="goToTypeSelector()">← Main Menu</button>
     <div class="chat-right">
       <div class="chat-type-badge" id="typeBadge" onclick="goToTypeSelector()">Romantic</div>
       <div class="user-email" id="userEmail"></div>
-      <button class="signout-btn" onclick="signOut()">Sign out</button>
+      <span class="guest-badge" id="guestBadge" style="display:none;">Guest session</span>
+      <button class="signout-btn" id="signoutBtn" onclick="signOut()">Sign out</button>
     </div>
   </div>
   <div class="chat-divider"><span id="chatDividerLabel">Your conversation</span></div>
@@ -551,6 +652,7 @@
   let isLoading = false;
   let currentType = 'romantic';
   let userEmailAddress = '';
+  let isGuest = false;
 
   const TYPE_CONFIG = {
     romantic:   { label: 'Romantic',   opening: `Welcome. I'm Verity.\n\nI'm here to help you find clarity about your romantic relationship — without judgment, without empty reassurance, and without pretending that hard things are simple.\n\nWhatever brought you here today, you're in the right place. We'll go at your pace, and I'll be honest with you every step of the way.\n\nTo start: what's been weighing on you most lately when it comes to your relationship?` },
@@ -567,6 +669,15 @@
 
   function goToTypeSelector() { showPage('typePage'); }
 
+  function startAsGuest() {
+    isGuest = true;
+    userEmailAddress = '';
+    document.getElementById('userEmail').textContent = '';
+    document.getElementById('guestBadge').style.display = 'inline';
+    document.getElementById('signoutBtn').textContent = 'Exit';
+    showPage('typePage');
+  }
+
   async function selectType(type) {
     currentType = type;
     const config = TYPE_CONFIG[type];
@@ -574,7 +685,11 @@
     document.getElementById('chatDividerLabel').textContent = config.label + ' · Your conversation';
     document.getElementById('messages').innerHTML = '';
     showPage('chatPage');
-    await loadHistory(type);
+    if (isGuest) {
+      appendMessage('ai', config.opening, false);
+    } else {
+      await loadHistory(type);
+    }
   }
 
   window.addEventListener('load', async () => {
@@ -584,8 +699,11 @@
       const res = await fetch('/api/auth/me');
       const data = await res.json();
       if (data.authenticated) {
+        isGuest = false;
         userEmailAddress = data.email;
         document.getElementById('userEmail').textContent = data.email;
+        document.getElementById('guestBadge').style.display = 'none';
+        document.getElementById('signoutBtn').textContent = 'Sign out';
         showPage('typePage');
       } else {
         showPage('landingPage');
@@ -623,7 +741,17 @@
   }
 
   async function signOut() {
+    if (isGuest) {
+      isGuest = false;
+      currentType = 'romantic';
+      document.getElementById('messages').innerHTML = '';
+      document.getElementById('guestBadge').style.display = 'none';
+      document.getElementById('signoutBtn').textContent = 'Sign out';
+      showPage('landingPage');
+      return;
+    }
     await fetch('/api/auth/signout', { method: 'POST' });
+    isGuest = false;
     currentType = 'romantic';
     document.getElementById('messages').innerHTML = '';
     document.getElementById('loginForm').style.display = 'block';
@@ -697,7 +825,8 @@
     appendMessage('user', text);
     setLoading(true);
     try {
-      const res = await fetch('/api/chat', {
+      const endpoint = isGuest ? '/api/chat/guest' : '/api/chat';
+      const res = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: text, type: currentType })
@@ -720,4 +849,4 @@
   });
 </script>
 </body>
-</html>
+     </html>
