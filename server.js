@@ -6,6 +6,7 @@ const { Pool } = require('pg');
 const { Resend } = require('resend');
 const { v4: uuidv4 } = require('uuid');
 const Anthropic = require('@anthropic-ai/sdk');
+const bcrypt = require('bcrypt');
 
 const app = express();
 app.use(cors());
@@ -20,6 +21,7 @@ const pool = new Pool({
 
 const resend = new Resend(process.env.RESEND_KEY);
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+const SALT_ROUNDS = 10;
 
 const SYSTEM_PROMPTS = {
   romantic: `You are Verity, a warm, insightful, and honest relationship advisor specializing in romantic partnerships. Your role is to help users gain clarity about their romantic relationships — including whether to stay, work on things, or leave.
@@ -114,6 +116,7 @@ TONE: Warm, conversational, honest. Like a wise friend who actually tells you th
 FORMAT: Flowing prose only. No bullet points or headers. 3-5 paragraphs max.`
 };
 
+// ─── DB INIT ──────────────────────────────────────────────────────────────────
 async function initDB() {
   await pool.query(`
     CREATE TABLE IF NOT EXISTS users (
@@ -145,9 +148,16 @@ async function initDB() {
       created_at TIMESTAMP DEFAULT NOW()
     );
   `);
+
+  // Add password_hash column if it doesn't exist (safe to run on existing DB)
+  await pool.query(`
+    ALTER TABLE users ADD COLUMN IF NOT EXISTS password_hash TEXT;
+  `);
+
   console.log('Database initialized');
 }
 
+// ─── AUTH MIDDLEWARE ──────────────────────────────────────────────────────────
 async function requireAuth(req, res, next) {
   const sessionToken = req.cookies.session;
   if (!sessionToken) return res.status(401).json({ error: 'Not authenticated' });
@@ -164,6 +174,90 @@ async function requireAuth(req, res, next) {
   }
 }
 
+// ─── HELPER: create session cookie ───────────────────────────────────────────
+async function createSession(res, userId) {
+  const sessionToken = uuidv4();
+  const sessionExpiry = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
+  await pool.query(
+    'INSERT INTO sessions (user_id, token, expires_at) VALUES ($1, $2, $3)',
+    [userId, sessionToken, sessionExpiry]
+  );
+  res.cookie('session', sessionToken, {
+    httpOnly: true,
+    secure: true,
+    sameSite: 'lax',
+    expires: sessionExpiry
+  });
+}
+
+// ─── REGISTER WITH PASSWORD ───────────────────────────────────────────────────
+app.post('/api/auth/register', async (req, res) => {
+  const { email, password } = req.body;
+  if (!email || !password) return res.status(400).json({ error: 'Email and password required' });
+  if (password.length < 8) return res.status(400).json({ error: 'Password must be at least 8 characters' });
+
+  try {
+    // Check if user exists
+    const existing = await pool.query('SELECT id, password_hash FROM users WHERE email = $1', [email]);
+
+    if (existing.rows.length > 0) {
+      const user = existing.rows[0];
+      if (user.password_hash) {
+        return res.status(400).json({ error: 'An account with this email already exists. Please sign in.' });
+      }
+      // User exists via magic link — add a password to their account
+      const hash = await bcrypt.hash(password, SALT_ROUNDS);
+      await pool.query('UPDATE users SET password_hash = $1 WHERE id = $2', [hash, user.id]);
+      await createSession(res, user.id);
+      return res.json({ success: true });
+    }
+
+    // New user — create account with password
+    const hash = await bcrypt.hash(password, SALT_ROUNDS);
+    const result = await pool.query(
+      'INSERT INTO users (email, password_hash) VALUES ($1, $2) RETURNING id',
+      [email, hash]
+    );
+    await createSession(res, result.rows[0].id);
+    res.json({ success: true });
+  } catch (err) {
+    console.error('Register error:', err);
+    res.status(500).json({ error: 'Registration failed. Please try again.' });
+  }
+});
+
+// ─── LOGIN WITH PASSWORD ──────────────────────────────────────────────────────
+app.post('/api/auth/login', async (req, res) => {
+  const { email, password } = req.body;
+  if (!email || !password) return res.status(400).json({ error: 'Email and password required' });
+
+  try {
+    const result = await pool.query('SELECT id, password_hash FROM users WHERE email = $1', [email]);
+
+    if (result.rows.length === 0) {
+      return res.status(401).json({ error: 'No account found with this email.' });
+    }
+
+    const user = result.rows[0];
+
+    if (!user.password_hash) {
+      return res.status(401).json({ error: 'This account uses email link login. Use the email link option instead.' });
+    }
+
+    const match = await bcrypt.compare(password, user.password_hash);
+    if (!match) {
+      return res.status(401).json({ error: 'Incorrect password. Please try again.' });
+    }
+
+    await createSession(res, user.id);
+    res.json({ success: true });
+  } catch (err) {
+    console.error('Login error:', err);
+    res.status(500).json({ error: 'Login failed. Please try again.' });
+  }
+});
+
+// ─── SEND MAGIC LINK ──────────────────────────────────────────────────────────
 app.post('/api/auth/send-link', async (req, res) => {
   const { email } = req.body;
   if (!email) return res.status(400).json({ error: 'Email required' });
@@ -206,6 +300,7 @@ app.post('/api/auth/send-link', async (req, res) => {
   }
 });
 
+// ─── VERIFY MAGIC LINK ────────────────────────────────────────────────────────
 app.get('/api/auth/verify', async (req, res) => {
   const { token } = req.query;
   if (!token) return res.redirect('/?error=invalid');
@@ -220,21 +315,7 @@ app.get('/api/auth/verify', async (req, res) => {
     if (new Date(link.expires_at) < new Date()) return res.redirect('/?error=expired');
 
     await pool.query('UPDATE magic_links SET used = TRUE WHERE token = $1', [token]);
-
-    const sessionToken = uuidv4();
-    const sessionExpiry = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
-    await pool.query(
-      'INSERT INTO sessions (user_id, token, expires_at) VALUES ($1, $2, $3)',
-      [link.user_id, sessionToken, sessionExpiry]
-    );
-
-    res.cookie('session', sessionToken, {
-      httpOnly: true,
-      secure: true,
-      sameSite: 'lax',
-      expires: sessionExpiry
-    });
-
+    await createSession(res, link.user_id);
     res.redirect('/');
   } catch (err) {
     console.error('Verify error:', err);
@@ -242,6 +323,7 @@ app.get('/api/auth/verify', async (req, res) => {
   }
 });
 
+// ─── GET CURRENT USER ─────────────────────────────────────────────────────────
 app.get('/api/auth/me', async (req, res) => {
   const sessionToken = req.cookies.session;
   if (!sessionToken) return res.json({ authenticated: false });
@@ -259,6 +341,7 @@ app.get('/api/auth/me', async (req, res) => {
   }
 });
 
+// ─── SIGN OUT ─────────────────────────────────────────────────────────────────
 app.post('/api/auth/signout', async (req, res) => {
   const sessionToken = req.cookies.session;
   if (sessionToken) {
@@ -268,6 +351,7 @@ app.post('/api/auth/signout', async (req, res) => {
   res.json({ success: true });
 });
 
+// ─── GET MESSAGE HISTORY ──────────────────────────────────────────────────────
 app.get('/api/messages', requireAuth, async (req, res) => {
   const { type } = req.query;
   const relType = type || 'romantic';
@@ -285,6 +369,7 @@ app.get('/api/messages', requireAuth, async (req, res) => {
   }
 });
 
+// ─── CHAT — authenticated ─────────────────────────────────────────────────────
 app.post('/api/chat', requireAuth, async (req, res) => {
   const { message, type } = req.body;
   const relType = type || 'romantic';
@@ -327,6 +412,7 @@ app.post('/api/chat', requireAuth, async (req, res) => {
   }
 });
 
+// ─── CHAT — guest ─────────────────────────────────────────────────────────────
 app.post('/api/chat/guest', async (req, res) => {
   const { message, type, history } = req.body;
   const relType = type || 'romantic';
@@ -360,6 +446,7 @@ app.post('/api/chat/guest', async (req, res) => {
   }
 });
 
+// ─── START ────────────────────────────────────────────────────────────────────
 const PORT = process.env.PORT || 3000;
 initDB().then(() => {
   app.listen(PORT, () => console.log(`Verity running on port ${PORT}`));
