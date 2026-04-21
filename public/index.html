@@ -60,19 +60,18 @@
   }
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  /* ─── GLOBAL NAV BAR (appears on all pages) ─── */
+  /* ─── GLOBAL NAV ─── */
   .global-nav {
     width: 100%; max-width: 680px;
     padding: 16px 28px 0;
-    display: flex; justify-content: space-between; align-items: center;
-    gap: 10px;
+    display: flex; justify-content: space-between; align-items: center; gap: 10px;
   }
   .global-nav-left { display: flex; align-items: center; gap: 8px; }
   .global-nav-right { display: flex; align-items: center; gap: 8px; }
   .nav-logo-wrap {
     background: var(--bg); border-radius: 8px;
     padding: 4px 8px; display: inline-flex;
-    align-items: center; text-decoration: none;
+    align-items: center; cursor: pointer;
   }
   .nav-logo-wrap img { width: 64px; display: block; }
   .nav-btn {
@@ -84,12 +83,12 @@
     box-shadow: var(--shadow-sm);
   }
   .nav-btn:hover { color: var(--accent); border-color: var(--accent-dim); }
-  .nav-btn.danger:hover { color: var(--rose); border-color: var(--rose); }
   .nav-greeting {
     font-family: 'Jost', sans-serif; font-size: 15px;
     font-weight: 300; color: var(--muted); font-style: italic;
   }
 
+  /* ─── HERO ─── */
   .logo-wrap {
     background: var(--bg); border-radius: 12px;
     padding: 8px 12px; display: inline-flex;
@@ -105,8 +104,7 @@
   }
   .hero-title {
     font-size: clamp(32px, 6vw, 48px); font-weight: 300;
-    font-style: italic; line-height: 1.2;
-    color: var(--text); margin-bottom: 18px;
+    font-style: italic; line-height: 1.2; color: var(--text); margin-bottom: 18px;
   }
   .hero-sub {
     font-family: 'Jost', sans-serif; font-weight: 400;
@@ -133,6 +131,7 @@
     color: var(--text-soft); text-align: center;
   }
 
+  /* ─── HOW IT WORKS ─── */
   .how-it-works {
     width: 100%; max-width: 680px;
     padding: 48px 28px 32px; display: grid;
@@ -142,14 +141,11 @@
     background: var(--surface); border: 1px solid var(--border);
     border-radius: 8px; padding: 20px 16px; box-shadow: var(--shadow-sm);
   }
-  .step-number {
-    font-family: 'Jost', sans-serif; font-size: 15px;
-    font-weight: 500; letter-spacing: 0.2em;
-    color: var(--accent-dim); margin-bottom: 8px;
-  }
+  .step-number { font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 500; letter-spacing: 0.2em; color: var(--accent-dim); margin-bottom: 8px; }
   .step-title { font-size: 17px; font-weight: 500; color: var(--text); line-height: 1.3; margin-bottom: 8px; }
   .step-desc { font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 300; color: var(--text-soft); line-height: 1.6; }
 
+  /* ─── LOGIN CARD ─── */
   .login-section {
     width: 100%; max-width: 680px;
     padding: 0 28px 56px;
@@ -160,67 +156,54 @@
     background: var(--surface); border: 1px solid var(--border);
     border-radius: 10px; padding: 36px 32px; box-shadow: var(--shadow);
   }
-
   .auth-toggle {
     display: flex; border: 1px solid var(--border);
-    border-radius: 6px; overflow: hidden; margin-bottom: 28px;
-    background: var(--bg);
+    border-radius: 6px; overflow: hidden; margin-bottom: 28px; background: var(--bg);
   }
   .auth-toggle-btn {
-    flex: 1; font-family: 'Jost', sans-serif;
-    font-size: 15px; font-weight: 400; letter-spacing: 0.1em;
-    text-transform: uppercase; padding: 11px 8px;
-    border: none; background: transparent; cursor: pointer;
-    color: var(--muted); transition: all 0.2s;
+    flex: 1; font-family: 'Jost', sans-serif; font-size: 15px;
+    font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 11px 8px; border: none; background: transparent;
+    cursor: pointer; color: var(--muted); transition: all 0.2s;
   }
   .auth-toggle-btn.active { background: var(--accent-dim); color: #fff; }
   .auth-toggle-btn:not(.active):hover { color: var(--accent); }
-
-  .pw-tabs {
-    display: flex; gap: 0; margin-bottom: 24px;
-    border-bottom: 1px solid var(--border);
-  }
+  .pw-tabs { display: flex; margin-bottom: 24px; border-bottom: 1px solid var(--border); }
   .pw-tab {
-    font-family: 'Jost', sans-serif; font-size: 15px;
-    font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase;
+    font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 400;
+    letter-spacing: 0.1em; text-transform: uppercase;
     padding: 8px 20px 12px; border: none; background: transparent;
     cursor: pointer; color: var(--muted); transition: all 0.2s;
     border-bottom: 2px solid transparent; margin-bottom: -1px;
   }
   .pw-tab.active { color: var(--accent-dim); border-bottom-color: var(--accent-dim); }
   .pw-tab:not(.active):hover { color: var(--accent); }
-
   .auth-panel { display: none; }
   .auth-panel.active { display: block; }
-
   .login-title { font-size: 24px; font-weight: 300; font-style: italic; margin-bottom: 10px; color: var(--text); line-height: 1.3; }
   .login-sub { font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 300; color: var(--text-soft); margin-bottom: 4px; line-height: 1.6; }
   .login-sub-note { font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 300; color: var(--muted); margin-bottom: 24px; line-height: 1.6; font-style: italic; }
   .input-field {
-    width: 100%; background: var(--bg);
-    border: 1px solid var(--border); border-radius: 6px;
-    padding: 14px 16px; font-family: 'Jost', sans-serif;
+    width: 100%; background: var(--bg); border: 1px solid var(--border);
+    border-radius: 6px; padding: 14px 16px; font-family: 'Jost', sans-serif;
     font-size: 15px; font-weight: 300; color: var(--text);
     outline: none; transition: border-color 0.2s; margin-bottom: 14px;
   }
   .input-field:focus { border-color: var(--accent-dim); }
   .input-field::placeholder { color: var(--muted); font-size: 15px; }
   .primary-btn {
-    width: 100%; background: var(--accent-dim); border: none;
-    color: #fff; font-family: 'Jost', sans-serif;
-    font-size: 15px; font-weight: 500; letter-spacing: 0.15em;
-    text-transform: uppercase; padding: 15px; border-radius: 6px;
-    cursor: pointer; transition: all 0.2s;
+    width: 100%; background: var(--accent-dim); border: none; color: #fff;
+    font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 500;
+    letter-spacing: 0.15em; text-transform: uppercase; padding: 15px;
+    border-radius: 6px; cursor: pointer; transition: all 0.2s;
   }
   .primary-btn:hover:not(:disabled) { background: var(--accent); }
   .primary-btn:disabled { opacity: 0.4; cursor: not-allowed; }
   .guest-btn {
-    width: 100%; background: transparent;
-    border: 1px solid var(--border); color: var(--text-soft);
-    font-family: 'Jost', sans-serif; font-size: 15px;
+    width: 100%; background: transparent; border: 1px solid var(--border);
+    color: var(--text-soft); font-family: 'Jost', sans-serif; font-size: 15px;
     font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase;
-    padding: 13px; border-radius: 6px; cursor: pointer;
-    transition: all 0.2s; margin-top: 10px;
+    padding: 13px; border-radius: 6px; cursor: pointer; transition: all 0.2s; margin-top: 10px;
   }
   .guest-btn:hover { border-color: var(--accent-dim); color: var(--accent); }
   .guest-note { font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 300; color: var(--muted); text-align: center; margin-top: 10px; line-height: 1.6; font-style: italic; }
@@ -267,8 +250,7 @@
 
   /* ─── CHAT ─── */
   .chat-header {
-    width: 100%; max-width: 680px;
-    padding: 12px 28px 0;
+    width: 100%; max-width: 680px; padding: 12px 28px 0;
     display: flex; justify-content: space-between; align-items: center; gap: 10px;
   }
   .chat-type-badge {
@@ -321,18 +303,10 @@
   .send-btn:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
   .disclaimer { font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 300; color: var(--muted); text-align: center; line-height: 1.6; }
 
-  /* ─── CONFIRM MODAL ─── */
-  .modal-overlay {
-    display: none; position: fixed; inset: 0;
-    background: rgba(26,58,58,0.4); z-index: 100;
-    align-items: center; justify-content: center; padding: 28px;
-  }
+  /* ─── MODAL ─── */
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(26,58,58,0.4); z-index: 100; align-items: center; justify-content: center; padding: 28px; }
   .modal-overlay.active { display: flex; }
-  .modal {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 10px; padding: 32px; max-width: 380px; width: 100%;
-    box-shadow: var(--shadow); text-align: center;
-  }
+  .modal { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 32px; max-width: 380px; width: 100%; box-shadow: var(--shadow); text-align: center; }
   .modal-title { font-size: 22px; font-weight: 300; font-style: italic; margin-bottom: 12px; color: var(--text); }
   .modal-body { font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 300; color: var(--text-soft); line-height: 1.6; margin-bottom: 28px; }
   .modal-actions { display: flex; gap: 12px; }
@@ -341,6 +315,7 @@
   .modal-confirm { flex: 1; font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: #fff; background: var(--rose); border: none; padding: 12px; border-radius: 6px; cursor: pointer; transition: all 0.2s; }
   .modal-confirm:hover { background: #b56a6a; }
 
+  /* ─── FOOTER DISCLAIMER ─── */
   .site-disclaimer { width: 100%; max-width: 680px; padding: 16px 28px 28px; font-family: 'Jost', sans-serif; font-size: 12px; font-weight: 300; color: var(--muted); text-align: center; line-height: 1.7; border-top: 1px solid var(--border); margin-top: 8px; }
 
   @media (max-width: 620px) { .how-it-works { grid-template-columns: repeat(2, 1fr); padding: 32px 20px 24px; } }
@@ -378,18 +353,18 @@
 <!-- ═══════════════ LANDING PAGE ═══════════════ -->
 <div id="landingPage" class="page">
 
-  <!-- Global nav on landing page (home=logo, no sign out needed since not logged in yet) -->
+  <!-- Nav bar — no logo here since the hero below has the large logo -->
   <div class="global-nav">
     <div class="global-nav-left">
-      <div class="nav-logo-wrap"><img src="/logo.png" alt="Verity" /></div>
+      <span class="nav-greeting" id="landingGreeting" style="display:none;"></span>
     </div>
     <div class="global-nav-right">
-      <span class="nav-greeting" id="landingGreeting" style="display:none;"></span>
       <button class="nav-btn" id="landingSignoutBtn" style="display:none;" onclick="signOut()">Sign out</button>
     </div>
   </div>
 
   <div class="hero">
+    <!-- Large logo — only on landing page -->
     <div class="logo-wrap"><img src="/logo.png" alt="Verity" /></div>
     <div style="font-family:'Jost',sans-serif; font-weight:400; font-size:15px; letter-spacing:0.3em; text-transform:uppercase; color:var(--accent); margin-bottom:18px;">Let's Chat</div>
     <h1 class="hero-title">Honest advice for relationships that matter</h1>
@@ -526,8 +501,8 @@
 <div id="typePage" class="page">
   <div class="global-nav">
     <div class="global-nav-left">
-      <div class="nav-logo-wrap"><img src="/logo.png" alt="Verity" /></div>
-      <span class="nav-greeting" id="typeGreeting"></span>
+      <div class="nav-logo-wrap" onclick="goHome()"><img src="/logo.png" alt="Verity" /></div>
+      <span class="nav-greeting" id="typeGreeting" style="display:none;"></span>
     </div>
     <div class="global-nav-right">
       <button class="nav-btn" onclick="goHome()">Home</button>
@@ -613,15 +588,14 @@
 <div id="chatPage" class="page">
   <div class="global-nav">
     <div class="global-nav-left">
-      <div class="nav-logo-wrap" onclick="goToTypeSelector()" style="cursor:pointer;"><img src="/logo.png" alt="Verity" /></div>
-      <span class="nav-greeting" id="chatGreeting"></span>
+      <div class="nav-logo-wrap" onclick="goToTypeSelector()"><img src="/logo.png" alt="Verity" /></div>
+      <span class="nav-greeting" id="chatGreeting" style="display:none;"></span>
     </div>
     <div class="global-nav-right">
       <button class="nav-btn" onclick="goHome()">Home</button>
       <button class="nav-btn" id="chatSignoutBtn" onclick="signOut()">Sign out</button>
     </div>
   </div>
-
   <div class="chat-header">
     <div class="chat-type-badge" id="typeBadge" onclick="goToTypeSelector()">Romantic</div>
     <div style="display:flex; align-items:center; gap:8px;">
@@ -663,6 +637,45 @@
     friendship: { label: 'Friendship', opening: `Welcome. I'm Verity.\n\nFriendships matter more than we often admit — and when something feels off, it can be surprisingly hard to know what to do. I'm here to help you think it through clearly and honestly.\n\nWhether it's a conflict, a drift, or something harder to put into words — you're in the right place.\n\nTo start: what's been going on with a friendship that brought you here today?` }
   };
 
+  // ─── URL ROUTING ─────────────────────────────────────────────────────────────
+  const PAGE_HASHES = {
+    landingPage: '#/',
+    typePage: '#/topics',
+    chatPage: '#/chat'
+  };
+
+  function showPage(name) {
+    document.getElementById('loadingScreen').style.display = 'none';
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    if (name) {
+      document.getElementById(name).classList.add('active');
+      if (name === 'chatPage') {
+        history.replaceState(null, '', `#/chat/${currentType}`);
+      } else {
+        history.replaceState(null, '', PAGE_HASHES[name] || '#/');
+      }
+    }
+    updateGreetings();
+    updateSignoutButtons();
+  }
+
+  window.addEventListener('hashchange', () => {
+    const hash = window.location.hash;
+    if (hash.startsWith('#/chat/')) {
+      const type = hash.replace('#/chat/', '');
+      if (TYPE_CONFIG[type] && (userEmailAddress || isGuest)) {
+        selectType(type);
+      } else {
+        showPage('landingPage');
+      }
+    } else if (hash === '#/topics') {
+      if (userEmailAddress || isGuest) showPage('typePage');
+      else showPage('landingPage');
+    } else {
+      showPage('landingPage');
+    }
+  });
+
   // ─── GREETINGS ───────────────────────────────────────────────────────────────
   function updateGreetings() {
     const name = userFirstName ? `Hi, ${userFirstName}` : '';
@@ -672,7 +685,6 @@
       const el = document.getElementById(id);
       if (el) { el.textContent = display; el.style.display = display ? 'inline' : 'none'; }
     });
-    // Landing page greeting (shown if somehow still on landing while logged in)
     const lg = document.getElementById('landingGreeting');
     if (lg) { lg.textContent = name; lg.style.display = name ? 'inline' : 'none'; }
   }
@@ -683,7 +695,6 @@
       const el = document.getElementById(id);
       if (el) el.textContent = label;
     });
-    // Show sign out on landing only if authenticated
     const lb = document.getElementById('landingSignoutBtn');
     if (lb) lb.style.display = (!isGuest && userEmailAddress) ? 'inline-block' : 'none';
   }
@@ -693,9 +704,9 @@
     document.querySelectorAll('.auth-panel').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.auth-toggle-btn').forEach(b => b.classList.remove('active'));
     const panelMap = { magic: 'panelMagic', password: 'panelPassword', guest: 'panelGuest' };
-    const btnMap = { magic: 'toggleMagic', password: 'togglePassword', guest: 'toggleGuest' };
+    const btnMap   = { magic: 'toggleMagic', password: 'togglePassword', guest: 'toggleGuest' };
     if (panelMap[mode]) document.getElementById(panelMap[mode]).classList.add('active');
-    if (btnMap[mode]) document.getElementById(btnMap[mode]).classList.add('active');
+    if (btnMap[mode])   document.getElementById(btnMap[mode]).classList.add('active');
   }
 
   function setPwTab(tab) {
@@ -712,23 +723,12 @@
     el.textContent = msg; el.style.display = 'block';
   }
 
-  // ─── PAGES ───────────────────────────────────────────────────────────────────
-  function showPage(name) {
-    document.getElementById('loadingScreen').style.display = 'none';
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    if (name) document.getElementById(name).classList.add('active');
-    updateGreetings();
-    updateSignoutButtons();
-  }
-
+  // ─── NAVIGATION ───────────────────────────────────────────────────────────────
   function goToTypeSelector() { showPage('typePage'); }
 
   function goHome() {
-    if (isGuest || !userEmailAddress) {
-      showPage('landingPage');
-    } else {
-      showPage('typePage');
-    }
+    if (isGuest || !userEmailAddress) showPage('landingPage');
+    else showPage('typePage');
   }
 
   // ─── CLEAR HISTORY ────────────────────────────────────────────────────────────
@@ -757,7 +757,6 @@
     }
   }
 
-  // Close modal on overlay click
   document.getElementById('confirmModal').addEventListener('click', function(e) {
     if (e.target === this) closeModal();
   });
@@ -771,8 +770,7 @@
     btn.disabled = true; btn.textContent = 'Signing in...';
     try {
       const res = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
       });
       const data = await res.json();
@@ -804,8 +802,7 @@
     btn.disabled = true; btn.textContent = 'Creating account...';
     try {
       const res = await fetch('/api/auth/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password, firstName })
       });
       const data = await res.json();
@@ -833,8 +830,7 @@
     btn.disabled = true; btn.textContent = 'Sending...';
     try {
       const res = await fetch('/api/auth/send-link', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, firstName })
       });
       const data = await res.json();
@@ -901,7 +897,7 @@
     showPage('landingPage');
   }
 
-  // ─── TYPE SELECTION ───────────────────────────────────────────────────────────
+  // ─── SELECT TYPE ──────────────────────────────────────────────────────────────
   async function selectType(type) {
     currentType = type;
     guestHistory = [];
@@ -909,7 +905,6 @@
     document.getElementById('typeBadge').textContent = config.label;
     document.getElementById('chatDividerLabel').textContent = config.label + ' · Your conversation';
     document.getElementById('messages').innerHTML = '';
-    // Show clear button only for logged-in users
     document.getElementById('clearBtn').style.display = (!isGuest) ? 'inline-block' : 'none';
     showPage('chatPage');
     if (isGuest) {
@@ -981,14 +976,12 @@
       let res;
       if (isGuest) {
         res = await fetch('/api/chat/guest', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ message: text, type: currentType, history: guestHistory, firstName: userFirstName })
         });
       } else {
         res = await fetch('/api/chat', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ message: text, type: currentType })
         });
       }
@@ -1013,4 +1006,4 @@
   document.getElementById('signinPassword').addEventListener('keydown', e => { if (e.key === 'Enter') passwordSignIn(); });
 </script>
 </body>
-</html>
+ </html>
