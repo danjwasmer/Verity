@@ -60,6 +60,36 @@
   }
   @keyframes spin { to { transform: rotate(360deg); } }
 
+  /* ─── GLOBAL NAV BAR (appears on all pages) ─── */
+  .global-nav {
+    width: 100%; max-width: 680px;
+    padding: 16px 28px 0;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 10px;
+  }
+  .global-nav-left { display: flex; align-items: center; gap: 8px; }
+  .global-nav-right { display: flex; align-items: center; gap: 8px; }
+  .nav-logo-wrap {
+    background: var(--bg); border-radius: 8px;
+    padding: 4px 8px; display: inline-flex;
+    align-items: center; text-decoration: none;
+  }
+  .nav-logo-wrap img { width: 64px; display: block; }
+  .nav-btn {
+    font-family: 'Jost', sans-serif; font-size: 13px;
+    font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--text-soft); background: var(--surface);
+    border: 1px solid var(--border); padding: 6px 14px;
+    border-radius: 4px; cursor: pointer; transition: all 0.2s;
+    box-shadow: var(--shadow-sm);
+  }
+  .nav-btn:hover { color: var(--accent); border-color: var(--accent-dim); }
+  .nav-btn.danger:hover { color: var(--rose); border-color: var(--rose); }
+  .nav-greeting {
+    font-family: 'Jost', sans-serif; font-size: 15px;
+    font-weight: 300; color: var(--muted); font-style: italic;
+  }
+
   .logo-wrap {
     background: var(--bg); border-radius: 12px;
     padding: 8px 12px; display: inline-flex;
@@ -69,7 +99,7 @@
 
   .hero {
     width: 100%; max-width: 680px;
-    padding: 52px 28px 36px;
+    padding: 24px 28px 36px;
     display: flex; flex-direction: column;
     align-items: center; text-align: center;
   }
@@ -110,8 +140,7 @@
   }
   .step {
     background: var(--surface); border: 1px solid var(--border);
-    border-radius: 8px; padding: 20px 16px;
-    box-shadow: var(--shadow-sm);
+    border-radius: 8px; padding: 20px 16px; box-shadow: var(--shadow-sm);
   }
   .step-number {
     font-family: 'Jost', sans-serif; font-size: 15px;
@@ -119,10 +148,7 @@
     color: var(--accent-dim); margin-bottom: 8px;
   }
   .step-title { font-size: 17px; font-weight: 500; color: var(--text); line-height: 1.3; margin-bottom: 8px; }
-  .step-desc {
-    font-family: 'Jost', sans-serif; font-size: 15px;
-    font-weight: 300; color: var(--text-soft); line-height: 1.6;
-  }
+  .step-desc { font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 300; color: var(--text-soft); line-height: 1.6; }
 
   .login-section {
     width: 100%; max-width: 680px;
@@ -132,11 +158,9 @@
   .login-card {
     width: 100%;
     background: var(--surface); border: 1px solid var(--border);
-    border-radius: 10px; padding: 36px 32px;
-    box-shadow: var(--shadow);
+    border-radius: 10px; padding: 36px 32px; box-shadow: var(--shadow);
   }
 
-  /* ─── AUTH MODE TOGGLE ─── */
   .auth-toggle {
     display: flex; border: 1px solid var(--border);
     border-radius: 6px; overflow: hidden; margin-bottom: 28px;
@@ -149,12 +173,9 @@
     border: none; background: transparent; cursor: pointer;
     color: var(--muted); transition: all 0.2s;
   }
-  .auth-toggle-btn.active {
-    background: var(--accent-dim); color: #fff;
-  }
+  .auth-toggle-btn.active { background: var(--accent-dim); color: #fff; }
   .auth-toggle-btn:not(.active):hover { color: var(--accent); }
 
-  /* ─── PASSWORD SUB-TABS ─── */
   .pw-tabs {
     display: flex; gap: 0; margin-bottom: 24px;
     border-bottom: 1px solid var(--border);
@@ -172,20 +193,9 @@
   .auth-panel { display: none; }
   .auth-panel.active { display: block; }
 
-  .login-title {
-    font-size: 24px; font-weight: 300; font-style: italic;
-    margin-bottom: 10px; color: var(--text); line-height: 1.3;
-  }
-  .login-sub {
-    font-family: 'Jost', sans-serif; font-size: 15px;
-    font-weight: 300; color: var(--text-soft);
-    margin-bottom: 4px; line-height: 1.6;
-  }
-  .login-sub-note {
-    font-family: 'Jost', sans-serif; font-size: 15px;
-    font-weight: 300; color: var(--muted);
-    margin-bottom: 24px; line-height: 1.6; font-style: italic;
-  }
+  .login-title { font-size: 24px; font-weight: 300; font-style: italic; margin-bottom: 10px; color: var(--text); line-height: 1.3; }
+  .login-sub { font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 300; color: var(--text-soft); margin-bottom: 4px; line-height: 1.6; }
+  .login-sub-note { font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 300; color: var(--muted); margin-bottom: 24px; line-height: 1.6; font-style: italic; }
   .input-field {
     width: 100%; background: var(--bg);
     border: 1px solid var(--border); border-radius: 6px;
@@ -213,37 +223,18 @@
     transition: all 0.2s; margin-top: 10px;
   }
   .guest-btn:hover { border-color: var(--accent-dim); color: var(--accent); }
-  .guest-note {
-    font-family: 'Jost', sans-serif; font-size: 15px;
-    font-weight: 300; color: var(--muted);
-    text-align: center; margin-top: 10px; line-height: 1.6; font-style: italic;
-  }
-  .login-note {
-    font-family: 'Jost', sans-serif; font-size: 15px;
-    font-weight: 300; color: var(--muted);
-    text-align: center; margin-top: 16px; line-height: 1.6;
-  }
-  .error-msg {
-    font-family: 'Jost', sans-serif; font-size: 15px;
-    font-weight: 300; color: #c47a7a;
-    margin-bottom: 14px; line-height: 1.6; display: none;
-  }
+  .guest-note { font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 300; color: var(--muted); text-align: center; margin-top: 10px; line-height: 1.6; font-style: italic; }
+  .login-note { font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 300; color: var(--muted); text-align: center; margin-top: 16px; line-height: 1.6; }
+  .error-msg { font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 300; color: #c47a7a; margin-bottom: 14px; line-height: 1.6; display: none; }
   .success-msg { display: none; text-align: center; padding: 20px; }
   .success-icon { font-size: 36px; margin-bottom: 12px; }
   .success-title { font-size: 22px; font-style: italic; font-weight: 300; margin-bottom: 8px; }
-  .success-sub {
-    font-family: 'Jost', sans-serif; font-size: 15px;
-    font-weight: 300; color: var(--text-soft); line-height: 1.6;
-  }
+  .success-sub { font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 300; color: var(--text-soft); line-height: 1.6; }
 
   /* ─── TYPE SELECTOR ─── */
-  .type-page-logo {
-    padding: 32px 28px 0; display: flex;
-    justify-content: center; width: 100%; max-width: 680px;
-  }
   .type-page {
     width: 100%; max-width: 680px;
-    padding: 32px 28px; display: flex;
+    padding: 24px 28px; display: flex;
     flex-direction: column; align-items: center; gap: 32px;
   }
   .type-header { text-align: center; }
@@ -257,24 +248,15 @@
     display: flex; flex-direction: column; align-items: center; gap: 14px;
     position: relative; overflow: hidden; box-shadow: var(--shadow-sm);
   }
-  .type-card::before {
-    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-    opacity: 0; transition: opacity 0.25s;
-  }
+  .type-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; opacity: 0; transition: opacity 0.25s; }
   .type-card.romantic::before { background: linear-gradient(90deg, transparent, var(--rose), transparent); }
   .type-card.workplace::before { background: linear-gradient(90deg, transparent, var(--blue), transparent); }
   .type-card.family::before { background: linear-gradient(90deg, transparent, var(--sage), transparent); }
   .type-card.friendship::before { background: linear-gradient(90deg, transparent, var(--lavender), transparent); }
   .type-card:hover::before { opacity: 1; }
-  .type-card:hover {
-    background: var(--surface2); transform: translateY(-3px);
-    box-shadow: 0 8px 32px rgba(42,138,138,0.15), 0 2px 8px rgba(26,58,58,0.08);
-  }
+  .type-card:hover { background: var(--surface2); transform: translateY(-3px); box-shadow: 0 8px 32px rgba(42,138,138,0.15), 0 2px 8px rgba(26,58,58,0.08); }
   .type-card:hover .type-name { color: var(--accent); }
-  .type-illustration {
-    width: 80px; height: 80px; display: flex; align-items: center;
-    justify-content: center; border-radius: 50%; transition: transform 0.25s;
-  }
+  .type-illustration { width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: transform 0.25s; }
   .type-card:hover .type-illustration { transform: scale(1.05); }
   .type-card.romantic .type-illustration { background: rgba(196,122,122,0.1); }
   .type-card.workplace .type-illustration { background: rgba(74,122,176,0.1); }
@@ -285,15 +267,10 @@
 
   /* ─── CHAT ─── */
   .chat-header {
-    width: 100%; max-width: 680px; padding: 20px 28px 0;
-    display: flex; justify-content: space-between; align-items: center; gap: 12px;
+    width: 100%; max-width: 680px;
+    padding: 12px 28px 0;
+    display: flex; justify-content: space-between; align-items: center; gap: 10px;
   }
-  .chat-logo-wrap {
-    background: var(--bg); border-radius: 8px; padding: 4px 8px;
-    display: inline-flex; align-items: center; cursor: pointer; flex-shrink: 0;
-  }
-  .chat-logo-wrap img { width: 72px; display: block; }
-  .chat-right { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
   .chat-type-badge {
     font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 400;
     letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-dim);
@@ -301,51 +278,26 @@
     padding: 5px 12px; border-radius: 20px; cursor: pointer; transition: all 0.2s;
   }
   .chat-type-badge:hover { border-color: var(--accent-dim); color: var(--accent); }
-  .user-email { font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 300; color: var(--muted); }
-  .main-menu-btn {
-    font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 400;
-    letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-soft);
-    background: var(--surface); border: 1px solid var(--border); padding: 7px 14px;
-    border-radius: 4px; cursor: pointer; transition: all 0.2s; box-shadow: var(--shadow-sm);
-  }
-  .main-menu-btn:hover { color: var(--accent); border-color: var(--accent-dim); }
-  .signout-btn {
-    font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 400;
+  .clear-btn {
+    font-family: 'Jost', sans-serif; font-size: 13px; font-weight: 400;
     letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted);
-    background: none; border: 1px solid var(--border); padding: 6px 12px;
+    background: none; border: 1px solid var(--border); padding: 5px 12px;
     border-radius: 4px; cursor: pointer; transition: all 0.2s;
   }
-  .signout-btn:hover { color: var(--text); border-color: var(--muted); }
+  .clear-btn:hover { color: var(--rose); border-color: var(--rose); }
+  .guest-badge { font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 300; color: var(--muted); font-style: italic; }
   .chat-divider {
-    width: 100%; max-width: 680px; padding: 16px 28px 0;
+    width: 100%; max-width: 680px; padding: 12px 28px 0;
     display: flex; align-items: center; gap: 16px;
   }
   .chat-divider::before, .chat-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
-  .chat-divider span {
-    font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 300;
-    letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); white-space: nowrap;
-  }
-  .guest-badge { font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 300; color: var(--muted); font-style: italic; }
-  .chat-wrap {
-    width: 100%; max-width: 680px; flex: 1;
-    display: flex; flex-direction: column; padding: 0 28px; min-height: 300px;
-  }
+  .chat-divider span { font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 300; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+  .chat-wrap { width: 100%; max-width: 680px; flex: 1; display: flex; flex-direction: column; padding: 0 28px; min-height: 300px; }
   .messages { flex: 1; display: flex; flex-direction: column; padding-bottom: 16px; }
-  .msg {
-    display: flex; flex-direction: column; gap: 6px;
-    padding: 22px 0; border-bottom: 1px solid rgba(42,138,138,0.15);
-    animation: fadeUp 0.4s ease both;
-  }
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+  .msg { display: flex; flex-direction: column; gap: 6px; padding: 22px 0; border-bottom: 1px solid rgba(42,138,138,0.15); animation: fadeUp 0.4s ease both; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
   .msg-header { display: flex; align-items: center; gap: 8px; }
-  .msg-avatar {
-    width: 26px; height: 26px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Jost', sans-serif; font-size: 9px; font-weight: 500; flex-shrink: 0;
-  }
+  .msg-avatar { width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Jost', sans-serif; font-size: 9px; font-weight: 500; flex-shrink: 0; }
   .msg.ai .msg-avatar { background: var(--accent-soft); border: 1px solid rgba(42,138,138,0.3); color: var(--accent); }
   .msg.user .msg-avatar { background: rgba(42,138,138,0.12); border: 1px solid rgba(42,138,138,0.25); color: var(--accent); }
   .msg-label { font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; }
@@ -358,72 +310,85 @@
   .typing-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent-dim); animation: pulse 1.2s ease-in-out infinite; }
   .typing-dot:nth-child(2) { animation-delay: 0.2s; }
   .typing-dot:nth-child(3) { animation-delay: 0.4s; }
-  @keyframes pulse {
-    0%, 80%, 100% { opacity: 0.2; transform: scale(0.75); }
-    40% { opacity: 1; transform: scale(1); }
-  }
-  .input-area {
-    width: 100%; max-width: 680px; padding: 16px 28px 16px;
-    display: flex; flex-direction: column; gap: 10px;
-    position: sticky; bottom: 0;
-    background: linear-gradient(to bottom, transparent, var(--bg) 25%);
-  }
-  .input-box {
-    display: flex; gap: 10px; align-items: flex-end;
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 8px; padding: 14px 16px;
-    transition: border-color 0.2s, box-shadow 0.2s; box-shadow: var(--shadow-sm);
-  }
+  @keyframes pulse { 0%, 80%, 100% { opacity: 0.2; transform: scale(0.75); } 40% { opacity: 1; transform: scale(1); } }
+  .input-area { width: 100%; max-width: 680px; padding: 16px 28px 16px; display: flex; flex-direction: column; gap: 10px; position: sticky; bottom: 0; background: linear-gradient(to bottom, transparent, var(--bg) 25%); }
+  .input-box { display: flex; gap: 10px; align-items: flex-end; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; transition: border-color 0.2s, box-shadow 0.2s; box-shadow: var(--shadow-sm); }
   .input-box:focus-within { border-color: var(--accent-dim); box-shadow: 0 0 0 3px rgba(42,138,138,0.12), var(--shadow-sm); }
-  textarea {
-    flex: 1; background: transparent; border: none; outline: none;
-    resize: none; font-family: 'Cormorant Garamond', serif;
-    font-size: 18px; font-weight: 300; color: var(--text);
-    line-height: 1.6; min-height: 28px; max-height: 140px;
-    overflow-y: auto; scrollbar-width: none;
-  }
+  textarea { flex: 1; background: transparent; border: none; outline: none; resize: none; font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 300; color: var(--text); line-height: 1.6; min-height: 28px; max-height: 140px; overflow-y: auto; scrollbar-width: none; }
   textarea::placeholder { color: var(--muted); font-style: italic; font-size: 16px; }
-  .send-btn {
-    background: var(--accent-dim); border: none; color: #fff;
-    font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 500;
-    letter-spacing: 0.12em; text-transform: uppercase;
-    padding: 9px 18px; border-radius: 5px; cursor: pointer;
-    transition: all 0.2s; white-space: nowrap;
-  }
+  .send-btn { background: var(--accent-dim); border: none; color: #fff; font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; padding: 9px 18px; border-radius: 5px; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
   .send-btn:hover:not(:disabled) { background: var(--accent); transform: translateY(-1px); }
   .send-btn:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
   .disclaimer { font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 300; color: var(--muted); text-align: center; line-height: 1.6; }
 
-  .site-disclaimer {
-    width: 100%; max-width: 680px; padding: 16px 28px 28px;
-    font-family: 'Jost', sans-serif; font-size: 12px; font-weight: 300;
-    color: var(--muted); text-align: center; line-height: 1.7;
-    border-top: 1px solid var(--border); margin-top: 8px;
+  /* ─── CONFIRM MODAL ─── */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(26,58,58,0.4); z-index: 100;
+    align-items: center; justify-content: center; padding: 28px;
   }
+  .modal-overlay.active { display: flex; }
+  .modal {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 32px; max-width: 380px; width: 100%;
+    box-shadow: var(--shadow); text-align: center;
+  }
+  .modal-title { font-size: 22px; font-weight: 300; font-style: italic; margin-bottom: 12px; color: var(--text); }
+  .modal-body { font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 300; color: var(--text-soft); line-height: 1.6; margin-bottom: 28px; }
+  .modal-actions { display: flex; gap: 12px; }
+  .modal-cancel { flex: 1; font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); background: transparent; border: 1px solid var(--border); padding: 12px; border-radius: 6px; cursor: pointer; transition: all 0.2s; }
+  .modal-cancel:hover { color: var(--text); border-color: var(--muted); }
+  .modal-confirm { flex: 1; font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: #fff; background: var(--rose); border: none; padding: 12px; border-radius: 6px; cursor: pointer; transition: all 0.2s; }
+  .modal-confirm:hover { background: #b56a6a; }
+
+  .site-disclaimer { width: 100%; max-width: 680px; padding: 16px 28px 28px; font-family: 'Jost', sans-serif; font-size: 12px; font-weight: 300; color: var(--muted); text-align: center; line-height: 1.7; border-top: 1px solid var(--border); margin-top: 8px; }
 
   @media (max-width: 620px) { .how-it-works { grid-template-columns: repeat(2, 1fr); padding: 32px 20px 24px; } }
   @media (max-width: 520px) {
     .how-it-works { grid-template-columns: 1fr; padding: 32px 20px 24px; }
     .type-grid { grid-template-columns: 1fr; }
-    .hero, .type-page, .chat-header, .chat-divider, .chat-wrap, .input-area { padding-left: 20px; padding-right: 20px; }
+    .hero, .type-page, .chat-header, .chat-divider, .chat-wrap, .input-area, .global-nav { padding-left: 20px; padding-right: 20px; }
     .login-section { padding-left: 20px; padding-right: 20px; }
     .login-card { padding: 28px 20px; }
     .msg-body { font-size: 17px; }
     textarea { font-size: 16px; }
-    .user-email { display: none; }
     .site-disclaimer { padding-left: 20px; padding-right: 20px; }
   }
 </style>
 </head>
 <body>
 
+<!-- CONFIRM MODAL -->
+<div class="modal-overlay" id="confirmModal">
+  <div class="modal">
+    <div class="modal-title">Clear conversation?</div>
+    <div class="modal-body" id="modalBody">This will permanently delete your conversation history in this category. Your other conversations will not be affected.</div>
+    <div class="modal-actions">
+      <button class="modal-cancel" onclick="closeModal()">Cancel</button>
+      <button class="modal-confirm" onclick="confirmClear()">Yes, clear it</button>
+    </div>
+  </div>
+</div>
+
 <div id="loadingScreen" class="loading-screen">
   <div class="spinner"></div>
   Let's Chat
 </div>
 
-<!-- LANDING PAGE -->
+<!-- ═══════════════ LANDING PAGE ═══════════════ -->
 <div id="landingPage" class="page">
+
+  <!-- Global nav on landing page (home=logo, no sign out needed since not logged in yet) -->
+  <div class="global-nav">
+    <div class="global-nav-left">
+      <div class="nav-logo-wrap"><img src="/logo.png" alt="Verity" /></div>
+    </div>
+    <div class="global-nav-right">
+      <span class="nav-greeting" id="landingGreeting" style="display:none;"></span>
+      <button class="nav-btn" id="landingSignoutBtn" style="display:none;" onclick="signOut()">Sign out</button>
+    </div>
+  </div>
+
   <div class="hero">
     <div class="logo-wrap"><img src="/logo.png" alt="Verity" /></div>
     <div style="font-family:'Jost',sans-serif; font-weight:400; font-size:15px; letter-spacing:0.3em; text-transform:uppercase; color:var(--accent); margin-bottom:18px;">Let's Chat</div>
@@ -488,20 +453,19 @@
 
   <div class="login-section">
     <div class="login-card">
-
-      <!-- MODE TOGGLE -->
       <div class="auth-toggle">
         <button class="auth-toggle-btn active" id="toggleMagic" onclick="setAuthMode('magic')">Email Link</button>
         <button class="auth-toggle-btn" id="togglePassword" onclick="setAuthMode('password')">Password</button>
-        <button class="auth-toggle-btn" id="toggleGuest" onclick="startAsGuest()">Guest</button>
+        <button class="auth-toggle-btn" id="toggleGuest" onclick="setAuthMode('guest')">Guest</button>
       </div>
 
-      <!-- MAGIC LINK PANEL -->
+      <!-- MAGIC LINK -->
       <div class="auth-panel active" id="panelMagic">
         <div id="magicLinkForm">
           <div class="login-title">Begin your journey or pick up where you left off</div>
           <div class="login-sub">Enter your email and we'll send you a secure login link — no password needed.</div>
           <div class="login-sub-note">Login required to pick up where you left off.</div>
+          <input type="text" id="magicFirstName" class="input-field" placeholder="First name (optional)" />
           <input type="email" id="emailInput" class="input-field" placeholder="your@email.com" />
           <button class="primary-btn" id="sendLinkBtn" onclick="sendMagicLink()">Send my login link</button>
           <div class="login-note">Free trial, no credit card required. · We use top-tier data encryption, your conversations are always safe and private.</div>
@@ -513,14 +477,12 @@
         </div>
       </div>
 
-      <!-- PASSWORD PANEL -->
+      <!-- PASSWORD -->
       <div class="auth-panel" id="panelPassword">
         <div class="pw-tabs">
           <button class="pw-tab active" id="tabSignin" onclick="setPwTab('signin')">Sign In</button>
           <button class="pw-tab" id="tabRegister" onclick="setPwTab('register')">Register</button>
         </div>
-
-        <!-- SIGN IN -->
         <div id="signinForm">
           <div class="login-title">Welcome back</div>
           <div class="login-sub" style="margin-bottom:20px;">Sign in with your email and password.</div>
@@ -530,12 +492,11 @@
           <button class="primary-btn" id="signinBtn" onclick="passwordSignIn()">Sign In</button>
           <div class="login-note" style="margin-top:14px;">Forgot your password? Use the Email Link option to sign in without a password.</div>
         </div>
-
-        <!-- REGISTER -->
         <div id="registerForm" style="display:none;">
           <div class="login-title">Create your account</div>
           <div class="login-sub" style="margin-bottom:20px;">Set up a password to sign in anytime.</div>
           <div class="error-msg" id="registerError"></div>
+          <input type="text" id="registerFirstName" class="input-field" placeholder="First name (optional)" />
           <input type="email" id="registerEmail" class="input-field" placeholder="your@email.com" />
           <input type="password" id="registerPassword" class="input-field" placeholder="Password (min 8 characters)" />
           <input type="password" id="registerConfirm" class="input-field" placeholder="Confirm password" />
@@ -544,15 +505,15 @@
         </div>
       </div>
 
-      <!-- GUEST NOTE (shown when guest tab tapped) -->
+      <!-- GUEST -->
       <div class="auth-panel" id="panelGuest">
         <div class="login-title">Continue as guest</div>
         <div class="login-sub" style="margin-bottom:8px;">Start chatting right away — no account needed.</div>
-        <div class="guest-note" style="text-align:left; margin-bottom:24px;">Your conversation will be private but cannot be saved or resumed later. To keep your history, create an account.</div>
+        <input type="text" id="guestFirstName" class="input-field" placeholder="First name (optional)" />
+        <div class="guest-note" style="text-align:left; margin-bottom:24px;">Your conversation will be private but cannot be saved or resumed later.</div>
         <button class="primary-btn" onclick="confirmGuest()">Start as Guest</button>
         <button class="guest-btn" onclick="setAuthMode('magic')">← Back to Login</button>
       </div>
-
     </div>
   </div>
 
@@ -561,10 +522,17 @@
   </div>
 </div>
 
-<!-- TYPE SELECTOR -->
+<!-- ═══════════════ TYPE SELECTOR ═══════════════ -->
 <div id="typePage" class="page">
-  <div class="type-page-logo">
-    <div class="logo-wrap" style="margin-bottom:0; cursor:default;"><img src="/logo.png" alt="Verity" /></div>
+  <div class="global-nav">
+    <div class="global-nav-left">
+      <div class="nav-logo-wrap"><img src="/logo.png" alt="Verity" /></div>
+      <span class="nav-greeting" id="typeGreeting"></span>
+    </div>
+    <div class="global-nav-right">
+      <button class="nav-btn" onclick="goHome()">Home</button>
+      <button class="nav-btn" id="typeSignoutBtn" onclick="signOut()">Sign out</button>
+    </div>
   </div>
   <div class="type-page">
     <div class="type-header">
@@ -641,16 +609,24 @@
   </div>
 </div>
 
-<!-- CHAT PAGE -->
+<!-- ═══════════════ CHAT PAGE ═══════════════ -->
 <div id="chatPage" class="page">
+  <div class="global-nav">
+    <div class="global-nav-left">
+      <div class="nav-logo-wrap" onclick="goToTypeSelector()" style="cursor:pointer;"><img src="/logo.png" alt="Verity" /></div>
+      <span class="nav-greeting" id="chatGreeting"></span>
+    </div>
+    <div class="global-nav-right">
+      <button class="nav-btn" onclick="goHome()">Home</button>
+      <button class="nav-btn" id="chatSignoutBtn" onclick="signOut()">Sign out</button>
+    </div>
+  </div>
+
   <div class="chat-header">
-    <div class="chat-logo-wrap" onclick="goToTypeSelector()"><img src="/logo.png" alt="Verity" /></div>
-    <button class="main-menu-btn" onclick="goToTypeSelector()">← Main Menu</button>
-    <div class="chat-right">
-      <div class="chat-type-badge" id="typeBadge" onclick="goToTypeSelector()">Romantic</div>
-      <div class="user-email" id="userEmail"></div>
+    <div class="chat-type-badge" id="typeBadge" onclick="goToTypeSelector()">Romantic</div>
+    <div style="display:flex; align-items:center; gap:8px;">
       <span class="guest-badge" id="guestBadge" style="display:none;">Guest session</span>
-      <button class="signout-btn" id="signoutBtn" onclick="signOut()">Sign out</button>
+      <button class="clear-btn" id="clearBtn" onclick="promptClearHistory()" style="display:none;">Clear history</button>
     </div>
   </div>
   <div class="chat-divider"><span id="chatDividerLabel">Your conversation</span></div>
@@ -676,6 +652,7 @@
   let isLoading = false;
   let currentType = 'romantic';
   let userEmailAddress = '';
+  let userFirstName = '';
   let isGuest = false;
   let guestHistory = [];
 
@@ -686,20 +663,39 @@
     friendship: { label: 'Friendship', opening: `Welcome. I'm Verity.\n\nFriendships matter more than we often admit — and when something feels off, it can be surprisingly hard to know what to do. I'm here to help you think it through clearly and honestly.\n\nWhether it's a conflict, a drift, or something harder to put into words — you're in the right place.\n\nTo start: what's been going on with a friendship that brought you here today?` }
   };
 
-  // ─── AUTH MODE ───────────────────────────────────────────────────────────────
+  // ─── GREETINGS ───────────────────────────────────────────────────────────────
+  function updateGreetings() {
+    const name = userFirstName ? `Hi, ${userFirstName}` : '';
+    const guestLabel = isGuest ? 'Guest session' : '';
+    const display = name || guestLabel;
+    ['typeGreeting', 'chatGreeting'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) { el.textContent = display; el.style.display = display ? 'inline' : 'none'; }
+    });
+    // Landing page greeting (shown if somehow still on landing while logged in)
+    const lg = document.getElementById('landingGreeting');
+    if (lg) { lg.textContent = name; lg.style.display = name ? 'inline' : 'none'; }
+  }
+
+  function updateSignoutButtons() {
+    const label = isGuest ? 'Exit' : 'Sign out';
+    ['typeSignoutBtn', 'chatSignoutBtn'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = label;
+    });
+    // Show sign out on landing only if authenticated
+    const lb = document.getElementById('landingSignoutBtn');
+    if (lb) lb.style.display = (!isGuest && userEmailAddress) ? 'inline-block' : 'none';
+  }
+
+  // ─── AUTH MODE ────────────────────────────────────────────────────────────────
   function setAuthMode(mode) {
     document.querySelectorAll('.auth-panel').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.auth-toggle-btn').forEach(b => b.classList.remove('active'));
-    if (mode === 'magic') {
-      document.getElementById('panelMagic').classList.add('active');
-      document.getElementById('toggleMagic').classList.add('active');
-    } else if (mode === 'password') {
-      document.getElementById('panelPassword').classList.add('active');
-      document.getElementById('togglePassword').classList.add('active');
-    } else if (mode === 'guest') {
-      document.getElementById('panelGuest').classList.add('active');
-      document.getElementById('toggleGuest').classList.add('active');
-    }
+    const panelMap = { magic: 'panelMagic', password: 'panelPassword', guest: 'panelGuest' };
+    const btnMap = { magic: 'toggleMagic', password: 'togglePassword', guest: 'toggleGuest' };
+    if (panelMap[mode]) document.getElementById(panelMap[mode]).classList.add('active');
+    if (btnMap[mode]) document.getElementById(btnMap[mode]).classList.add('active');
   }
 
   function setPwTab(tab) {
@@ -713,9 +709,58 @@
 
   function showError(id, msg) {
     const el = document.getElementById(id);
-    el.textContent = msg;
-    el.style.display = 'block';
+    el.textContent = msg; el.style.display = 'block';
   }
+
+  // ─── PAGES ───────────────────────────────────────────────────────────────────
+  function showPage(name) {
+    document.getElementById('loadingScreen').style.display = 'none';
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    if (name) document.getElementById(name).classList.add('active');
+    updateGreetings();
+    updateSignoutButtons();
+  }
+
+  function goToTypeSelector() { showPage('typePage'); }
+
+  function goHome() {
+    if (isGuest || !userEmailAddress) {
+      showPage('landingPage');
+    } else {
+      showPage('typePage');
+    }
+  }
+
+  // ─── CLEAR HISTORY ────────────────────────────────────────────────────────────
+  function promptClearHistory() {
+    const label = TYPE_CONFIG[currentType]?.label || currentType;
+    document.getElementById('modalBody').textContent =
+      `This will permanently delete your ${label} conversation history. Your other conversations will not be affected.`;
+    document.getElementById('confirmModal').classList.add('active');
+  }
+
+  function closeModal() {
+    document.getElementById('confirmModal').classList.remove('active');
+  }
+
+  async function confirmClear() {
+    closeModal();
+    try {
+      const res = await fetch('/api/messages?type=' + currentType, { method: 'DELETE' });
+      const data = await res.json();
+      if (data.success) {
+        document.getElementById('messages').innerHTML = '';
+        appendMessage('ai', TYPE_CONFIG[currentType].opening, false);
+      }
+    } catch {
+      alert('Could not clear conversation. Please try again.');
+    }
+  }
+
+  // Close modal on overlay click
+  document.getElementById('confirmModal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
 
   // ─── PASSWORD SIGN IN ─────────────────────────────────────────────────────────
   async function passwordSignIn() {
@@ -732,13 +777,12 @@
       });
       const data = await res.json();
       if (data.success) {
+        isGuest = false;
         userEmailAddress = email;
-        document.getElementById('userEmail').textContent = email;
-        document.getElementById('guestBadge').style.display = 'none';
-        document.getElementById('signoutBtn').textContent = 'Sign out';
+        userFirstName = data.firstName || '';
         showPage('typePage');
       } else {
-        showError('signinError', data.error || 'Sign in failed. Please try again.');
+        showError('signinError', data.error || 'Sign in failed.');
         btn.disabled = false; btn.textContent = 'Sign In';
       }
     } catch {
@@ -747,8 +791,9 @@
     }
   }
 
-  // ─── PASSWORD REGISTER ───────────────────────────────────────────────────────
+  // ─── PASSWORD REGISTER ────────────────────────────────────────────────────────
   async function passwordRegister() {
+    const firstName = document.getElementById('registerFirstName').value.trim();
     const email = document.getElementById('registerEmail').value.trim();
     const password = document.getElementById('registerPassword').value;
     const confirm = document.getElementById('registerConfirm').value;
@@ -761,17 +806,16 @@
       const res = await fetch('/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({ email, password, firstName })
       });
       const data = await res.json();
       if (data.success) {
+        isGuest = false;
         userEmailAddress = email;
-        document.getElementById('userEmail').textContent = email;
-        document.getElementById('guestBadge').style.display = 'none';
-        document.getElementById('signoutBtn').textContent = 'Sign out';
+        userFirstName = firstName;
         showPage('typePage');
       } else {
-        showError('registerError', data.error || 'Registration failed. Please try again.');
+        showError('registerError', data.error || 'Registration failed.');
         btn.disabled = false; btn.textContent = 'Create Account';
       }
     } catch {
@@ -782,6 +826,7 @@
 
   // ─── MAGIC LINK ───────────────────────────────────────────────────────────────
   async function sendMagicLink() {
+    const firstName = document.getElementById('magicFirstName').value.trim();
     const email = document.getElementById('emailInput').value.trim();
     if (!email) return;
     const btn = document.getElementById('sendLinkBtn');
@@ -790,7 +835,7 @@
       const res = await fetch('/api/auth/send-link', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email })
+        body: JSON.stringify({ email, firstName })
       });
       const data = await res.json();
       if (data.success) {
@@ -808,41 +853,14 @@
   }
 
   // ─── GUEST ────────────────────────────────────────────────────────────────────
-  function startAsGuest() { setAuthMode('guest'); }
-
   function confirmGuest() {
     isGuest = true;
     guestHistory = [];
+    userFirstName = document.getElementById('guestFirstName').value.trim();
     userEmailAddress = '';
-    document.getElementById('userEmail').textContent = '';
     document.getElementById('guestBadge').style.display = 'inline';
-    document.getElementById('signoutBtn').textContent = 'Exit';
+    document.getElementById('clearBtn').style.display = 'none';
     showPage('typePage');
-  }
-
-  // ─── PAGE / TYPE ──────────────────────────────────────────────────────────────
-  function showPage(name) {
-    document.getElementById('loadingScreen').style.display = 'none';
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    if (name) document.getElementById(name).classList.add('active');
-  }
-
-  function goToTypeSelector() { showPage('typePage'); }
-
-  async function selectType(type) {
-    currentType = type;
-    guestHistory = [];
-    const config = TYPE_CONFIG[type];
-    document.getElementById('typeBadge').textContent = config.label;
-    document.getElementById('chatDividerLabel').textContent = config.label + ' · Your conversation';
-    document.getElementById('messages').innerHTML = '';
-    showPage('chatPage');
-    if (isGuest) {
-      guestHistory.push({ role: 'assistant', content: config.opening });
-      appendMessage('ai', config.opening, false);
-    } else {
-      await loadHistory(type);
-    }
   }
 
   // ─── ON LOAD ──────────────────────────────────────────────────────────────────
@@ -855,9 +873,7 @@
       if (data.authenticated) {
         isGuest = false;
         userEmailAddress = data.email;
-        document.getElementById('userEmail').textContent = data.email;
-        document.getElementById('guestBadge').style.display = 'none';
-        document.getElementById('signoutBtn').textContent = 'Sign out';
+        userFirstName = data.firstName || '';
         showPage('typePage');
       } else {
         showPage('landingPage');
@@ -868,14 +884,13 @@
   // ─── SIGN OUT ─────────────────────────────────────────────────────────────────
   async function signOut() {
     if (isGuest) {
-      isGuest = false; guestHistory = []; currentType = 'romantic';
+      isGuest = false; guestHistory = []; userFirstName = ''; currentType = 'romantic';
       document.getElementById('messages').innerHTML = '';
       document.getElementById('guestBadge').style.display = 'none';
-      document.getElementById('signoutBtn').textContent = 'Sign out';
       showPage('landingPage'); return;
     }
     await fetch('/api/auth/signout', { method: 'POST' });
-    isGuest = false; currentType = 'romantic';
+    isGuest = false; userFirstName = ''; userEmailAddress = ''; currentType = 'romantic';
     document.getElementById('messages').innerHTML = '';
     document.getElementById('magicLinkForm').style.display = 'block';
     document.getElementById('successMsg').style.display = 'none';
@@ -886,7 +901,26 @@
     showPage('landingPage');
   }
 
-  // ─── HISTORY / MESSAGES ───────────────────────────────────────────────────────
+  // ─── TYPE SELECTION ───────────────────────────────────────────────────────────
+  async function selectType(type) {
+    currentType = type;
+    guestHistory = [];
+    const config = TYPE_CONFIG[type];
+    document.getElementById('typeBadge').textContent = config.label;
+    document.getElementById('chatDividerLabel').textContent = config.label + ' · Your conversation';
+    document.getElementById('messages').innerHTML = '';
+    // Show clear button only for logged-in users
+    document.getElementById('clearBtn').style.display = (!isGuest) ? 'inline-block' : 'none';
+    showPage('chatPage');
+    if (isGuest) {
+      guestHistory.push({ role: 'assistant', content: config.opening });
+      appendMessage('ai', config.opening, false);
+    } else {
+      await loadHistory(type);
+    }
+  }
+
+  // ─── HISTORY ─────────────────────────────────────────────────────────────────
   async function loadHistory(type) {
     try {
       const res = await fetch('/api/messages?type=' + type);
@@ -935,6 +969,7 @@
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
   });
 
+  // ─── SEND MESSAGE ─────────────────────────────────────────────────────────────
   async function sendMessage() {
     if (isLoading) return;
     const text = textarea.value.trim();
@@ -948,7 +983,7 @@
         res = await fetch('/api/chat/guest', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ message: text, type: currentType, history: guestHistory })
+          body: JSON.stringify({ message: text, type: currentType, history: guestHistory, firstName: userFirstName })
         });
       } else {
         res = await fetch('/api/chat', {
@@ -974,12 +1009,8 @@
     }
   }
 
-  document.getElementById('emailInput').addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') sendMagicLink();
-  });
-  document.getElementById('signinPassword').addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') passwordSignIn();
-  });
+  document.getElementById('emailInput').addEventListener('keydown', e => { if (e.key === 'Enter') sendMagicLink(); });
+  document.getElementById('signinPassword').addEventListener('keydown', e => { if (e.key === 'Enter') passwordSignIn(); });
 </script>
 </body>
 </html>
