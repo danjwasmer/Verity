@@ -191,11 +191,8 @@ async function initDB() {
       created_at TIMESTAMP DEFAULT NOW()
     );
   `);
-
-  await pool.query(`
-    ALTER TABLE users ADD COLUMN IF NOT EXISTS password_hash TEXT;
-  `);
-
+  await pool.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS password_hash TEXT;`);
+  await pool.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS first_name TEXT;`);
   console.log('Database initialized');
 }
 
@@ -216,7 +213,7 @@ async function requireAuth(req, res, next) {
   }
 }
 
-// ─── HELPER: create session cookie ───────────────────────────────────────────
+// ─── HELPER: create session ───────────────────────────────────────────────────
 async function createSession(res, userId) {
   const sessionToken = uuidv4();
   const sessionExpiry = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
@@ -225,62 +222,51 @@ async function createSession(res, userId) {
     [userId, sessionToken, sessionExpiry]
   );
   res.cookie('session', sessionToken, {
-    httpOnly: true,
-    secure: true,
-    sameSite: 'lax',
-    expires: sessionExpiry
+    httpOnly: true, secure: true, sameSite: 'lax', expires: sessionExpiry
   });
 }
 
-// ─── REGISTER WITH PASSWORD ───────────────────────────────────────────────────
+// ─── REGISTER ────────────────────────────────────────────────────────────────
 app.post('/api/auth/register', async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, firstName } = req.body;
   if (!email || !password) return res.status(400).json({ error: 'Email and password required' });
   if (password.length < 8) return res.status(400).json({ error: 'Password must be at least 8 characters' });
   try {
     const existing = await pool.query('SELECT id, password_hash FROM users WHERE email = $1', [email]);
     if (existing.rows.length > 0) {
       const user = existing.rows[0];
-      if (user.password_hash) {
-        return res.status(400).json({ error: 'An account with this email already exists. Please sign in.' });
-      }
+      if (user.password_hash) return res.status(400).json({ error: 'An account with this email already exists. Please sign in.' });
       const hash = await bcrypt.hash(password, SALT_ROUNDS);
-      await pool.query('UPDATE users SET password_hash = $1 WHERE id = $2', [hash, user.id]);
+      await pool.query('UPDATE users SET password_hash = $1, first_name = COALESCE(first_name, $2) WHERE id = $3', [hash, firstName || null, user.id]);
       await createSession(res, user.id);
-      return res.json({ success: true });
+      return res.json({ success: true, firstName: firstName || null });
     }
     const hash = await bcrypt.hash(password, SALT_ROUNDS);
     const result = await pool.query(
-      'INSERT INTO users (email, password_hash) VALUES ($1, $2) RETURNING id',
-      [email, hash]
+      'INSERT INTO users (email, password_hash, first_name) VALUES ($1, $2, $3) RETURNING id',
+      [email, hash, firstName || null]
     );
     await createSession(res, result.rows[0].id);
-    res.json({ success: true });
+    res.json({ success: true, firstName: firstName || null });
   } catch (err) {
     console.error('Register error:', err);
     res.status(500).json({ error: 'Registration failed. Please try again.' });
   }
 });
 
-// ─── LOGIN WITH PASSWORD ──────────────────────────────────────────────────────
+// ─── LOGIN ────────────────────────────────────────────────────────────────────
 app.post('/api/auth/login', async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) return res.status(400).json({ error: 'Email and password required' });
   try {
-    const result = await pool.query('SELECT id, password_hash FROM users WHERE email = $1', [email]);
-    if (result.rows.length === 0) {
-      return res.status(401).json({ error: 'No account found with this email.' });
-    }
+    const result = await pool.query('SELECT id, password_hash, first_name FROM users WHERE email = $1', [email]);
+    if (result.rows.length === 0) return res.status(401).json({ error: 'No account found with this email.' });
     const user = result.rows[0];
-    if (!user.password_hash) {
-      return res.status(401).json({ error: 'This account uses email link login. Use the email link option instead.' });
-    }
+    if (!user.password_hash) return res.status(401).json({ error: 'This account uses email link login. Use the email link option instead.' });
     const match = await bcrypt.compare(password, user.password_hash);
-    if (!match) {
-      return res.status(401).json({ error: 'Incorrect password. Please try again.' });
-    }
+    if (!match) return res.status(401).json({ error: 'Incorrect password. Please try again.' });
     await createSession(res, user.id);
-    res.json({ success: true });
+    res.json({ success: true, firstName: user.first_name || null });
   } catch (err) {
     console.error('Login error:', err);
     res.status(500).json({ error: 'Login failed. Please try again.' });
@@ -289,25 +275,20 @@ app.post('/api/auth/login', async (req, res) => {
 
 // ─── SEND MAGIC LINK ──────────────────────────────────────────────────────────
 app.post('/api/auth/send-link', async (req, res) => {
-  const { email } = req.body;
+  const { email, firstName } = req.body;
   if (!email) return res.status(400).json({ error: 'Email required' });
   try {
     await pool.query(
-      'INSERT INTO users (email) VALUES ($1) ON CONFLICT (email) DO NOTHING',
-      [email]
+      'INSERT INTO users (email, first_name) VALUES ($1, $2) ON CONFLICT (email) DO UPDATE SET first_name = COALESCE(users.first_name, $2)',
+      [email, firstName || null]
     );
     const userResult = await pool.query('SELECT id FROM users WHERE email = $1', [email]);
     const userId = userResult.rows[0].id;
     const token = uuidv4();
     const expiresAt = new Date(Date.now() + 15 * 60 * 1000);
-    await pool.query(
-      'INSERT INTO magic_links (user_id, token, expires_at) VALUES ($1, $2, $3)',
-      [userId, token, expiresAt]
-    );
-
+    await pool.query('INSERT INTO magic_links (user_id, token, expires_at) VALUES ($1, $2, $3)', [userId, token, expiresAt]);
     const baseUrl = process.env.BASE_URL || `https://${req.headers.host}`;
     const magicLink = `${baseUrl}/api/auth/verify?token=${token}`;
-
     await resend.emails.send({
       from: 'Verity <onboarding@resend.dev>',
       to: email,
@@ -322,7 +303,6 @@ app.post('/api/auth/send-link', async (req, res) => {
         </div>
       `
     });
-
     res.json({ success: true });
   } catch (err) {
     console.error('Send link error:', err);
@@ -335,10 +315,7 @@ app.get('/api/auth/verify', async (req, res) => {
   const { token } = req.query;
   if (!token) return res.redirect('/?error=invalid');
   try {
-    const result = await pool.query(
-      'SELECT user_id, expires_at, used FROM magic_links WHERE token = $1',
-      [token]
-    );
+    const result = await pool.query('SELECT user_id, expires_at, used FROM magic_links WHERE token = $1', [token]);
     if (result.rows.length === 0) return res.redirect('/?error=invalid');
     const link = result.rows[0];
     if (link.used) return res.redirect('/?error=used');
@@ -358,13 +335,13 @@ app.get('/api/auth/me', async (req, res) => {
   if (!sessionToken) return res.json({ authenticated: false });
   try {
     const result = await pool.query(
-      `SELECT u.email FROM sessions s
+      `SELECT u.email, u.first_name FROM sessions s
        JOIN users u ON u.id = s.user_id
        WHERE s.token = $1 AND s.expires_at > NOW()`,
       [sessionToken]
     );
     if (result.rows.length === 0) return res.json({ authenticated: false });
-    res.json({ authenticated: true, email: result.rows[0].email });
+    res.json({ authenticated: true, email: result.rows[0].email, firstName: result.rows[0].first_name || null });
   } catch (err) {
     res.json({ authenticated: false });
   }
@@ -373,22 +350,17 @@ app.get('/api/auth/me', async (req, res) => {
 // ─── SIGN OUT ─────────────────────────────────────────────────────────────────
 app.post('/api/auth/signout', async (req, res) => {
   const sessionToken = req.cookies.session;
-  if (sessionToken) {
-    await pool.query('DELETE FROM sessions WHERE token = $1', [sessionToken]).catch(() => {});
-  }
+  if (sessionToken) await pool.query('DELETE FROM sessions WHERE token = $1', [sessionToken]).catch(() => {});
   res.clearCookie('session');
   res.json({ success: true });
 });
 
-// ─── GET MESSAGE HISTORY ──────────────────────────────────────────────────────
+// ─── GET MESSAGES ─────────────────────────────────────────────────────────────
 app.get('/api/messages', requireAuth, async (req, res) => {
-  const { type } = req.query;
-  const relType = type || 'romantic';
+  const relType = req.query.type || 'romantic';
   try {
     const result = await pool.query(
-      `SELECT role, content FROM messages
-       WHERE user_id = $1 AND relationship_type = $2
-       ORDER BY created_at ASC`,
+      `SELECT role, content FROM messages WHERE user_id = $1 AND relationship_type = $2 ORDER BY created_at ASC`,
       [req.userId, relType]
     );
     res.json({ messages: result.rows });
@@ -398,16 +370,29 @@ app.get('/api/messages', requireAuth, async (req, res) => {
   }
 });
 
+// ─── CLEAR MESSAGES ───────────────────────────────────────────────────────────
+app.delete('/api/messages', requireAuth, async (req, res) => {
+  const relType = req.query.type || 'romantic';
+  try {
+    await pool.query('DELETE FROM messages WHERE user_id = $1 AND relationship_type = $2', [req.userId, relType]);
+    res.json({ success: true });
+  } catch (err) {
+    console.error('Clear history error:', err);
+    res.status(500).json({ error: 'Failed to clear conversation' });
+  }
+});
+
 // ─── CHAT — authenticated ─────────────────────────────────────────────────────
 app.post('/api/chat', requireAuth, async (req, res) => {
   const { message, type } = req.body;
   const relType = type || 'romantic';
   if (!message) return res.status(400).json({ error: 'Message required' });
   try {
+    const userResult = await pool.query('SELECT first_name FROM users WHERE id = $1', [req.userId]);
+    const firstName = userResult.rows[0]?.first_name || null;
+
     const historyResult = await pool.query(
-      `SELECT role, content FROM messages
-       WHERE user_id = $1 AND relationship_type = $2
-       ORDER BY created_at ASC`,
+      `SELECT role, content FROM messages WHERE user_id = $1 AND relationship_type = $2 ORDER BY created_at ASC`,
       [req.userId, relType]
     );
     const messages = historyResult.rows.map(m => ({
@@ -416,10 +401,14 @@ app.post('/api/chat', requireAuth, async (req, res) => {
     }));
     messages.push({ role: 'user', content: message });
 
+    const nameContext = firstName
+      ? `\nUSER'S NAME: The user's first name is ${firstName}. You must use this name. Address them as ${firstName} in your very first response, and continue to use their name naturally throughout the conversation — not in every message, but regularly enough that it feels personal and warm. Never refer to them as "you" exclusively when their name is available.\n`
+      : '';
+
     const response = await anthropic.messages.create({
       model: 'claude-opus-4-5',
       max_tokens: 1024,
-      system: SYSTEM_PROMPTS[relType] || SYSTEM_PROMPTS.romantic,
+      system: (SYSTEM_PROMPTS[relType] || SYSTEM_PROMPTS.romantic) + nameContext,
       messages
     });
 
@@ -443,7 +432,7 @@ app.post('/api/chat', requireAuth, async (req, res) => {
 
 // ─── CHAT — guest ─────────────────────────────────────────────────────────────
 app.post('/api/chat/guest', async (req, res) => {
-  const { message, type, history } = req.body;
+  const { message, type, history, firstName } = req.body;
   const relType = type || 'romantic';
   if (!message) return res.status(400).json({ error: 'Message required' });
   try {
@@ -460,10 +449,14 @@ app.post('/api/chat/guest', async (req, res) => {
     }
     messages.push({ role: 'user', content: message });
 
+    const nameContext = firstName
+      ? `\nUSER'S NAME: The user's first name is ${firstName}. You must use this name. Address them as ${firstName} in your very first response, and continue to use their name naturally throughout the conversation — not in every message, but regularly enough that it feels personal and warm. Never refer to them as "you" exclusively when their name is available.\n`
+      : '';
+
     const response = await anthropic.messages.create({
       model: 'claude-opus-4-5',
       max_tokens: 1024,
-      system: SYSTEM_PROMPTS[relType] || SYSTEM_PROMPTS.romantic,
+      system: (SYSTEM_PROMPTS[relType] || SYSTEM_PROMPTS.romantic) + nameContext,
       messages
     });
 
