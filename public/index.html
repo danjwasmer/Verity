@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Verity — Honest Advice for Relationships That Matter</title>
+<link rel="icon" type="image/png" href="/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -69,8 +70,7 @@
   .global-nav-left { display: flex; align-items: center; gap: 8px; }
   .global-nav-right { display: flex; align-items: center; gap: 8px; }
   .nav-logo-wrap {
-    background: transparent; /* ← was var(--bg); now transparent so PNG alpha shows through */
-    border-radius: 8px;
+    background: var(--bg); border-radius: 8px;
     padding: 4px 8px; display: inline-flex;
     align-items: center; cursor: pointer;
   }
@@ -91,8 +91,7 @@
 
   /* ─── HERO ─── */
   .logo-wrap {
-    background: transparent; /* ← was var(--bg); now transparent so PNG alpha shows through */
-    border-radius: 12px;
+    background: var(--bg); border-radius: 12px;
     padding: 8px 12px; display: inline-flex;
     align-items: center; justify-content: center; margin-bottom: 20px;
   }
@@ -1008,4 +1007,4 @@
   document.getElementById('signinPassword').addEventListener('keydown', e => { if (e.key === 'Enter') passwordSignIn(); });
 </script>
 </body>
-</html>
+             </html>
