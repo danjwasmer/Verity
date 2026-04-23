@@ -27,6 +27,7 @@
     --shadow: 0 4px 24px rgba(26,58,58,0.10), 0 1.5px 6px rgba(26,58,58,0.07);
     --shadow-sm: 0 2px 10px rgba(26,58,58,0.08), 0 1px 3px rgba(26,58,58,0.05);
   }
+
   html, body {
     height: 100%;
     background: var(--bg);
@@ -35,6 +36,7 @@
     font-size: 18px;
     line-height: 1.7;
   }
+
   body {
     display: flex;
     flex-direction: column;
@@ -54,11 +56,13 @@
     color: var(--muted); font-family: 'Jost', sans-serif;
     font-size: 15px; letter-spacing: 0.2em; text-transform: uppercase;
   }
+
   .spinner {
     width: 32px; height: 32px;
     border: 1px solid #d0c8bc; border-top-color: #2a8a8a;
     border-radius: 50%; animation: spin 1s linear infinite;
   }
+
   @keyframes spin { to { transform: rotate(360deg); } }
 
   /* ─── GLOBAL NAV ─── */
@@ -67,14 +71,18 @@
     padding: 16px 28px 0;
     display: flex; justify-content: space-between; align-items: center; gap: 10px;
   }
+
   .global-nav-left { display: flex; align-items: center; gap: 8px; }
   .global-nav-right { display: flex; align-items: center; gap: 8px; }
+
   .nav-logo-wrap {
     background: var(--bg); border-radius: 8px;
     padding: 4px 8px; display: inline-flex;
     align-items: center; cursor: pointer;
   }
+
   .nav-logo-wrap img { width: 64px; display: block; }
+
   .nav-btn {
     font-family: 'Jost', sans-serif; font-size: 13px;
     font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase;
@@ -83,7 +91,9 @@
     border-radius: 4px; cursor: pointer; transition: all 0.2s;
     box-shadow: var(--shadow-sm);
   }
+
   .nav-btn:hover { color: var(--accent); border-color: var(--accent-dim); }
+
   .nav-greeting {
     font-family: 'Jost', sans-serif; font-size: 15px;
     font-weight: 300; color: var(--muted); font-style: italic;
@@ -95,6 +105,7 @@
     padding: 8px 12px; display: inline-flex;
     align-items: center; justify-content: center; margin-bottom: 20px;
   }
+
   .logo-wrap img { width: 120px; display: block; }
 
   .hero {
@@ -103,10 +114,12 @@
     display: flex; flex-direction: column;
     align-items: center; text-align: center;
   }
+
   .hero-title {
     font-size: clamp(32px, 6vw, 48px); font-weight: 300;
     font-style: italic; line-height: 1.2; color: var(--text); margin-bottom: 18px;
   }
+
   .hero-sub {
     font-family: 'Jost', sans-serif; font-weight: 400;
     font-size: 15px; color: var(--text-soft);
@@ -119,13 +132,17 @@
     width: 100%; max-width: 460px; margin-bottom: 0;
     box-shadow: var(--shadow-sm);
   }
+
   .trust-item {
     flex: 1; display: flex; flex-direction: column;
     align-items: center; gap: 8px; padding: 18px 8px;
     background: var(--surface); border-right: 1px solid var(--border);
   }
+
   .trust-item:last-child { border-right: none; }
+
   .trust-icon { width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; }
+
   .trust-label {
     font-family: 'Jost', sans-serif; font-size: 15px;
     font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;
@@ -138,10 +155,12 @@
     padding: 48px 28px 32px; display: grid;
     grid-template-columns: repeat(4, 1fr); gap: 14px;
   }
+
   .step {
     background: var(--surface); border: 1px solid var(--border);
     border-radius: 8px; padding: 20px 16px; box-shadow: var(--shadow-sm);
   }
+
   .step-number { font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 500; letter-spacing: 0.2em; color: var(--accent-dim); margin-bottom: 8px; }
   .step-title { font-size: 17px; font-weight: 500; color: var(--text); line-height: 1.3; margin-bottom: 8px; }
   .step-desc { font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 300; color: var(--text-soft); line-height: 1.6; }
@@ -152,24 +171,30 @@
     padding: 0 28px 56px;
     display: flex; flex-direction: column; align-items: center;
   }
+
   .login-card {
     width: 100%;
     background: var(--surface); border: 1px solid var(--border);
     border-radius: 10px; padding: 36px 32px; box-shadow: var(--shadow);
   }
+
   .auth-toggle {
     display: flex; border: 1px solid var(--border);
     border-radius: 6px; overflow: hidden; margin-bottom: 28px; background: var(--bg);
   }
+
   .auth-toggle-btn {
     flex: 1; font-family: 'Jost', sans-serif; font-size: 15px;
     font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase;
     padding: 11px 8px; border: none; background: transparent;
     cursor: pointer; color: var(--muted); transition: all 0.2s;
   }
+
   .auth-toggle-btn.active { background: var(--accent-dim); color: #fff; }
   .auth-toggle-btn:not(.active):hover { color: var(--accent); }
+
   .pw-tabs { display: flex; margin-bottom: 24px; border-bottom: 1px solid var(--border); }
+
   .pw-tab {
     font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 400;
     letter-spacing: 0.1em; text-transform: uppercase;
@@ -177,36 +202,46 @@
     cursor: pointer; color: var(--muted); transition: all 0.2s;
     border-bottom: 2px solid transparent; margin-bottom: -1px;
   }
+
   .pw-tab.active { color: var(--accent-dim); border-bottom-color: var(--accent-dim); }
   .pw-tab:not(.active):hover { color: var(--accent); }
+
   .auth-panel { display: none; }
   .auth-panel.active { display: block; }
+
   .login-title { font-size: 24px; font-weight: 300; font-style: italic; margin-bottom: 10px; color: var(--text); line-height: 1.3; }
   .login-sub { font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 300; color: var(--text-soft); margin-bottom: 4px; line-height: 1.6; }
   .login-sub-note { font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 300; color: var(--muted); margin-bottom: 24px; line-height: 1.6; font-style: italic; }
+
   .input-field {
     width: 100%; background: var(--bg); border: 1px solid var(--border);
     border-radius: 6px; padding: 14px 16px; font-family: 'Jost', sans-serif;
     font-size: 15px; font-weight: 300; color: var(--text);
     outline: none; transition: border-color 0.2s; margin-bottom: 14px;
   }
+
   .input-field:focus { border-color: var(--accent-dim); }
   .input-field::placeholder { color: var(--muted); font-size: 15px; }
+
   .primary-btn {
     width: 100%; background: var(--accent-dim); border: none; color: #fff;
     font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 500;
     letter-spacing: 0.15em; text-transform: uppercase; padding: 15px;
     border-radius: 6px; cursor: pointer; transition: all 0.2s;
   }
+
   .primary-btn:hover:not(:disabled) { background: var(--accent); }
   .primary-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
   .guest-btn {
     width: 100%; background: transparent; border: 1px solid var(--border);
     color: var(--text-soft); font-family: 'Jost', sans-serif; font-size: 15px;
     font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase;
     padding: 13px; border-radius: 6px; cursor: pointer; transition: all 0.2s; margin-top: 10px;
   }
+
   .guest-btn:hover { border-color: var(--accent-dim); color: var(--accent); }
+
   .guest-note { font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 300; color: var(--muted); text-align: center; margin-top: 10px; line-height: 1.6; font-style: italic; }
   .login-note { font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 300; color: var(--muted); text-align: center; margin-top: 16px; line-height: 1.6; }
   .error-msg { font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 300; color: #c47a7a; margin-bottom: 14px; line-height: 1.6; display: none; }
@@ -221,10 +256,13 @@
     padding: 24px 28px; display: flex;
     flex-direction: column; align-items: center; gap: 32px;
   }
+
   .type-header { text-align: center; }
   .type-title { font-size: 32px; font-weight: 300; font-style: italic; margin-bottom: 10px; }
   .type-sub { font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 300; color: var(--text-soft); }
+
   .type-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; width: 100%; }
+
   .type-card {
     background: var(--surface); border: 1px solid var(--border);
     border-radius: 10px; padding: 28px 20px; cursor: pointer;
@@ -232,6 +270,7 @@
     display: flex; flex-direction: column; align-items: center; gap: 14px;
     position: relative; overflow: hidden; box-shadow: var(--shadow-sm);
   }
+
   .type-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; opacity: 0; transition: opacity 0.25s; }
   .type-card.romantic::before { background: linear-gradient(90deg, transparent, var(--rose), transparent); }
   .type-card.workplace::before { background: linear-gradient(90deg, transparent, var(--blue), transparent); }
@@ -240,43 +279,103 @@
   .type-card:hover::before { opacity: 1; }
   .type-card:hover { background: var(--surface2); transform: translateY(-3px); box-shadow: 0 8px 32px rgba(42,138,138,0.15), 0 2px 8px rgba(26,58,58,0.08); }
   .type-card:hover .type-name { color: var(--accent); }
+
   .type-illustration { width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: transform 0.25s; }
   .type-card:hover .type-illustration { transform: scale(1.05); }
   .type-card.romantic .type-illustration { background: rgba(196,122,122,0.1); }
   .type-card.workplace .type-illustration { background: rgba(74,122,176,0.1); }
   .type-card.family .type-illustration { background: rgba(58,154,106,0.1); }
   .type-card.friendship .type-illustration { background: rgba(122,106,176,0.1); }
+
   .type-name { font-size: 18px; font-weight: 400; color: var(--text); transition: color 0.25s; }
   .type-desc { font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 300; color: var(--muted); line-height: 1.6; }
 
   /* ─── CHAT ─── */
-  .chat-header {
-    width: 100%; max-width: 680px; padding: 12px 28px 0;
-    display: flex; justify-content: space-between; align-items: center; gap: 10px;
+  .chat-shell {
+    width: 100%;
+    max-width: 920px;
+    padding: 12px 28px 0;
   }
+
+  .chat-header {
+    width: 100%;
+    padding: 0 0 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
   .chat-type-badge {
     font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 400;
     letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-dim);
     background: var(--accent-soft); border: 1px solid rgba(42,138,138,0.2);
     padding: 5px 12px; border-radius: 20px; cursor: pointer; transition: all 0.2s;
   }
+
   .chat-type-badge:hover { border-color: var(--accent-dim); color: var(--accent); }
-  .clear-btn {
-    font-family: 'Jost', sans-serif; font-size: 13px; font-weight: 400;
+
+  .chat-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .clear-btn, .jump-btn {
+    font-family: 'Jost', sans-serif; font-size: 12px; font-weight: 400;
     letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted);
-    background: none; border: 1px solid var(--border); padding: 5px 12px;
+    background: none; border: 1px solid var(--border); padding: 6px 10px;
     border-radius: 4px; cursor: pointer; transition: all 0.2s;
   }
-  .clear-btn:hover { color: var(--rose); border-color: var(--rose); }
-  .guest-badge { font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 300; color: var(--muted); font-style: italic; }
+
+  .clear-btn:hover, .jump-btn:hover {
+    color: var(--accent-dim);
+    border-color: var(--accent-dim);
+    background: rgba(42,138,138,0.06);
+  }
+
+  .clear-btn:hover {
+    color: var(--rose);
+    border-color: var(--rose);
+    background: rgba(196,122,122,0.06);
+  }
+
+  .guest-badge { font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 300; color: var(--muted); font-style: italic; margin-right: 4px; }
+
   .chat-divider {
-    width: 100%; max-width: 680px; padding: 12px 28px 0;
+    width: 100%;
+    padding: 0 0 14px;
     display: flex; align-items: center; gap: 16px;
   }
+
   .chat-divider::before, .chat-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
   .chat-divider span { font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 300; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
-  .chat-wrap { width: 100%; max-width: 680px; flex: 1; display: flex; flex-direction: column; padding: 0 28px; min-height: 300px; }
-  .messages { flex: 1; display: flex; flex-direction: column; padding-bottom: 16px; }
+
+  .chat-panel {
+    width: 100%;
+    height: min(72vh, 760px);
+    min-height: 440px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .chat-wrap {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 10px 28px 0;
+    scroll-behavior: smooth;
+  }
+
+  .messages { display: flex; flex-direction: column; padding-bottom: 16px; }
   .msg { display: flex; flex-direction: column; gap: 6px; padding: 22px 0; border-bottom: 1px solid rgba(42,138,138,0.15); animation: fadeUp 0.4s ease both; }
   @keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
   .msg-header { display: flex; align-items: center; gap: 8px; }
@@ -288,13 +387,28 @@
   .msg.ai .msg-label { color: var(--accent); }
   .msg-body { font-size: 18px; font-weight: 300; line-height: 1.8; color: var(--text); white-space: pre-wrap; padding-left: 34px; }
   .msg.user .msg-body { color: var(--text-soft); font-style: italic; }
-  .typing { display: flex; align-items: center; gap: 6px; padding: 22px 0; padding-left: 34px; opacity: 0; transition: opacity 0.3s; }
+
+  .typing {
+    display: flex; align-items: center; gap: 6px;
+    padding: 10px 0 20px 34px; opacity: 0; transition: opacity 0.3s;
+  }
+
   .typing.visible { opacity: 1; }
   .typing-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent-dim); animation: pulse 1.2s ease-in-out infinite; }
   .typing-dot:nth-child(2) { animation-delay: 0.2s; }
   .typing-dot:nth-child(3) { animation-delay: 0.4s; }
   @keyframes pulse { 0%, 80%, 100% { opacity: 0.2; transform: scale(0.75); } 40% { opacity: 1; transform: scale(1); } }
-  .input-area { width: 100%; max-width: 680px; padding: 16px 28px 16px; display: flex; flex-direction: column; gap: 10px; position: sticky; bottom: 0; background: linear-gradient(to bottom, transparent, var(--bg) 25%); }
+
+  .input-area {
+    width: 100%;
+    border-top: 1px solid var(--border);
+    padding: 14px 18px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: linear-gradient(180deg, rgba(237,232,223,0.96), rgba(237,232,223,1));
+  }
+
   .input-box { display: flex; gap: 10px; align-items: flex-end; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; transition: border-color 0.2s, box-shadow 0.2s; box-shadow: var(--shadow-sm); }
   .input-box:focus-within { border-color: var(--accent-dim); box-shadow: 0 0 0 3px rgba(42,138,138,0.12), var(--shadow-sm); }
   textarea { flex: 1; background: transparent; border: none; outline: none; resize: none; font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 300; color: var(--text); line-height: 1.6; min-height: 28px; max-height: 140px; overflow-y: auto; scrollbar-width: none; }
@@ -319,16 +433,21 @@
   /* ─── FOOTER DISCLAIMER ─── */
   .site-disclaimer { width: 100%; max-width: 680px; padding: 16px 28px 28px; font-family: 'Jost', sans-serif; font-size: 12px; font-weight: 300; color: var(--muted); text-align: center; line-height: 1.7; border-top: 1px solid var(--border); margin-top: 8px; }
 
-  @media (max-width: 620px) { .how-it-works { grid-template-columns: repeat(2, 1fr); padding: 32px 20px 24px; } }
+  @media (max-width: 620px) {
+    .how-it-works { grid-template-columns: repeat(2, 1fr); padding: 32px 20px 24px; }
+  }
+
   @media (max-width: 520px) {
     .how-it-works { grid-template-columns: 1fr; padding: 32px 20px 24px; }
     .type-grid { grid-template-columns: 1fr; }
-    .hero, .type-page, .chat-header, .chat-divider, .chat-wrap, .input-area, .global-nav { padding-left: 20px; padding-right: 20px; }
+    .hero, .type-page, .chat-shell, .global-nav { padding-left: 20px; padding-right: 20px; }
     .login-section { padding-left: 20px; padding-right: 20px; }
     .login-card { padding: 28px 20px; }
     .msg-body { font-size: 17px; }
     textarea { font-size: 16px; }
     .site-disclaimer { padding-left: 20px; padding-right: 20px; }
+    .chat-wrap { padding-left: 20px; padding-right: 20px; }
+    .chat-actions { justify-content: flex-start; }
   }
 </style>
 </head>
@@ -430,13 +549,12 @@
   <div class="login-section">
     <div class="login-card">
       <div class="auth-toggle">
-        <button class="auth-toggle-btn active" id="toggleMagic" onclick="setAuthMode('magic')">Email Link</button>
-        <button class="auth-toggle-btn" id="togglePassword" onclick="setAuthMode('password')">Password</button>
+        <button class="auth-toggle-btn active" id="togglePassword" onclick="setAuthMode('password')">Password</button>
         <button class="auth-toggle-btn" id="toggleGuest" onclick="setAuthMode('guest')">Guest</button>
       </div>
 
       <!-- MAGIC LINK -->
-      <div class="auth-panel active" id="panelMagic">
+      <div class="auth-panel" id="panelMagic">
         <div id="magicLinkForm">
           <div class="login-title">Begin your journey or pick up where you left off</div>
           <div class="login-sub">Enter your email and we'll send you a secure login link — no password needed.</div>
@@ -454,7 +572,7 @@
       </div>
 
       <!-- PASSWORD -->
-      <div class="auth-panel" id="panelPassword">
+      <div class="auth-panel active" id="panelPassword">
         <div class="pw-tabs">
           <button class="pw-tab active" id="tabSignin" onclick="setPwTab('signin')">Sign In</button>
           <button class="pw-tab" id="tabRegister" onclick="setPwTab('register')">Register</button>
@@ -488,7 +606,7 @@
         <input type="text" id="guestFirstName" class="input-field" placeholder="First name (optional)" />
         <div class="guest-note" style="text-align:left; margin-bottom:24px;">Your conversation will be private but cannot be saved or resumed later.</div>
         <button class="primary-btn" onclick="confirmGuest()">Start as Guest</button>
-        <button class="guest-btn" onclick="setAuthMode('magic')">← Back to Login</button>
+        <button class="guest-btn" onclick="setAuthMode('password')">← Back to Sign In</button>
       </div>
     </div>
   </div>
@@ -597,27 +715,40 @@
       <button class="nav-btn" id="chatSignoutBtn" onclick="signOut()">Sign out</button>
     </div>
   </div>
-  <div class="chat-header">
-    <div class="chat-type-badge" id="typeBadge" onclick="goToTypeSelector()">Romantic</div>
-    <div style="display:flex; align-items:center; gap:8px;">
-      <span class="guest-badge" id="guestBadge" style="display:none;">Guest session</span>
-      <button class="clear-btn" id="clearBtn" onclick="promptClearHistory()" style="display:none;">Clear history</button>
+
+  <div class="chat-shell">
+    <div class="chat-header">
+      <div class="chat-type-badge" id="typeBadge" onclick="goToTypeSelector()">Romantic</div>
+      <div class="chat-actions">
+        <span class="guest-badge" id="guestBadge" style="display:none;">Guest session</span>
+        <button class="jump-btn" type="button" onclick="jumpToTop()">Top</button>
+        <button class="jump-btn" type="button" onclick="jumpToMiddle()">Middle</button>
+        <button class="jump-btn" type="button" onclick="jumpToBottom()">Bottom</button>
+        <button class="jump-btn" id="copyConversationBtn" type="button" onclick="copyConversation()">Copy Conversation</button>
+        <button class="clear-btn" id="clearBtn" onclick="promptClearHistory()" style="display:none;">Clear history</button>
+      </div>
+    </div>
+
+    <div class="chat-divider"><span id="chatDividerLabel">Your conversation</span></div>
+
+    <div class="chat-panel">
+      <div class="chat-wrap" id="chatScrollArea">
+        <div class="messages" id="messages"></div>
+        <div class="typing" id="typing">
+          <div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>
+        </div>
+      </div>
+
+      <div class="input-area">
+        <div class="input-box">
+          <textarea id="userInput" placeholder="Share what's on your mind…" rows="1"></textarea>
+          <button class="send-btn" id="sendBtn" onclick="sendMessage()">Send</button>
+        </div>
+        <div class="disclaimer">Verity is not a licensed therapist. If you're in crisis, please contact a mental health professional.</div>
+      </div>
     </div>
   </div>
-  <div class="chat-divider"><span id="chatDividerLabel">Your conversation</span></div>
-  <div class="chat-wrap">
-    <div class="messages" id="messages"></div>
-    <div class="typing" id="typing">
-      <div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>
-    </div>
-  </div>
-  <div class="input-area">
-    <div class="input-box">
-      <textarea id="userInput" placeholder="Share what's on your mind…" rows="1"></textarea>
-      <button class="send-btn" id="sendBtn" onclick="sendMessage()">Send</button>
-    </div>
-    <div class="disclaimer">Verity is not a licensed therapist. If you're in crisis, please contact a mental health professional.</div>
-  </div>
+
   <div class="site-disclaimer">
     Verity makes no warranty to the accuracy of the information and advice provided. Use of this site is for entertainment purposes only. Verity is not a mental health professional. Always seek the help of a licensed professional if you are experiencing a crisis.
   </div>
@@ -704,10 +835,19 @@
   function setAuthMode(mode) {
     document.querySelectorAll('.auth-panel').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.auth-toggle-btn').forEach(b => b.classList.remove('active'));
-    const panelMap = { magic: 'panelMagic', password: 'panelPassword', guest: 'panelGuest' };
-    const btnMap   = { magic: 'toggleMagic', password: 'togglePassword', guest: 'toggleGuest' };
+
+    const panelMap = {
+      password: 'panelPassword',
+      guest: 'panelGuest'
+    };
+
+    const btnMap = {
+      password: 'togglePassword',
+      guest: 'toggleGuest'
+    };
+
     if (panelMap[mode]) document.getElementById(panelMap[mode]).classList.add('active');
-    if (btnMap[mode])   document.getElementById(btnMap[mode]).classList.add('active');
+    if (btnMap[mode]) document.getElementById(btnMap[mode]).classList.add('active');
   }
 
   function setPwTab(tab) {
@@ -752,6 +892,7 @@
       if (data.success) {
         document.getElementById('messages').innerHTML = '';
         appendMessage('ai', TYPE_CONFIG[currentType].opening, false);
+        jumpToTop();
       }
     } catch {
       alert('Could not clear conversation. Please try again.');
@@ -894,7 +1035,7 @@
     document.getElementById('sendLinkBtn').disabled = false;
     document.getElementById('sendLinkBtn').textContent = 'Send my login link';
     document.getElementById('emailInput').value = '';
-    setAuthMode('magic');
+    setAuthMode('password');
     showPage('landingPage');
   }
 
@@ -911,6 +1052,7 @@
     if (isGuest) {
       guestHistory.push({ role: 'assistant', content: config.opening });
       appendMessage('ai', config.opening, false);
+      jumpToTop();
     } else {
       await loadHistory(type);
     }
@@ -923,12 +1065,14 @@
       const data = await res.json();
       if (data.messages && data.messages.length > 0) {
         data.messages.forEach(m => appendMessage(m.role === 'assistant' ? 'ai' : 'user', m.content, false));
-        document.getElementById('messages').scrollTop = document.getElementById('messages').scrollHeight;
+        jumpToBottom(false);
       } else {
         appendMessage('ai', TYPE_CONFIG[type].opening, false);
+        jumpToTop();
       }
     } catch {
       appendMessage('ai', 'Welcome back. What would you like to talk about today?', false);
+      jumpToTop();
     }
   }
 
@@ -947,13 +1091,89 @@
     body.textContent = text;
     msg.appendChild(header); msg.appendChild(body);
     container.appendChild(msg);
-    container.scrollTop = container.scrollHeight;
   }
 
   function setLoading(val) {
     isLoading = val;
     document.getElementById('sendBtn').disabled = val;
     document.getElementById('typing').className = val ? 'typing visible' : 'typing';
+  }
+
+  function getChatScrollArea() {
+    return document.getElementById('chatScrollArea');
+  }
+
+  function jumpToTop(smooth = true) {
+    const el = getChatScrollArea();
+    el.scrollTo({ top: 0, behavior: smooth ? 'smooth' : 'auto' });
+  }
+
+  function jumpToMiddle(smooth = true) {
+    const el = getChatScrollArea();
+    const middle = Math.max(0, (el.scrollHeight - el.clientHeight) / 2);
+    el.scrollTo({ top: middle, behavior: smooth ? 'smooth' : 'auto' });
+  }
+
+  function jumpToBottom(smooth = true) {
+    const el = getChatScrollArea();
+    el.scrollTo({ top: el.scrollHeight, behavior: smooth ? 'smooth' : 'auto' });
+  }
+
+  function buildConversationText() {
+    const messages = Array.from(document.querySelectorAll('#messages .msg'));
+    const typeLabel = TYPE_CONFIG[currentType]?.label || currentType;
+
+    const parts = [
+      'Verity',
+      `Conversation Type: ${typeLabel}`,
+      ''
+    ];
+
+    for (const msg of messages) {
+      const label = msg.querySelector('.msg-label')?.textContent?.trim() || 'Message';
+      const body = msg.querySelector('.msg-body')?.textContent?.trim() || '';
+      parts.push(`${label}:`);
+      parts.push(body);
+      parts.push('');
+    }
+
+    return parts.join('\n');
+  }
+
+  async function copyConversation() {
+    const btn = document.getElementById('copyConversationBtn');
+    const originalText = btn.textContent;
+    const text = buildConversationText();
+
+    if (!text.trim()) {
+      btn.textContent = 'Nothing to Copy';
+      setTimeout(() => { btn.textContent = originalText; }, 1400);
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(text);
+      btn.textContent = 'Copied';
+      setTimeout(() => { btn.textContent = originalText; }, 1400);
+    } catch {
+      try {
+        const temp = document.createElement('textarea');
+        temp.value = text;
+        temp.setAttribute('readonly', '');
+        temp.style.position = 'absolute';
+        temp.style.left = '-9999px';
+        document.body.appendChild(temp);
+        temp.select();
+        document.execCommand('copy');
+        document.body.removeChild(temp);
+
+        btn.textContent = 'Copied';
+        setTimeout(() => { btn.textContent = originalText; }, 1400);
+      } catch {
+        btn.textContent = 'Copy Failed';
+        setTimeout(() => { btn.textContent = originalText; }, 1600);
+      }
+    }
   }
 
   const textarea = document.getElementById('userInput');
@@ -972,6 +1192,7 @@
     if (!text) return;
     textarea.value = ''; textarea.style.height = 'auto';
     appendMessage('user', text);
+    jumpToBottom(false);
     setLoading(true);
     try {
       let res;
@@ -994,17 +1215,19 @@
           guestHistory.push({ role: 'assistant', content: data.reply });
         }
         appendMessage('ai', data.reply);
+        jumpToBottom();
       } else {
         appendMessage('ai', 'Something went wrong. Please try again.');
+        jumpToBottom();
       }
     } catch {
       setLoading(false);
       appendMessage('ai', 'Something went wrong connecting to Verity. Please try again.');
+      jumpToBottom();
     }
   }
 
-  document.getElementById('emailInput').addEventListener('keydown', e => { if (e.key === 'Enter') sendMagicLink(); });
   document.getElementById('signinPassword').addEventListener('keydown', e => { if (e.key === 'Enter') passwordSignIn(); });
 </script>
 </body>
-             </html>
+</html>
