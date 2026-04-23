@@ -69,7 +69,8 @@
   .global-nav-left { display: flex; align-items: center; gap: 8px; }
   .global-nav-right { display: flex; align-items: center; gap: 8px; }
   .nav-logo-wrap {
-    background: var(--bg); border-radius: 8px;
+    background: transparent; /* ← was var(--bg); now transparent so PNG alpha shows through */
+    border-radius: 8px;
     padding: 4px 8px; display: inline-flex;
     align-items: center; cursor: pointer;
   }
@@ -90,7 +91,8 @@
 
   /* ─── HERO ─── */
   .logo-wrap {
-    background: var(--bg); border-radius: 12px;
+    background: transparent; /* ← was var(--bg); now transparent so PNG alpha shows through */
+    border-radius: 12px;
     padding: 8px 12px; display: inline-flex;
     align-items: center; justify-content: center; margin-bottom: 20px;
   }
@@ -1006,4 +1008,4 @@
   document.getElementById('signinPassword').addEventListener('keydown', e => { if (e.key === 'Enter') passwordSignIn(); });
 </script>
 </body>
- </html>
+</html>
