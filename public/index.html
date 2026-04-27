@@ -717,6 +717,69 @@
     margin-right: 4px;
   }
 
+  .response-toggle-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 2px 4px 2px 2px;
+  }
+
+  .response-toggle-label {
+    font-family: 'Jost', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent-dim);
+    min-width: 112px;
+    text-align: right;
+  }
+
+  .response-switch {
+    position: relative;
+    display: inline-block;
+    width: 54px;
+    height: 30px;
+    flex-shrink: 0;
+  }
+
+  .response-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .response-slider {
+    position: absolute;
+    inset: 0;
+    cursor: pointer;
+    background: var(--border);
+    border-radius: 999px;
+    transition: 0.2s ease;
+    border: 1px solid rgba(31,102,102,0.18);
+  }
+
+  .response-slider::before {
+    content: '';
+    position: absolute;
+    height: 22px;
+    width: 22px;
+    left: 3px;
+    top: 3px;
+    background: #fff;
+    border-radius: 50%;
+    transition: 0.2s ease;
+    box-shadow: 0 2px 6px rgba(26,58,58,0.18);
+  }
+
+  .response-switch input:checked + .response-slider {
+    background: linear-gradient(180deg, var(--accent), var(--accent-dim));
+  }
+
+  .response-switch input:checked + .response-slider::before {
+    transform: translateX(24px);
+  }
+
   .chat-divider {
     width: 100%;
     padding: 0 0 14px;
@@ -1079,6 +1142,7 @@
     .site-disclaimer { padding-left: 20px; padding-right: 20px; }
     .chat-wrap { padding-left: 20px; padding-right: 20px; }
     .chat-actions { justify-content: flex-start; }
+    .response-toggle-label { min-width: 0; text-align: left; }
   }
 </style>
 </head>
@@ -1354,6 +1418,15 @@
       <div class="chat-type-badge" id="typeBadge" onclick="goToTypeSelector()">Romantic</div>
       <div class="chat-actions">
         <span class="guest-badge" id="guestBadge" style="display:none;">Guest session</span>
+
+        <div class="response-toggle-wrap">
+          <span class="response-toggle-label" id="responseModeLabel">Comprehensive</span>
+          <label class="response-switch">
+            <input type="checkbox" id="responseModeToggle" checked onchange="toggleResponseMode()">
+            <span class="response-slider"></span>
+          </label>
+        </div>
+
         <button class="jump-btn" type="button" onclick="jumpToTop()">Top</button>
         <button class="jump-btn" type="button" onclick="jumpToMiddle()">Middle</button>
         <button class="jump-btn" type="button" onclick="jumpToBottom()">Bottom</button>
@@ -1394,6 +1467,7 @@
   let userFirstName = '';
   let isGuest = false;
   let guestHistory = [];
+  let currentResponseMode = 'comprehensive';
 
   const TYPE_CONFIG = {
     romantic:   { label: 'Romantic',   opening: `Welcome. I'm Verity.\n\nI'm here to help you find clarity about your romantic relationship — without judgment, without empty reassurance, and without pretending that hard things are simple.\n\nWhatever brought you here today, you're in the right place. We'll go at your pace, and I'll be honest with you every step of the way.\n\nTo start: what's been weighing on you most lately when it comes to your relationship?` },
@@ -1407,6 +1481,20 @@
     typePage: '#/topics',
     chatPage: '#/chat'
   };
+
+  function toggleResponseMode() {
+    const checked = document.getElementById('responseModeToggle').checked;
+    currentResponseMode = checked ? 'comprehensive' : 'concise';
+    document.getElementById('responseModeLabel').textContent = checked ? 'Comprehensive' : 'Concise';
+  }
+
+  function initializeResponseMode() {
+    const toggle = document.getElementById('responseModeToggle');
+    const label = document.getElementById('responseModeLabel');
+    if (toggle) toggle.checked = true;
+    if (label) label.textContent = 'Comprehensive';
+    currentResponseMode = 'comprehensive';
+  }
 
   function showPage(name) {
     document.getElementById('loadingScreen').style.display = 'none';
@@ -1645,6 +1733,8 @@
   }
 
   window.addEventListener('load', async () => {
+    initializeResponseMode();
+
     const params = new URLSearchParams(window.location.search);
     if (params.get('error')) {
       showPage('landingPage');
@@ -1674,6 +1764,7 @@
       currentType = 'romantic';
       document.getElementById('messages').innerHTML = '';
       document.getElementById('guestBadge').style.display = 'none';
+      initializeResponseMode();
       showPage('landingPage');
       return;
     }
@@ -1689,6 +1780,7 @@
     document.getElementById('sendLinkBtn').textContent = 'Send my login link';
     document.getElementById('emailInput').value = '';
     setAuthMode('password');
+    initializeResponseMode();
     showPage('landingPage');
   }
 
@@ -1870,13 +1962,23 @@
         res = await fetch('/api/chat/guest', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ message: text, type: currentType, history: guestHistory, firstName: userFirstName })
+          body: JSON.stringify({
+            message: text,
+            type: currentType,
+            history: guestHistory,
+            firstName: userFirstName,
+            responseMode: currentResponseMode
+          })
         });
       } else {
         res = await fetch('/api/chat', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ message: text, type: currentType })
+          body: JSON.stringify({
+            message: text,
+            type: currentType,
+            responseMode: currentResponseMode
+          })
         });
       }
 
