@@ -58,6 +58,21 @@ A user can trigger both rules at different points in the conversation. Keep coun
 RULE 4 — Never mention the classification system:
 Do not use the words superficial, meaningful, or classification in your response. Do not tell the user you are tracking anything. The nudge should feel like natural, intuitive guidance from a perceptive advisor — not a system response.`;
 
+const CONCISE_RESPONSE_RULES = `
+CONCISE RESPONSE MODE:
+
+When response mode is set to concise, keep the response as brief as possible without losing meaningful context, emotional accuracy, or practical usefulness.
+
+Rules:
+- Use fewer words and shorter paragraphs
+- Remove repetition, filler, and extra softening
+- Keep the most important insight
+- Keep the clearest next step
+- If a question is necessary, ask only one short focused question
+- Do not become cold or robotic
+- Do not leave out key nuance that would materially change the advice
+`;
+
 const SYSTEM_PROMPTS = {
   romantic: `You are Verity, a warm, insightful, and honest relationship advisor specializing in romantic partnerships. Your role is to help users gain clarity about their romantic relationships — including whether to stay, work on things, or leave.
 
@@ -158,6 +173,22 @@ FORMAT: Flowing prose only. No bullet points or headers. 3-5 paragraphs max.
 
 ${CLASSIFICATION_RULES}`
 };
+
+function normalizeResponseMode(mode) {
+  return String(mode || '').toLowerCase().trim() === 'concise'
+    ? 'concise'
+    : 'comprehensive';
+}
+
+function extractReplyText(response) {
+  if (!response || !Array.isArray(response.content)) return '';
+
+  return response.content
+    .filter(block => block && block.type === 'text' && typeof block.text === 'string')
+    .map(block => block.text)
+    .join('\n\n')
+    .trim();
+}
 
 // ─── DB INIT ──────────────────────────────────────────────────────────────────
 async function initDB() {
@@ -384,9 +415,12 @@ app.delete('/api/messages', requireAuth, async (req, res) => {
 
 // ─── CHAT — authenticated ─────────────────────────────────────────────────────
 app.post('/api/chat', requireAuth, async (req, res) => {
-  const { message, type } = req.body;
+  const { message, type, responseMode } = req.body;
   const relType = type || 'romantic';
+  const normalizedResponseMode = normalizeResponseMode(responseMode);
+
   if (!message) return res.status(400).json({ error: 'Message required' });
+
   try {
     const userResult = await pool.query('SELECT first_name FROM users WHERE id = $1', [req.userId]);
     const firstName = userResult.rows[0]?.first_name || null;
@@ -395,24 +429,35 @@ app.post('/api/chat', requireAuth, async (req, res) => {
       `SELECT role, content FROM messages WHERE user_id = $1 AND relationship_type = $2 ORDER BY created_at ASC`,
       [req.userId, relType]
     );
+
     const messages = historyResult.rows.map(m => ({
       role: m.role === 'assistant' ? 'assistant' : 'user',
       content: m.content
     }));
+
     messages.push({ role: 'user', content: message });
 
     const nameContext = firstName
       ? `\nUSER'S NAME: The user's first name is ${firstName}. You must use this name. Address them as ${firstName} in your very first response, and continue to use their name naturally throughout the conversation — not in every message, but regularly enough that it feels personal and warm. Never refer to them as "you" exclusively when their name is available.\n`
       : '';
 
+    const systemPrompt =
+      (SYSTEM_PROMPTS[relType] || SYSTEM_PROMPTS.romantic) +
+      (normalizedResponseMode === 'concise' ? `\n\n${CONCISE_RESPONSE_RULES}` : '') +
+      nameContext;
+
     const response = await anthropic.messages.create({
       model: 'claude-opus-4-5',
       max_tokens: 1024,
-      system: (SYSTEM_PROMPTS[relType] || SYSTEM_PROMPTS.romantic) + nameContext,
+      system: systemPrompt,
       messages
     });
 
-    const reply = response.content[0].text;
+    const reply = extractReplyText(response);
+
+    if (!reply) {
+      throw new Error('No text returned from Anthropic');
+    }
 
     await pool.query(
       'INSERT INTO messages (user_id, relationship_type, role, content) VALUES ($1, $2, $3, $4)',
@@ -432,9 +477,12 @@ app.post('/api/chat', requireAuth, async (req, res) => {
 
 // ─── CHAT — guest ─────────────────────────────────────────────────────────────
 app.post('/api/chat/guest', async (req, res) => {
-  const { message, type, history, firstName } = req.body;
+  const { message, type, history, firstName, responseMode } = req.body;
   const relType = type || 'romantic';
+  const normalizedResponseMode = normalizeResponseMode(responseMode);
+
   if (!message) return res.status(400).json({ error: 'Message required' });
+
   try {
     const messages = [];
     if (Array.isArray(history) && history.length > 0) {
@@ -447,20 +495,31 @@ app.post('/api/chat/guest', async (req, res) => {
         }
       }
     }
+
     messages.push({ role: 'user', content: message });
 
     const nameContext = firstName
       ? `\nUSER'S NAME: The user's first name is ${firstName}. You must use this name. Address them as ${firstName} in your very first response, and continue to use their name naturally throughout the conversation — not in every message, but regularly enough that it feels personal and warm. Never refer to them as "you" exclusively when their name is available.\n`
       : '';
 
+    const systemPrompt =
+      (SYSTEM_PROMPTS[relType] || SYSTEM_PROMPTS.romantic) +
+      (normalizedResponseMode === 'concise' ? `\n\n${CONCISE_RESPONSE_RULES}` : '') +
+      nameContext;
+
     const response = await anthropic.messages.create({
       model: 'claude-opus-4-5',
       max_tokens: 1024,
-      system: (SYSTEM_PROMPTS[relType] || SYSTEM_PROMPTS.romantic) + nameContext,
+      system: systemPrompt,
       messages
     });
 
-    const reply = response.content[0].text;
+    const reply = extractReplyText(response);
+
+    if (!reply) {
+      throw new Error('No text returned from Anthropic');
+    }
+
     res.json({ reply });
   } catch (err) {
     console.error('Guest chat error:', err);
